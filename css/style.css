@@ -117,7 +117,8 @@ h1 {
 	font-size:2em;
 	margin:0.67em 0;
 #	color:#353535;
-	color:#FBA352;
+	color:#E04343;	
+	color: rgba(29, 4, 1, 1.0);	
 }
 h2 {
 	font-size:1.5em;
@@ -462,12 +463,15 @@ table {
 }
 .hero h1 {
 	font-size: 120px;
-	letter-spacing: -8px;
+	letter-spacing: -3px;
 	margin: 0;
 	font-weight: 600;
 	line-height: 95px;
 	text-transform: uppercase;
+	text-shadow: 0 0 3px #FFF8E3, 0 0 3px #FFF8E3, 0 0 3px #FFF8E3, 0 0 3px #FFF8E3;	
+
 }
+
 .hero h1 span {
 	#color:#a1a9b0;
 	#color:#795535;
