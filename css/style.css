@@ -14,7 +14,7 @@
     width:100%;
     height:100%;
     overflow:visible;
-    background: #fff url('../img/preloader.gif') no-repeat center center;
+    background: #FFF8E3 url('../img/preloader.gif') no-repeat center center;
 }
 
 
@@ -118,7 +118,6 @@ h1 {
 	margin:0.67em 0;
 #	color:#353535;
 	color:#E04343;	
-	color: rgba(29, 4, 1, 1.0);	
 }
 h2 {
 	font-size:1.5em;
@@ -380,7 +379,7 @@ table {
 /* Menu */
 .menu-wrap {
 	z-index:999;
-	background: rgba(255, 255, 255, 1);
+	background: rgba(255, 248, 227, .8);	
 	-webkit-transition:width 0.4s,height 0.4s,-webkit-transform 0.4s;
 	transition:width 0.4s,height 0.4s,transform 0.4s;
 	-webkit-transition-timing-function:cubic-bezier(0.7,0,0.3,1);
@@ -468,13 +467,16 @@ table {
 	font-weight: 600;
 	line-height: 95px;
 	text-transform: uppercase;
-	text-shadow: 0 0 3px #FFF8E3, 0 0 3px #FFF8E3, 0 0 3px #FFF8E3, 0 0 3px #FFF8E3;	
-
+	text-shadow: 0 0 3px #E04343, 0 0 3px #E04343, 0 0 3px #E04343, 0 0 3px #E04343;	
+	padding-top: 10px;
+	color: rgba(29, 4, 1);		
 }
 
 .hero h1 span {
 	#color:#a1a9b0;
 	#color:#795535;
+	color: #FFF8E3;
+	text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;	
 	/* display:inline-block; */
 }
 .hero h3 {
@@ -587,14 +589,15 @@ h1.arrow span {
 	background-size:cover;
 }
 .color-bg {
-	background: #E04343;
+	background: #F5BD5C;
 }
 
 .color-bg a {
     color: #FFE800;
 }
 .color-bg h6, .color-bg p {
-    color: white;
+    color: #1D2904;
+	font-size: 1.5em;
 }
 .color-bg h6::after{
 	border-color: #fff;
@@ -617,7 +620,7 @@ h1.arrow span {
 	color: #8C8C8C;
 }
 .color-bg h1.arrow span {
-    color: #FFE800;
+    color: #1D2904;
 }
 .color-bg h1.arrow {
     color: #FFF;
@@ -945,7 +948,8 @@ ul.social-buttons li:last-child {
 .up-btn {
 	width:55px;
 	height:55px;
-	background: rgba(255, 232, 1, 0.9);
+#	background: rgba(255, 232, 1, 0.9);
+	background: #FFF8E3;
 	display:block;
 	margin:0 auto;
 	color: #E04343;
@@ -960,8 +964,9 @@ ul.social-buttons li:last-child {
 	margin-right:auto;
 }
 .up-btn:hover,up-btn:focus {
-	color: black;
-	background: #FFE800;
+	color: #FFF8E3;
+	background: #E04343;
+	
 }
 .contact-details {
 	margin:70px 0;

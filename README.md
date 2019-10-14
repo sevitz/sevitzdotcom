@@ -1,5 +1,5 @@
-# JohnDoe
-A Responsive Free One Page Portfolio Website template
+# SEVITZDOTCOM
+Personal Portfolio Site for Adrian Sevitz
 
 
 
