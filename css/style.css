@@ -1129,11 +1129,17 @@ ul.slides li {
 	}
 
 	.hero h1 {
-		font-size: 100px;
+		font-size: 80px;
 		line-height: 80px;
 		margin-top: 65px;
+	}
+	
 }
+
+@media screen and (max-width:725px) {
+	.hero h3, .menu-wrap, .menu-button {display:none}
 }
+
 /* 480px (WVGA - Low End Windows Phone) */
 @media screen and (max-width:480px) {
 	.wrapper {
@@ -1227,16 +1233,7 @@ ul.slides li {
 	.effects .img {
     	margin-bottom: 15px;
 	}
-	.show-menu .icon-list a {
-		display: block;
-		width: 100%;
-		float: left;
-		margin-bottom: 10px;
-	}
 
-	.show-menu .menu-wrap {
-		height: 100%;
-	}
 }
 
 
