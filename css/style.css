@@ -1246,3 +1246,9 @@ ul.slides li {
 	    padding-bottom: 40px;
 	}
 }
+
+
+/** Bootstrap Changes **/
+.col-md-4 {
+	width: 25%;
+}
