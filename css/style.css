@@ -1257,3 +1257,8 @@ ul.slides li {
 .col-md-4 {
 	width: 25%;
 }
+
+/** Bootstrap Changes **/
+.col-md-5 {
+	width: 20%;
+}
