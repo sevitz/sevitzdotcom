@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbour Jacket Picker</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Georgia', serif; background: #f4f1eb; color: #2c2416; min-height: 100vh; display: flex; flex-direction: column; }
+  .header { background: #2c2416; color: #f4f1eb; padding: 18px 28px; display: flex; align-items: flex-end; justify-content: space-between; }
+  .header-title { font-size: 22px; font-weight: normal; letter-spacing: 3px; text-transform: uppercase; }
+  .header-sub { font-size: 11px; color: #a89878; letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+  .header-count { font-size: 12px; color: #a89878; letter-spacing: 1px; text-align: right; }
+  .filter-bar { background: #e8e2d5; border-bottom: 1px solid #d4c9b0; padding: 12px 28px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .filter-label { font-size: 11px; color: #7a6a50; letter-spacing: 1.5px; text-transform: uppercase; margin-right: 4px; }
+  .filter-btn { padding: 5px 16px; border: 1px solid #a89878; background: transparent; border-radius: 20px; font-size: 11px; cursor: pointer; letter-spacing: 1.5px; text-transform: uppercase; color: #2c2416; transition: all 0.2s; font-family: 'Georgia', serif; }
+  .filter-btn.active, .filter-btn:hover { background: #2c2416; color: #f4f1eb; border-color: #2c2416; }
+  .hint { margin-left: auto; font-size: 11px; color: #a89878; letter-spacing: 1px; font-style: italic; }
+  .shortlist-panel { background: #2c2416; color: #f4f1eb; padding: 14px 28px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .shortlist-panel .names { font-size: 12px; color: #a89878; flex: 1; }
+  .shortlist-panel button { background: transparent; border: 1px solid #a89878; color: #a89878; padding: 5px 14px; font-size: 11px; cursor: pointer; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 2px; font-family: 'Georgia', serif; }
+  .shortlist-panel button:hover { background: #a89878; color: #2c2416; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; padding: 24px 28px; flex: 1; }
+  .card { background: white; border-radius: 3px; overflow: hidden; transition: transform 0.18s, box-shadow 0.18s; position: relative; border: 2px solid transparent; }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.13); }
+  .card.faved { border-color: #2c2416; }
+  .fav-badge { position: absolute; top: 10px; right: 10px; background: #2c2416; color: #f4f1eb; width: 28px; height: 28px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 14px; z-index: 2; box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
+  .card.faved .fav-badge { display: flex; }
+  .type-badge { position: absolute; top: 10px; left: 10px; background: rgba(44,36,22,0.75); color: #f4f1eb; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; z-index: 2; }
+  .card-images { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 100%; background: #e8e2d5; }
+  .card-img-wrap { aspect-ratio: 3/4; background: #e8e2d5; position: relative; overflow: hidden; }
+  .card-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .img-label { position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); background: rgba(44,36,22,0.6); color: #f4f1eb; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 2px 7px; border-radius: 2px; white-space: nowrap; }
+  .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #a89878; font-size: 10px; letter-spacing: 1px; text-align: center; padding: 8px; flex-direction: column; gap: 6px; }
+  .card-img-placeholder a { color: #7a6a50; font-size: 10px; }
+  .card-body { padding: 12px 14px 8px; }
+  .card-name { font-size: 14px; font-weight: bold; letter-spacing: 0.5px; margin-bottom: 2px; }
+  .card-colour { font-size: 11px; color: #7a6a50; text-transform: uppercase; letter-spacing: 1.5px; }
+  .card-price { font-size: 15px; font-weight: bold; display: none; margin-top: 4px; }
+  .card-price.admin { display: block; }
+  .card-actions { padding: 0 14px 13px; display: flex; gap: 7px; margin-top: 10px; }
+  .btn-fav { flex: 1; padding: 8px; border: 1px solid #2c2416; background: transparent; color: #2c2416; font-size: 11px; cursor: pointer; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 2px; transition: all 0.2s; font-family: 'Georgia', serif; }
+  .btn-fav:hover { background: #2c2416; color: #f4f1eb; }
+  .card.faved .btn-fav { background: #2c2416; color: #f4f1eb; }
+  .btn-view { padding: 8px 12px; border: 1px solid #a89878; background: transparent; color: #7a6a50; font-size: 13px; cursor: pointer; border-radius: 2px; transition: all 0.2s; text-decoration: none; display: none; align-items: center; }
+  .btn-view.admin { display: flex; }
+  .btn-view:hover { background: #a89878; color: white; }
+  .empty-state { grid-column: 1/-1; padding: 60px; text-align: center; color: #a89878; font-size: 13px; letter-spacing: 1.5px; font-style: italic; }
+  .section-header { font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; color: #2c2416; padding: 20px 28px 0; font-weight: bold; }
+  .section-header-sub { color: #7a6a50; font-weight: normal; }
+  .section-divider { border-top: 1px solid #d4c9b0; margin: 4px 28px 0; }
+  .info-section { background: white; margin: 20px 28px 0; padding: 20px 24px; border-radius: 3px; border: 1px solid #d4c9b0; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .info-col h3 { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; color: #2c2416; }
+  .info-col p { font-size: 12.5px; line-height: 1.6; color: #5a4d3a; }
+  footer { background: #e8e2d5; border-top: 1px solid #d4c9b0; padding: 12px 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .footer-version { font-size: 10px; color: #a89878; letter-spacing: 1px; }
+  .footer-right { display: flex; align-items: center; gap: 8px; }
+  .admin-btn { padding: 5px 16px; border: 1px solid #a89878; background: transparent; border-radius: 20px; font-size: 11px; cursor: pointer; letter-spacing: 1.5px; text-transform: uppercase; color: #7a6a50; font-family: 'Georgia', serif; transition: all 0.2s; }
+  .admin-btn:hover { background: #2c2416; color: #f4f1eb; border-color: #2c2416; }
+  .admin-btn.unlocked { color: #2c2416; border-color: #2c2416; }
+  .import-btn { display: none; padding: 5px 16px; border: 1px solid #a89878; background: transparent; border-radius: 20px; font-size: 11px; cursor: pointer; letter-spacing: 1.5px; text-transform: uppercase; color: #7a6a50; font-family: 'Georgia', serif; transition: all 0.2s; }
+  .import-btn:hover { background: #2c2416; color: #f4f1eb; border-color: #2c2416; }
+  .import-btn.admin { display: inline-block; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <div class="header-title">Barbour</div>
+    <div class="header-sub">Women's Waterproof &amp; Showerproof Jackets</div>
+  </div>
+  <div class="header-count" id="count"></div>
+</div>
+<div class="filter-bar">
+  <span class="filter-label">Show:</span>
+  <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+  <button class="filter-btn" onclick="setFilter('showerproof', this)">Showerproof</button>
+  <button class="filter-btn" onclick="setFilter('waterproof', this)">Waterproof</button>
+  <button class="filter-btn" id="fav-filter-btn" onclick="setFilter('favourite', this)">&#10084; Shortlisted</button>
+  <span class="hint">Click &#9825; to shortlist</span>
+</div>
+<div class="info-section">
+  <div class="info-col">
+    <h3>Showerproof</h3>
+    <p>Designed to handle light rain and brief downpours. These jackets use treated cotton or polyamide fabrics that repel water on the surface, keeping you dry in passing showers. Lighter, more breathable, and typically softer in feel. Ideal for everyday wear when you want protection without the bulk, but not suited to prolonged heavy rain.</p>
+  </div>
+  <div class="info-col">
+    <h3>Waterproof</h3>
+    <p>Built for sustained rain and heavier weather. These jackets use sealed seams and membranes or coatings that prevent water from penetrating, even during extended exposure. Slightly more structured and protective, they are the better choice for longer walks, outdoor days, or unpredictable weather where staying completely dry matters.</p>
+  </div>
+</div>
+<div id="shortlist-grid-section" style="display:none;">
+  <div class="section-header">Your Shortlist</div>
+  <div class="shortlist-panel" id="shortlist-panel">
+    <button onclick="copyShortlist()">Copy</button>
+    <button onclick="clearAll()">Clear all</button>
+    <span class="names" id="shortlist-names"></span>
+  </div>
+  <div class="grid" id="shortlist-grid"></div>
+  <div class="section-divider"></div>
+  <div class="section-header section-header-sub">All Jackets</div>
+</div>
+<div class="grid" id="grid"></div>
+<footer>
+  <span class="footer-version">v6.2 &middot; Built 09 Jun 2026 22:00</span>
+  <div class="footer-right">
+    <button class="import-btn" id="import-btn" onclick="importShortlist()">Import shortlist</button>
+    <button class="admin-btn" id="admin-btn" onclick="adminPrompt()">Admin</button>
+  </div>
+</footer>
+<script>
+var B = "https://www.barbour.com/dw/image/v2/BLCL_PRD/on/demandware.static/-/Sites-master-catalog/default/";
+var Q = "?q=70&sh=1875&strip=false&sw=1500";
+
+var allJackets = [
+  { id: "LSP0337BK11", name: "Maizy",      type: "Showerproof", price: 179, colour: "Black",
+    front: B+"dwff7cfc2f/images/LSP0337BK11/LSP0337BK11_01front.jpg"+Q,
+    back:  B+"dweb0184e5/images/LSP0337BK11/LSP0337BK11_04back.jpg"+Q,
+    url: "https://www.barbour.com/gb/maizy-showerproof-jacket-LSP0337BK11.html" },
+  { id: "LSP0306OL72", name: "Hawkridge",  type: "Showerproof", price: 199, colour: "Olive",
+    front: B+"dw7c24de73/images/LSP0306OL72/LSP0306OL72_01front.jpg"+Q,
+    back:  B+"dw41723d4c/images/LSP0306OL72/LSP0306OL72_04back.jpg"+Q,
+    url: "https://www.barbour.com/gb/hawkridge-showerproof-jacket-LSP0306OL72.html" },
+  { id: "LSP0220BK11", name: "Piper",      type: "Showerproof", price: 159, colour: "Black",
+    front: B+"dwa916bbeb/images/LSP0220BK11/LSP0220BK11_01front.jpg"+Q,
+    back:  B+"dw46e15924/images/LSP0220BK11/LSP0220BK11_04back.jpg"+Q,
+    url: "https://www.barbour.com/gb/piper-showerproof-jacket-LSP0220BK11.html" },
+  { id: "LSP0307BK11", name: "Weaver",     type: "Showerproof", price: 169, colour: "Black",
+    front: B+"dw9a5c2759/images/LSP0307BK11/LSP0307BK11_01front.png"+Q,
+    back:  B+"dwe2792d4b/images/LSP0307BK11/LSP0307BK11_04back.jpg"+Q,
+    url: "https://www.barbour.com/gb/weaver-showerproof-jacket-LSP0307BK11.html" },
+  { id: "LSP0298BK12", name: "Tika",       type: "Showerproof", price: 199, colour: "Black",
+    front: B+"dwc4084c87/images/LSP0298BK12/LSP0298BK12_01front.jpg"+Q,
+    back:  B+"dw735a0b6a/images/LSP0298BK12/LSP0298BK12_04back.jpg"+Q,
+    url: "https://www.barbour.com/gb/tika-showerproof-jacket-LSP0298BK12.html" },
+  { id: "LSP0301BK11", name: "Debbie",     type: "Showerproof", price: 179, colour: "Black",
+    front: B+"dwd9d97062/images/LSP0301BK11/LSP0301BK11_01front.jpg"+Q,
+    back:  B+"dwff7cfc2f/images/LSP0301BK11/LSP0301BK11_04back.jpg"+Q,
+    url: "https://www.barbour.com/gb/debbie-showerproof-jacket-LSP0301BK11.html" },
+  { id: "LSP0270BK11", name: "Jourdaine",  type: "Showerproof", price: 199, colour: "Black",
+    front: B+"dwff7cfc2f/images/LSP0270BK11/LSP0270BK11_01front.jpg"+Q,
+    back:  B+"dwff7cfc2f/images/LSP0270BK11/LSP0270BK11_04back.jpg"+Q,
+    url: "https://www.barbour.com/gb/jourdaine-showerproof-jacket-LSP0270BK11.html" },
+  { id: "LSP0295BK11", name: "Liya",       type: "Showerproof", price: 159, colour: "Black",
+    front: B+"dwff7cfc2f/images/LSP0295BK11/LSP0295BK11_01front.jpg"+Q,
+    back:  B+"dwff7cfc2f/images/LSP0295BK11/LSP0295BK11_04back.jpg"+Q,
+    url: "https://www.barbour.com/gb/liya-showerproof-jacket-LSP0295BK11.html" },
+  { id: "LWB0937PU11", name: "Thorpe",     type: "Waterproof",  price: 199, colour: "Purple",
+    front: B+"dwff7cfc2f/images/LWB0937PU11/LWB0937PU11_01front.jpg"+Q,
+    back:  B+"dwff7cfc2f/images/LWB0937PU11/LWB0937PU11_04back.jpg"+Q,
+    url: "https://www.barbour.com/gb/thorpe-waterproof-jacket-LWB0937PU11.html" },
+  { id: "LWB0933CH71", name: "Short Kyra", type: "Waterproof",  price: 209, colour: "Chalk",
+    front: B+"dwff7cfc2f/images/LWB0933CH71/LWB0933CH71_01front.jpg"+Q,
+    back:  B+"dwff7cfc2f/images/LWB0933CH71/LWB0933CH71_04back.jpg"+Q,
+    url: "https://www.barbour.com/gb/short-kyra-waterproof-jacket-LWB0933CH71.html" },
+  { id: "LWB0938GY71", name: "Dovecragg",  type: "Waterproof",  price: 249, colour: "Grey",
+    front: B+"dwff7cfc2f/images/LWB0938GY71/LWB0938GY71_01front.jpg"+Q,
+    back:  B+"dwff7cfc2f/images/LWB0938GY71/LWB0938GY71_04back.jpg"+Q,
+    url: "https://www.barbour.com/gb/dovecragg-waterproof-jacket-LWB0938GY71.html" },
+  { id: "LWB0936OL51", name: "Baythorpe",  type: "Waterproof",  price: 199, colour: "Olive",
+    front: B+"dwff7cfc2f/images/LWB0936OL51/LWB0936OL51_01front.jpg"+Q,
+    back:  B+"dwff7cfc2f/images/LWB0936OL51/LWB0936OL51_04back.jpg"+Q,
+    url: "https://www.barbour.com/gb/baythorpe-waterproof-jacket-LWB0936OL51.html" },
+];
+
+var favourites = new Set();
+var currentFilter = "all";
+var adminUnlocked = false;
+
+function buildCard(j) {
+  var isFav = favourites.has(j.id);
+  var card = document.createElement("div");
+  card.className = "card" + (isFav ? " faved" : "");
+  var favBadge = document.createElement("div"); favBadge.className = "fav-badge"; favBadge.textContent = "\u2764"; card.appendChild(favBadge);
+  var typeBadge = document.createElement("div"); typeBadge.className = "type-badge"; typeBadge.textContent = j.type; card.appendChild(typeBadge);
+  var imagesRow = document.createElement("div"); imagesRow.className = "card-images";
+  var fWrap = document.createElement("div"); fWrap.className = "card-img-wrap";
+  var fImg = document.createElement("img"); fImg.className = "card-img"; fImg.src = j.front; fImg.alt = j.name + " Front"; fImg.loading = "lazy";
+  fImg.onerror = function(){ fWrap.innerHTML = '<div class="card-img-placeholder">No image<br><a href="'+j.url+'" target="_blank">View on Barbour</a></div>'; };
+  fWrap.appendChild(fImg);
+  var fLbl = document.createElement("div"); fLbl.className = "img-label"; fLbl.textContent = "Front"; fWrap.appendChild(fLbl);
+  imagesRow.appendChild(fWrap);
+  var bWrap = document.createElement("div"); bWrap.className = "card-img-wrap";
+  if (j.back) {
+    var bImg = document.createElement("img"); bImg.className = "card-img"; bImg.src = j.back; bImg.alt = j.name + " Back"; bImg.loading = "lazy";
+    bImg.onerror = function(){ bWrap.innerHTML = '<div class="card-img-placeholder">Back unavailable<br><a href="'+j.url+'" target="_blank">View on Barbour</a></div>'; };
+    bWrap.appendChild(bImg);
+    var bLbl = document.createElement("div"); bLbl.className = "img-label"; bLbl.textContent = "Back"; bWrap.appendChild(bLbl);
+  } else {
+    bWrap.innerHTML = '<div class="card-img-placeholder">Back view<br><a href="'+j.url+'" target="_blank">View on Barbour \u2197</a></div>';
+  }
+  imagesRow.appendChild(bWrap);
+  card.appendChild(imagesRow);
+  var body = document.createElement("div"); body.className = "card-body";
+  body.innerHTML = '<div class="card-name">' + j.name + '</div><div class="card-colour">' + j.colour + '</div><div class="card-price' + (adminUnlocked ? ' admin' : '') + '">\u00a3' + j.price + '</div>';
+  card.appendChild(body);
+  var actions = document.createElement("div"); actions.className = "card-actions";
+  var btnFav = document.createElement("button"); btnFav.className = "btn-fav";
+  btnFav.textContent = isFav ? "\u2764 Shortlisted" : "\u2661 Shortlist";
+  btnFav.onclick = function(e) { toggleFav(j.id, e); };
+  actions.appendChild(btnFav);
+  var btnView = document.createElement("a"); btnView.className = "btn-view" + (adminUnlocked ? " admin" : "");
+  btnView.href = j.url; btnView.target = "_blank"; btnView.title = "View on barbour.com"; btnView.textContent = "\u2197";
+  actions.appendChild(btnView);
+  card.appendChild(actions);
+  return card;
+}
+
+function render() {
+  var grid = document.getElementById("grid");
+  var shortlistGrid = document.getElementById("shortlist-grid");
+  var shortlistSection = document.getElementById("shortlist-grid-section");
+  var visible = allJackets.filter(function(j) {
+    if (currentFilter === "showerproof") return j.type === "Showerproof";
+    if (currentFilter === "waterproof")  return j.type === "Waterproof";
+    if (currentFilter === "favourite")   return favourites.has(j.id);
+    return true;
+  });
+  var favCount = favourites.size;
+  var favVisible = visible.filter(function(j){ return favourites.has(j.id); });
+
+  document.getElementById("count").textContent =
+    visible.length + " jacket" + (visible.length !== 1 ? "s" : "") +
+    (favCount ? "  \u00b7  \u2764 " + favCount + " shortlisted" : "");
+  var panel = document.getElementById("shortlist-panel");
+  if (favCount > 0) {
+    document.getElementById("shortlist-names").textContent =
+      allJackets.filter(function(j){return favourites.has(j.id);}).map(function(j){return j.name + " \u00b7 " + j.colour;}).join("  |  ");
+  }
+  document.getElementById("fav-filter-btn").textContent =
+    "\u2764 Shortlisted" + (favCount ? " (" + favCount + ")" : "");
+
+  // Shortlist section at top (only when there are favs and not already filtering to favs only)
+  shortlistGrid.innerHTML = "";
+  if (favVisible.length > 0 && currentFilter !== "favourite") {
+    shortlistSection.style.display = "block";
+    favVisible.forEach(function(j) { shortlistGrid.appendChild(buildCard(j)); });
+  } else {
+    shortlistSection.style.display = "none";
+  }
+
+  // Main grid
+  grid.innerHTML = "";
+  if (!visible.length) {
+    var el = document.createElement("div"); el.className = "empty-state";
+    el.textContent = currentFilter === "favourite" ? "No jackets shortlisted yet." : "No jackets match this filter.";
+    grid.appendChild(el); return;
+  }
+  visible.forEach(function(j) { grid.appendChild(buildCard(j)); });
+}
+function toggleFav(id, e) { e.stopPropagation(); favourites.has(id) ? favourites.delete(id) : favourites.add(id); render(); }
+function setFilter(type, btn) { currentFilter = type; document.querySelectorAll(".filter-btn").forEach(function(b){b.classList.remove("active");}); btn.classList.add("active"); render(); }
+function clearAll() { favourites.clear(); if (currentFilter === "favourite") setFilter("all", document.querySelector(".filter-btn")); else render(); }
+
+function copyShortlist() {
+  var picked = allJackets.filter(function(j){ return favourites.has(j.id); });
+  if (!picked.length) return;
+  var names = picked.map(function(j){ return j.name + " (" + j.colour + ")"; }).join(", ");
+  var ids = picked.map(function(j){ return j.id; }).join(",");
+  var text = "Barbour Shortlist: " + names + "\n[" + ids + "]";
+  navigator.clipboard.writeText(text).then(function(){
+    var btn = document.querySelector('.shortlist-panel button');
+    var orig = btn.textContent;
+    btn.textContent = "Copied!";
+    setTimeout(function(){ btn.textContent = orig; }, 1500);
+  });
+}
+
+function importShortlist() {
+  var input = prompt("Paste a shared shortlist:");
+  if (!input) return;
+  var match = input.match(/\[([A-Z0-9,]+)\]/);
+  if (match) {
+    var ids = match[1].split(",");
+    favourites.clear();
+    ids.forEach(function(id) {
+      var found = allJackets.find(function(j){ return j.id === id.trim(); });
+      if (found) favourites.add(found.id);
+    });
+    render();
+    if (favourites.size > 0) {
+      alert("Imported " + favourites.size + " jacket" + (favourites.size !== 1 ? "s" : "") + " to your shortlist.");
+    } else {
+      alert("No matching jackets found in that shortlist.");
+    }
+  } else {
+    alert("Could not read that shortlist. Make sure you paste the full text including the codes in square brackets.");
+  }
+}
+
+function updateAdminUI() {
+  document.getElementById("import-btn").className = "import-btn" + (adminUnlocked ? " admin" : "");
+}
+
+function adminPrompt() {
+  if (adminUnlocked) { adminUnlocked = false; document.getElementById("admin-btn").classList.remove("unlocked"); document.getElementById("admin-btn").textContent = "Admin"; updateAdminUI(); render(); return; }
+  var code = prompt("Enter admin code:");
+  if (code !== null && code.trim().toLowerCase() === "sev") { adminUnlocked = true; document.getElementById("admin-btn").classList.add("unlocked"); document.getElementById("admin-btn").textContent = "Admin \u2713"; updateAdminUI(); render(); }
+  else if (code !== null) { alert("Incorrect code."); }
+}
+render();
+</script>
+</body>
+</html>
