@@ -344,44 +344,46 @@
 // ── ROUND OF 32 FIXTURES ─────────────────────────────────────────────────────
 // matchId matches plaintextsports game numbers where known
 const ROUND32 = [
-  { id:'r32_1',  gId:'G73', teams: [{id:'south-africa', name:'S. Africa',   flag:'🇿🇦', pts:'RSA'}, {id:'canada',       name:'Canada',      flag:'🇨🇦', pts:'CAN'}] },
-  { id:'r32_2',  gId:'G74', teams: [{id:'germany',      name:'Germany',     flag:'🇩🇪', pts:'GER'}, {id:'paraguay',     name:'Paraguay',    flag:'🇵🇾', pts:'PAR'}] },
-  { id:'r32_3',  gId:'G75', teams: [{id:'netherlands',  name:'Netherlands', flag:'🇳🇱', pts:'NED'}, {id:'morocco',      name:'Morocco',     flag:'🇲🇦', pts:'MAR'}] },
-  { id:'r32_4',  gId:'G76', teams: [{id:'ivory-coast',  name:'Ivory Coast', flag:'🇨🇮', pts:'CIV'}, {id:'norway',       name:'Norway',      flag:'🇳🇴', pts:'NOR'}] },
-  { id:'r32_5',  gId:'G77', teams: [{id:'france',       name:'France',      flag:'🇫🇷', pts:'FRA'}, {id:'sweden',       name:'Sweden',      flag:'🇸🇪', pts:'SWE'}] },
-  { id:'r32_6',  gId:'G79', teams: [{id:'mexico',       name:'Mexico',      flag:'🇲🇽', pts:'MEX'}, {id:'ecuador',      name:'Ecuador',     flag:'🇪🇨', pts:'ECU'}] },
-  { id:'r32_7',  gId:'G80', teams: [{id:'england',      name:'England',     flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', pts:'ENG'}, {id:'dr-congo',    name:'DR Congo',    flag:'🇨🇩', pts:'COD'}] },
-  { id:'r32_8',  gId:'G82', teams: [{id:'belgium',      name:'Belgium',     flag:'🇧🇪', pts:'BEL'}, {id:'senegal',      name:'Senegal',     flag:'🇸🇳', pts:'SEN'}] },
-  { id:'r32_9',  gId:'G81', teams: [{id:'usa',          name:'USA',         flag:'🇺🇸', pts:'USA'}, {id:'bosnia',       name:'Bosnia',      flag:'🇧🇦', pts:'BIH'}] },
-  { id:'r32_10', gId:'G84', teams: [{id:'spain',        name:'Spain',       flag:'🇪🇸', pts:'ESP'}, {id:'austria',      name:'Austria',     flag:'🇦🇹', pts:'AUT'}] },
-  { id:'r32_11', gId:'G85', teams: [{id:'switzerland',  name:'Switzerland', flag:'🇨🇭', pts:'SUI'}, {id:'algeria',      name:'Algeria',     flag:'🇩🇿', pts:'ALG'}] },
-  { id:'r32_12', gId:'G83', teams: [{id:'portugal',     name:'Portugal',    flag:'🇵🇹', pts:'POR'}, {id:'croatia',      name:'Croatia',     flag:'🇭🇷', pts:'CRO'}] },
-  { id:'r32_13', gId:'G88', teams: [{id:'australia',    name:'Australia',   flag:'🇦🇺', pts:'AUS'}, {id:'egypt',        name:'Egypt',       flag:'🇪🇬', pts:'EGY'}] },
-  { id:'r32_14', gId:'G86', teams: [{id:'argentina',    name:'Argentina',   flag:'🇦🇷', pts:'ARG'}, {id:'cape-verde',   name:'Cape Verde',  flag:'🇨🇻', pts:'CPV'}] },
-  { id:'r32_15', gId:'G87', teams: [{id:'colombia',     name:'Colombia',    flag:'🇨🇴', pts:'COL'}, {id:'ghana',        name:'Ghana',       flag:'🇬🇭', pts:'GHA'}] },
-  { id:'r32_16', gId:'G78', teams: [{id:'japan',        name:'Japan',       flag:'🇯🇵', pts:'JPN'}, {id:'south-korea',  name:'South Korea', flag:'🇰🇷', pts:'KOR'}] },
+  // Left side of bracket (matches played Sun 28 Jun – Wed 1 Jul)
+  { id:'r32_1',  gId:'G73', teams: [{id:'south-africa', name:'S. Africa',   flag:'🇿🇦', pts:'RSA'}, {id:'canada',      name:'Canada',      flag:'🇨🇦', pts:'CAN'}] },
+  { id:'r32_2',  gId:'G74', teams: [{id:'germany',      name:'Germany',     flag:'🇩🇪', pts:'GER'}, {id:'paraguay',    name:'Paraguay',    flag:'🇵🇾', pts:'PAR'}] },
+  { id:'r32_3',  gId:'G75', teams: [{id:'netherlands',  name:'Netherlands', flag:'🇳🇱', pts:'NED'}, {id:'morocco',     name:'Morocco',     flag:'🇲🇦', pts:'MAR'}] },
+  { id:'r32_4',  gId:'G76', teams: [{id:'brazil',       name:'Brazil',      flag:'🇧🇷', pts:'BRA'}, {id:'japan',       name:'Japan',       flag:'🇯🇵', pts:'JPN'}] },
+  { id:'r32_5',  gId:'G77', teams: [{id:'france',       name:'France',      flag:'🇫🇷', pts:'FRA'}, {id:'sweden',      name:'Sweden',      flag:'🇸🇪', pts:'SWE'}] },
+  { id:'r32_6',  gId:'G78', teams: [{id:'ivory-coast',  name:'Ivory Coast', flag:'🇨🇮', pts:'CIV'}, {id:'norway',      name:'Norway',      flag:'🇳🇴', pts:'NOR'}] },
+  { id:'r32_7',  gId:'G79', teams: [{id:'mexico',       name:'Mexico',      flag:'🇲🇽', pts:'MEX'}, {id:'ecuador',     name:'Ecuador',     flag:'🇪🇨', pts:'ECU'}] },
+  { id:'r32_8',  gId:'G80', teams: [{id:'england',      name:'England',     flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', pts:'ENG'}, {id:'dr-congo',   name:'DR Congo',    flag:'🇨🇩', pts:'COD'}] },
+  // Right side of bracket (matches played Wed 1 Jul – Fri 3 Jul)
+  { id:'r32_9',  gId:'G81', teams: [{id:'usa',          name:'USA',         flag:'🇺🇸', pts:'USA'}, {id:'bosnia',      name:'Bosnia',      flag:'🇧🇦', pts:'BIH'}] },
+  { id:'r32_10', gId:'G82', teams: [{id:'belgium',      name:'Belgium',     flag:'🇧🇪', pts:'BEL'}, {id:'senegal',     name:'Senegal',     flag:'🇸🇳', pts:'SEN'}] },
+  { id:'r32_11', gId:'G83', teams: [{id:'portugal',     name:'Portugal',    flag:'🇵🇹', pts:'POR'}, {id:'croatia',     name:'Croatia',     flag:'🇭🇷', pts:'CRO'}] },
+  { id:'r32_12', gId:'G84', teams: [{id:'spain',        name:'Spain',       flag:'🇪🇸', pts:'ESP'}, {id:'austria',     name:'Austria',     flag:'🇦🇹', pts:'AUT'}] },
+  { id:'r32_13', gId:'G85', teams: [{id:'switzerland',  name:'Switzerland', flag:'🇨🇭', pts:'SUI'}, {id:'algeria',     name:'Algeria',     flag:'🇩🇿', pts:'ALG'}] },
+  { id:'r32_14', gId:'G86', teams: [{id:'argentina',    name:'Argentina',   flag:'🇦🇷', pts:'ARG'}, {id:'cape-verde',  name:'Cape Verde',  flag:'🇨🇻', pts:'CPV'}] },
+  { id:'r32_15', gId:'G87', teams: [{id:'colombia',     name:'Colombia',    flag:'🇨🇴', pts:'COL'}, {id:'ghana',       name:'Ghana',       flag:'🇬🇭', pts:'GHA'}] },
+  { id:'r32_16', gId:'G88', teams: [{id:'australia',    name:'Australia',   flag:'🇦🇺', pts:'AUS'}, {id:'egypt',       name:'Egypt',       flag:'🇪🇬', pts:'EGY'}] },
 ];
 
 // ── RESULTS (pre-seeded from plaintextsports, refreshed on load) ─────────────
 // winner: 0 = team[0] won, 1 = team[1] won, null = not played
 // scoreA / scoreB = goals (string, e.g. "1" or "1 3p" for pens)
 let results = {
-  'r32_1':  { winner: 1, scoreA: '0', scoreB: '1',       note: '' },      // RSA 0-1 CAN
-  'r32_2':  { winner: 0, scoreA: '1', scoreB: '1',       note: 'Pen' },   // GER 1-1p PAR (GER win pens)
-  'r32_3':  { winner: 1, scoreA: '1', scoreB: '1',       note: 'Pen' },   // NED 1-1p MAR (MAR win pens)
-  'r32_4':  { winner: null, scoreA: null, scoreB: null,  note: '' },      // CIV v NOR – 1pm Tue
-  'r32_5':  { winner: null, scoreA: null, scoreB: null,  note: '' },      // FRA v SWE – 5pm Tue
-  'r32_6':  { winner: null, scoreA: null, scoreB: null,  note: '' },      // MEX v ECU – 9pm Tue
-  'r32_7':  { winner: null, scoreA: null, scoreB: null,  note: '' },      // ENG v COD – Wed
-  'r32_8':  { winner: null, scoreA: null, scoreB: null,  note: '' },      // BEL v SEN – Wed
-  'r32_9':  { winner: null, scoreA: null, scoreB: null,  note: '' },      // USA v BIH – Wed
-  'r32_10': { winner: null, scoreA: null, scoreB: null,  note: '' },      // ESP v AUT – Thu
-  'r32_11': { winner: null, scoreA: null, scoreB: null,  note: '' },      // SUI v ALG – Thu
-  'r32_12': { winner: null, scoreA: null, scoreB: null,  note: '' },      // POR v CRO – Thu
-  'r32_13': { winner: null, scoreA: null, scoreB: null,  note: '' },      // AUS v EGY – Fri
-  'r32_14': { winner: null, scoreA: null, scoreB: null,  note: '' },      // ARG v CPV – Fri
-  'r32_15': { winner: null, scoreA: null, scoreB: null,  note: '' },      // COL v GHA – Fri
-  'r32_16': { winner: null, scoreA: null, scoreB: null,  note: '' },      // JPN v KOR – not yet confirmed
+  'r32_1':  { winner: 1, scoreA: '0', scoreB: '1',      note: '' },     // G73: RSA 0-1 CAN
+  'r32_2':  { winner: 0, scoreA: '1', scoreB: '1',      note: 'Pen' },  // G74: GER 1-1 PAR (GER win pens)
+  'r32_3':  { winner: 1, scoreA: '1', scoreB: '1',      note: 'Pen' },  // G75: NED 1-1 MAR (MAR win pens)
+  'r32_4':  { winner: 0, scoreA: '2', scoreB: '1',      note: '' },     // G76: BRA 2-1 JPN
+  'r32_5':  { winner: null, scoreA: null, scoreB: null, note: '' },     // G77: FRA v SWE – Tue 5pm
+  'r32_6':  { winner: null, scoreA: null, scoreB: null, note: '' },     // G78: CIV v NOR – Tue 1pm
+  'r32_7':  { winner: null, scoreA: null, scoreB: null, note: '' },     // G79: MEX v ECU – Tue 9pm
+  'r32_8':  { winner: null, scoreA: null, scoreB: null, note: '' },     // G80: ENG v COD – Wed 12pm
+  'r32_9':  { winner: null, scoreA: null, scoreB: null, note: '' },     // G81: USA v BIH – Wed 8pm
+  'r32_10': { winner: null, scoreA: null, scoreB: null, note: '' },     // G82: BEL v SEN – Wed 4pm
+  'r32_11': { winner: null, scoreA: null, scoreB: null, note: '' },     // G83: POR v CRO – Thu 7pm
+  'r32_12': { winner: null, scoreA: null, scoreB: null, note: '' },     // G84: ESP v AUT – Thu 3pm
+  'r32_13': { winner: null, scoreA: null, scoreB: null, note: '' },     // G85: SUI v ALG – Thu 11pm
+  'r32_14': { winner: null, scoreA: null, scoreB: null, note: '' },     // G86: ARG v CPV – Fri 6pm
+  'r32_15': { winner: null, scoreA: null, scoreB: null, note: '' },     // G87: COL v GHA – Fri 9:30pm
+  'r32_16': { winner: null, scoreA: null, scoreB: null, note: '' },     // G88: AUS v EGY – Fri 2pm
 };
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
