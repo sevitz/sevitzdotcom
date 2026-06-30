@@ -635,7 +635,7 @@ function exportBracket() {
 
   const W = 780, PAD = 28;
   const ROW_H = 33, GAP = 7, MATCH_GAP = 14;
-  const headerH = 148;
+  const headerH = 172;  // extra room for datetime + surviving line
   const leftMatches = 8;
   const bracketH = leftMatches * (2 * ROW_H + GAP) + (leftMatches - 1) * MATCH_GAP;
   const listLineH = 18;
@@ -664,7 +664,13 @@ function exportBracket() {
   ctx.fillStyle = '#0a0f1e';
   ctx.fillRect(0,0,W,totalH);
 
-  // header
+  // ── header ──
+  const now = new Date();
+  const dateStr = now.toLocaleDateString(undefined, { weekday:'short', day:'numeric', month:'short', year:'numeric' });
+  const timeStr = now.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+  const survColor = sc.surviving===sc.startTotal ? '#22c55e' : sc.surviving===0 ? '#ef4444'
+                  : survPct > 66 ? '#22c55e' : survPct > 33 ? '#f5c518' : '#ef4444';
+
   ctx.textAlign = 'center';
   ctx.fillStyle = '#fff';
   ctx.font = 'bold 19px system-ui';
@@ -673,10 +679,35 @@ function exportBracket() {
   ctx.font = 'bold 14px system-ui';
   ctx.fillText(possessive + ' Connection Bracket', W/2, 52);
 
-  // quick stats strip
+  // datetime + surviving points line
+  ctx.fillStyle = '#3a4460';
+  ctx.fillRect(PAD, 62, W-PAD*2, 1);
+
+  // left: datetime
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#4a5468';
+  ctx.font = '10px system-ui';
+  ctx.fillText('🕐 ' + dateStr + ' at ' + timeStr, PAD, 78);
+
+  // right: points surviving
+  ctx.textAlign = 'right';
+  if (sc.startTotal > 0) {
+    ctx.fillStyle = survColor;
+    ctx.font = 'bold 10px system-ui';
+    ctx.fillText('⚽ ' + sc.surviving + ' / ' + sc.startTotal + ' pts surviving (' + survPct + '%)', W-PAD, 78);
+  } else {
+    ctx.fillStyle = '#3a4460';
+    ctx.font = '10px system-ui';
+    ctx.fillText('No teams tagged yet', W-PAD, 78);
+  }
+
+  ctx.fillStyle = '#3a4460';
+  ctx.fillRect(PAD, 88, W-PAD*2, 1);
+
+  // quick stats strip  (shifted down by 24px to make room)
   const strip = [
     { label:'Starting Pts', value: sc.startTotal, color:'#f5c518' },
-    { label:'Still Alive',  value: sc.surviving,  color: sc.surviving===sc.startTotal ? '#22c55e' : sc.surviving===0 ? '#ef4444' : '#f5c518' },
+    { label:'Still Alive',  value: sc.surviving,  color: survColor },
     { label:'🏠 Lived In',  value: sc.lived,       color:'#f5c518' },
     { label:'✈️ Visited',   value: sc.visited,     color:'#3b9eff' },
   ];
@@ -686,18 +717,18 @@ function exportBracket() {
     ctx.fillStyle = s.color;
     ctx.font = 'bold 22px system-ui';
     ctx.textAlign = 'center';
-    ctx.fillText(s.value, sx+sw/2, 84);
+    ctx.fillText(s.value, sx+sw/2, 114);
     ctx.fillStyle = '#4a5468';
     ctx.font = '9px system-ui';
-    ctx.fillText(s.label, sx+sw/2, 98);
+    ctx.fillText(s.label, sx+sw/2, 128);
   });
 
   // survival bar
-  const barY = 108, barH = 10, barW = W - PAD*2;
+  const barY = 136, barH = 10, barW = W - PAD*2;
   ctx.fillStyle = '#0f1626';
   rrect(PAD, barY, barW, barH, 5); ctx.fill();
   const fillW = sc.startTotal > 0 ? barW * sc.surviving / sc.startTotal : barW;
-  const barColor = survPct > 66 ? '#22c55e' : survPct > 33 ? '#f5c518' : '#ef4444';
+  const barColor = survColor;
   ctx.fillStyle = barColor;
   rrect(PAD, barY, Math.max(8, fillW), barH, 5); ctx.fill();
 
@@ -711,7 +742,7 @@ function exportBracket() {
   ctx.fillText(survPct + '% surviving', W-PAD, barY+barH+12);
 
   ctx.fillStyle = '#232b42';
-  ctx.fillRect(PAD, 138, W-PAD*2, 1);
+  ctx.fillRect(PAD, 162, W-PAD*2, 1);
 
   // bracket
   const colW = 318;
