@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Cup 2026 – My Connection Bracket</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #0a0f1e;
+    color: #e8eaf0;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  header {
+    text-align: center;
+    padding: 24px 0 16px;
+  }
+  header h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #fff;
+  }
+  header h1 span {
+    color: #f5c518;
+  }
+  .subtitle {
+    font-size: 0.85rem;
+    color: #8892a4;
+    margin-top: 4px;
+  }
+
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 16px 0 24px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: #b0bac8;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot-lived { background: #f5c518; }
+  .dot-visited { background: #3b9eff; }
+  .dot-none { background: #3a3f52; }
+
+  .scoreboard {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .score-block {
+    background: #151c30;
+    border: 1px solid #232b42;
+    border-radius: 10px;
+    padding: 12px 24px;
+    text-align: center;
+  }
+  .score-num {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #f5c518;
+    line-height: 1;
+  }
+  .score-label {
+    font-size: 0.72rem;
+    color: #6b7690;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+
+  .bracket-outer {
+    overflow-x: auto;
+    padding-bottom: 20px;
+  }
+
+  .bracket-wrap {
+    display: flex;
+    gap: 0;
+    min-width: 1100px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .round-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .round-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4a5468;
+    margin-bottom: 8px;
+    text-align: center;
+    width: 100%;
+    padding: 0 4px;
+  }
+
+  .match-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .team-slot {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #151c30;
+    border: 1px solid #232b42;
+    border-radius: 6px;
+    padding: 5px 8px;
+    margin: 2px 0;
+    cursor: pointer;
+    width: 148px;
+    transition: background 0.15s, border-color 0.15s;
+    position: relative;
+    user-select: none;
+  }
+  .team-slot:hover {
+    background: #1d2540;
+    border-color: #3a4460;
+  }
+  .team-slot.lived-in {
+    border-color: #f5c518;
+    background: #1e1a08;
+  }
+  .team-slot.visited {
+    border-color: #3b9eff;
+    background: #091828;
+  }
+  .team-slot.no-connection {
+    border-color: #232b42;
+    background: #151c30;
+    opacity: 0.6;
+  }
+
+  .team-flag {
+    font-size: 1.1rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .team-name {
+    font-size: 0.72rem;
+    font-weight: 600;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #d8e0ee;
+  }
+  .team-badge {
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+  .team-pts {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #f5c518;
+    flex-shrink: 0;
+    min-width: 14px;
+    text-align: right;
+  }
+
+  /* connector lines */
+  .connector {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 18px;
+    flex-shrink: 0;
+  }
+
+  .trophy {
+    text-align: center;
+    font-size: 2.8rem;
+    margin: 0 12px;
+    line-height: 1;
+  }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open {
+    display: flex;
+  }
+  .modal {
+    background: #151c30;
+    border: 1px solid #2e3a55;
+    border-radius: 14px;
+    padding: 20px 24px;
+    width: 260px;
+    text-align: center;
+  }
+  .modal h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .modal p {
+    font-size: 0.75rem;
+    color: #6b7690;
+    margin-bottom: 16px;
+  }
+  .modal-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .modal-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #2e3a55;
+    background: #0f1626;
+    color: #d8e0ee;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    width: 100%;
+  }
+  .modal-btn:hover { background: #1d2540; border-color: #3a4460; }
+  .modal-btn.active-lived { background: #2a2005; border-color: #f5c518; color: #f5c518; }
+  .modal-btn.active-visited { background: #061428; border-color: #3b9eff; color: #3b9eff; }
+  .modal-btn.active-none { background: #0f1626; border-color: #6b7690; color: #6b7690; }
+  .modal-cancel {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    color: #4a5468;
+    cursor: pointer;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    color: #4a5468;
+  }
+  .modal-cancel:hover { color: #8892a4; }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .action-btn {
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+  }
+  .btn-export {
+    background: #f5c518;
+    color: #0a0f1e;
+  }
+  .btn-export:hover { background: #ffd740; }
+  .btn-reset {
+    background: transparent;
+    border: 1px solid #2e3a55;
+    color: #6b7690;
+  }
+  .btn-reset:hover { background: #151c30; color: #b0bac8; }
+
+  .round32-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  /* export canvas hidden */
+  #export-canvas { display: none; }
+
+  @media (max-width: 700px) {
+    .bracket-wrap { min-width: 800px; }
+    .team-slot { width: 130px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>World Cup <span>2026</span> – My Connection Bracket</h1>
+  <p class="subtitle">Tap any team to mark your connection &middot; Points auto-tally below</p>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot dot-lived"></div> 🏠 Lived in &ndash; 3 pts</div>
+  <div class="legend-item"><div class="legend-dot dot-visited"></div> ✈️ Visited &ndash; 1 pt</div>
+  <div class="legend-item"><div class="legend-dot dot-none"></div> 💨 No connection &ndash; 0 pts</div>
+</div>
+
+<div class="scoreboard">
+  <div class="score-block">
+    <div class="score-num" id="total-pts">0</div>
+    <div class="score-label">Total Points</div>
+  </div>
+  <div class="score-block">
+    <div class="score-num" id="lived-count">0</div>
+    <div class="score-label">🏠 Lived In</div>
+  </div>
+  <div class="score-block">
+    <div class="score-num" id="visited-count">0</div>
+    <div class="score-label">✈️ Visited</div>
+  </div>
+  <div class="score-block">
+    <div class="score-num" id="tagged-count">0</div>
+    <div class="score-label">Countries Tagged</div>
+  </div>
+</div>
+
+<div class="bracket-outer">
+  <div class="bracket-wrap" id="bracket-wrap">
+    <!-- rendered by JS -->
+  </div>
+</div>
+
+<div class="actions">
+  <button class="action-btn btn-export" onclick="exportBracket()">📥 Export Bracket Image</button>
+  <button class="action-btn btn-reset" onclick="resetAll()">Reset All</button>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <h3 id="modal-flag-name">🏳️ Country</h3>
+    <p>What's your connection?</p>
+    <div class="modal-btns">
+      <button class="modal-btn" id="btn-lived" onclick="setConnection('lived')">🏠 Lived In &nbsp;<small style="opacity:0.6">(3 pts)</small></button>
+      <button class="modal-btn" id="btn-visited" onclick="setConnection('visited')">✈️ Visited &nbsp;<small style="opacity:0.6">(1 pt)</small></button>
+      <button class="modal-btn" id="btn-none" onclick="setConnection('none')">💨 No Connection &nbsp;<small style="opacity:0.6">(0 pts)</small></button>
+    </div>
+    <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<canvas id="export-canvas"></canvas>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const ROUND32 = [
+  // Match 73
+  { id:'r32_1',  teams: [{id:'south-africa', name:'S. Africa', flag:'🇿🇦'}, {id:'canada', name:'Canada', flag:'🇨🇦'}] },
+  // Match 74
+  { id:'r32_2',  teams: [{id:'germany', name:'Germany', flag:'🇩🇪'}, {id:'paraguay', name:'Paraguay', flag:'🇵🇾'}] },
+  // Match 75
+  { id:'r32_3',  teams: [{id:'netherlands', name:'Netherlands', flag:'🇳🇱'}, {id:'morocco', name:'Morocco', flag:'🇲🇦'}] },
+  // Match 76
+  { id:'r32_4',  teams: [{id:'ivory-coast', name:'Ivory Coast', flag:'🇨🇮'}, {id:'norway', name:'Norway', flag:'🇳🇴'}] },
+  // Match 77
+  { id:'r32_5',  teams: [{id:'france', name:'France', flag:'🇫🇷'}, {id:'sweden', name:'Sweden', flag:'🇸🇪'}] },
+  // Match 78
+  { id:'r32_6',  teams: [{id:'mexico', name:'Mexico', flag:'🇲🇽'}, {id:'ecuador', name:'Ecuador', flag:'🇪🇨'}] },
+  // Match 79
+  { id:'r32_7',  teams: [{id:'england', name:'England', flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'}, {id:'dr-congo', name:'DR Congo', flag:'🇨🇩'}] },
+  // Match 80
+  { id:'r32_8',  teams: [{id:'belgium', name:'Belgium', flag:'🇧🇪'}, {id:'senegal', name:'Senegal', flag:'🇸🇳'}] },
+  // Match 81
+  { id:'r32_9',  teams: [{id:'usa', name:'USA', flag:'🇺🇸'}, {id:'bosnia', name:'Bosnia', flag:'🇧🇦'}] },
+  // Match 82
+  { id:'r32_10', teams: [{id:'spain', name:'Spain', flag:'🇪🇸'}, {id:'austria', name:'Austria', flag:'🇦🇹'}] },
+  // Match 83
+  { id:'r32_11', teams: [{id:'switzerland', name:'Switzerland', flag:'🇨🇭'}, {id:'algeria', name:'Algeria', flag:'🇩🇿'}] },
+  // Match 84
+  { id:'r32_12', teams: [{id:'portugal', name:'Portugal', flag:'🇵🇹'}, {id:'croatia', name:'Croatia', flag:'🇭🇷'}] },
+  // Match 85
+  { id:'r32_13', teams: [{id:'australia', name:'Australia', flag:'🇦🇺'}, {id:'egypt', name:'Egypt', flag:'🇪🇬'}] },
+  // Match 86
+  { id:'r32_14', teams: [{id:'argentina', name:'Argentina', flag:'🇦🇷'}, {id:'cape-verde', name:'Cape Verde', flag:'🇨🇻'}] },
+  // Match 87
+  { id:'r32_15', teams: [{id:'colombia', name:'Colombia', flag:'🇨🇴'}, {id:'ghana', name:'Ghana', flag:'🇬🇭'}] },
+  // Match 88
+  { id:'r32_16', teams: [{id:'japan', name:'Japan', flag:'🇯🇵'}, {id:'south-korea', name:'South Korea', flag:'🇰🇷'}] },
+];
+
+// state: teamId -> 'none' | 'visited' | 'lived'
+let connections = {};
+try {
+  const saved = localStorage.getItem('wc2026_connections');
+  if (saved) connections = JSON.parse(saved);
+} catch(e) {}
+
+let activeTeamId = null;
+
+function save() {
+  try { localStorage.setItem('wc2026_connections', JSON.stringify(connections)); } catch(e) {}
+}
+
+function getState(teamId) {
+  return connections[teamId] || 'unset';
+}
+
+function pts(teamId) {
+  const s = getState(teamId);
+  if (s === 'lived') return 3;
+  if (s === 'visited') return 1;
+  return 0;
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render() {
+  const wrap = document.getElementById('bracket-wrap');
+
+  // Build bracket HTML
+  // Left half: matches 1-8, Right half: matches 9-16
+  const left = ROUND32.slice(0, 8);
+  const right = ROUND32.slice(8, 16);
+
+  wrap.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:0;align-items:flex-end;">
+      <div class="round-label" style="width:148px;">Round of 32</div>
+      ${left.map(m => matchHTML(m)).join('<div style="height:10px"></div>')}
+    </div>
+    <div style="width:24px;"></div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:18px;">
+      <div style="font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#4a5468;margin-bottom:6px;">R16 – QF – SF – Final</div>
+      <div class="trophy">🏆</div>
+      <div style="font-size:0.65rem;color:#4a5468;margin-top:6px;text-align:center;">Bracket<br>TBD</div>
+    </div>
+    <div style="width:24px;"></div>
+    <div style="display:flex;flex-direction:column;gap:0;align-items:flex-start;">
+      <div class="round-label" style="width:148px;">Round of 32</div>
+      ${right.map(m => matchHTML(m)).join('<div style="height:10px"></div>')}
+    </div>
+  `;
+
+  updateScore();
+}
+
+function matchHTML(match) {
+  return `
+    <div style="display:flex;flex-direction:column;">
+      ${match.teams.map(t => teamHTML(t)).join('')}
+    </div>
+  `;
+}
+
+function teamHTML(team) {
+  const state = getState(team.id);
+  let cls = '';
+  let badge = '';
+  let ptsStr = '';
+  if (state === 'lived') { cls = 'lived-in'; badge = '🏠'; ptsStr = '3'; }
+  else if (state === 'visited') { cls = 'visited'; badge = '✈️'; ptsStr = '1'; }
+  else if (state === 'none') { cls = 'no-connection'; badge = '💨'; ptsStr = ''; }
+
+  return `<div class="team-slot ${cls}" onclick="openModal('${team.id}','${team.flag} ${team.name}')">
+    <span class="team-flag">${team.flag}</span>
+    <span class="team-name">${team.name}</span>
+    <span class="team-badge">${badge}</span>
+    <span class="team-pts">${ptsStr}</span>
+  </div>`;
+}
+
+function updateScore() {
+  const allTeams = ROUND32.flatMap(m => m.teams);
+  let total = 0, lived = 0, visited = 0, tagged = 0;
+  allTeams.forEach(t => {
+    const s = getState(t.id);
+    if (s === 'lived') { total += 3; lived++; tagged++; }
+    else if (s === 'visited') { total += 1; visited++; tagged++; }
+    else if (s === 'none') { tagged++; }
+  });
+  document.getElementById('total-pts').textContent = total;
+  document.getElementById('lived-count').textContent = lived;
+  document.getElementById('visited-count').textContent = visited;
+  document.getElementById('tagged-count').textContent = tagged;
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────────────
+function openModal(teamId, displayName) {
+  activeTeamId = teamId;
+  document.getElementById('modal-flag-name').textContent = displayName;
+  const state = getState(teamId);
+  document.getElementById('btn-lived').className = 'modal-btn' + (state === 'lived' ? ' active-lived' : '');
+  document.getElementById('btn-visited').className = 'modal-btn' + (state === 'visited' ? ' active-visited' : '');
+  document.getElementById('btn-none').className = 'modal-btn' + (state === 'none' ? ' active-none' : '');
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal-overlay')) {
+    document.getElementById('modal-overlay').classList.remove('open');
+    activeTeamId = null;
+  }
+}
+
+function setConnection(type) {
+  if (!activeTeamId) return;
+  connections[activeTeamId] = type;
+  save();
+  document.getElementById('modal-overlay').classList.remove('open');
+  activeTeamId = null;
+  render();
+}
+
+function resetAll() {
+  if (!confirm('Reset all your connection tags?')) return;
+  connections = {};
+  save();
+  render();
+}
+
+// ── EXPORT ────────────────────────────────────────────────────────────────────
+function exportBracket() {
+  const allTeams = ROUND32.flatMap(m => m.teams);
+  const W = 720, PAD = 32;
+  const ROW_H = 36, GAP = 10, MATCH_GAP = 18;
+  const headerH = 120;
+
+  // compute total height
+  const leftMatches = 8;
+  const totalH = headerH + leftMatches * (2 * ROW_H + GAP) + (leftMatches - 1) * MATCH_GAP + PAD;
+
+  const canvas = document.getElementById('export-canvas');
+  canvas.width = W;
+  canvas.height = totalH;
+  const ctx = canvas.getContext('2d');
+
+  // background
+  ctx.fillStyle = '#0a0f1e';
+  ctx.fillRect(0, 0, W, totalH);
+
+  // header
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 22px system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText('⚽ World Cup 2026 – My Connection Bracket', W / 2, 40);
+
+  // score
+  let total = 0, lived = 0, visited = 0;
+  allTeams.forEach(t => {
+    const s = getState(t.id);
+    if (s === 'lived') { total += 3; lived++; }
+    else if (s === 'visited') { total += 1; visited++; }
+  });
+
+  ctx.fillStyle = '#f5c518';
+  ctx.font = 'bold 18px system-ui';
+  ctx.fillText(`Total: ${total} pts`, W / 2, 68);
+  ctx.fillStyle = '#8892a4';
+  ctx.font = '13px system-ui';
+  ctx.fillText(`🏠 Lived in: ${lived}   ✈️ Visited: ${visited}`, W / 2, 90);
+  ctx.fillStyle = '#232b42';
+  ctx.fillRect(PAD, 104, W - PAD * 2, 1);
+
+  // draw matches
+  const colW = 300;
+  const leftX = PAD;
+  const rightX = W - PAD - colW;
+  let y = headerH;
+
+  function drawTeam(team, x, ty) {
+    const state = getState(team.id);
+    // bg
+    let bg = '#151c30', border = '#232b42';
+    if (state === 'lived') { bg = '#1e1a08'; border = '#f5c518'; }
+    else if (state === 'visited') { bg = '#091828'; border = '#3b9eff'; }
+    else if (state === 'none') { bg = '#151c30'; border = '#232b42'; ctx.globalAlpha = 0.6; }
+
+    ctx.globalAlpha = state === 'none' ? 0.6 : 1;
+    ctx.fillStyle = bg;
+    roundRect(ctx, x, ty, colW, ROW_H, 6);
+    ctx.fill();
+    ctx.strokeStyle = border;
+    ctx.lineWidth = state === 'lived' || state === 'visited' ? 1.5 : 1;
+    roundRect(ctx, x, ty, colW, ROW_H, 6);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    // flag + name
+    ctx.font = '16px system-ui';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#d8e0ee';
+    ctx.fillText(team.flag, x + 8, ty + ROW_H / 2 + 5);
+    ctx.font = '600 12px system-ui';
+    ctx.fillStyle = state === 'none' ? '#6b7690' : '#d8e0ee';
+    ctx.fillText(team.name, x + 32, ty + ROW_H / 2 + 4);
+
+    // badge + pts
+    let badge = '', ptsLabel = '';
+    if (state === 'lived') { badge = '🏠'; ptsLabel = '3'; }
+    else if (state === 'visited') { badge = '✈️'; ptsLabel = '1'; }
+    else if (state === 'none') { badge = '💨'; }
+
+    ctx.font = '14px system-ui';
+    ctx.textAlign = 'right';
+    ctx.fillText(badge, x + colW - 28, ty + ROW_H / 2 + 5);
+
+    if (ptsLabel) {
+      ctx.fillStyle = '#f5c518';
+      ctx.font = 'bold 11px system-ui';
+      ctx.fillText(ptsLabel, x + colW - 8, ty + ROW_H / 2 + 4);
+    }
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  }
+
+  // column headers
+  ctx.fillStyle = '#4a5468';
+  ctx.font = 'bold 10px system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText('ROUND OF 32', leftX + colW / 2, headerH - 6);
+  ctx.fillText('ROUND OF 32', rightX + colW / 2, headerH - 6);
+
+  // trophy
+  ctx.font = '28px system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText('🏆', W / 2, (totalH + headerH) / 2);
+
+  ROUND32.slice(0, 8).forEach((match, i) => {
+    const ty = y + i * (2 * ROW_H + GAP + MATCH_GAP);
+    drawTeam(match.teams[0], leftX, ty);
+    drawTeam(match.teams[1], leftX, ty + ROW_H + GAP);
+  });
+
+  ROUND32.slice(8, 16).forEach((match, i) => {
+    const ty = y + i * (2 * ROW_H + GAP + MATCH_GAP);
+    drawTeam(match.teams[0], rightX, ty);
+    drawTeam(match.teams[1], rightX, ty + ROW_H + GAP);
+  });
+
+  // footer
+  ctx.fillStyle = '#3a4460';
+  ctx.font = '10px system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText('🏠 Lived in = 3pts   ✈️ Visited = 1pt   💨 No connection = 0pts', W / 2, totalH - 10);
+
+  // download
+  const link = document.createElement('a');
+  link.download = 'wc2026_my_bracket.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
