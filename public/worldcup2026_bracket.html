@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>World Cup 2026 – Connection Bracket</title>
+<title>World Cup 2026 – Connection Bracket v3</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -197,6 +197,43 @@
   .btn-reset:hover { background: #151c30; color: #b0bac8; }
 
   #export-canvas { display: none; }
+
+  .version-chip {
+    display: inline-block; margin-top: 6px;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #3a4460; border: 1px solid #1e2840;
+    border-radius: 4px; padding: 2px 6px;
+  }
+
+  /* toast */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: #1d2a45; border: 1px solid #2e3a55; border-radius: 8px;
+    padding: 10px 18px; font-size: 0.8rem; font-weight: 600; color: #e8eaf0;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 200; white-space: nowrap;
+  }
+  .toast.show {
+    opacity: 1; transform: translateX(-50%) translateY(0);
+  }
+  .toast.success { border-color: #22c55e; color: #22c55e; }
+  .toast.error   { border-color: #ef4444; color: #ef4444; }
+
+  /* share/data button group */
+  .action-group-label {
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #3a4460; text-align: center; margin-top: 16px;
+  }
+  .actions-divider { width: 1px; background: #1e2840; margin: 0 4px; align-self: stretch; }
+  .btn-save-file  { background: transparent; border: 1px solid #2e3a55; color: #8892a4; }
+  .btn-save-file:hover { background: #151c30; color: #d8e0ee; }
+  .btn-load-file  { background: transparent; border: 1px solid #2e3a55; color: #8892a4; }
+  .btn-load-file:hover { background: #151c30; color: #d8e0ee; }
+  .btn-copy       { background: transparent; border: 1px solid #2e3a55; color: #8892a4; }
+  .btn-copy:hover { background: #151c30; color: #d8e0ee; }
+  .btn-paste      { background: transparent; border: 1px solid #2e3a55; color: #8892a4; }
+  .btn-paste:hover { background: #151c30; color: #d8e0ee; }
 </style>
 </head>
 <body>
@@ -204,6 +241,7 @@
 <header>
   <h1>World Cup <span class="gold">2026</span> &ndash; <span id="header-name">My</span> Connection Bracket</h1>
   <p class="subtitle">Tap any team to tag your connection &middot; Live results from plaintextsports.com</p>
+  <span class="version-chip">v3</span>
 </header>
 
 <div class="name-bar">
@@ -268,11 +306,24 @@
   &middot; <span id="last-fetched">loading...</span>
 </div>
 
+<div class="action-group-label">Image &amp; Results</div>
 <div class="actions">
-  <button class="action-btn btn-export" onclick="exportBracket()">📥 Export Image</button>
+  <button class="action-btn btn-export"  onclick="exportBracket()">📥 Export Image</button>
   <button class="action-btn btn-refresh" onclick="fetchResults()">🔄 Refresh Results</button>
-  <button class="action-btn btn-reset" onclick="resetAll()">Reset Tags</button>
+  <button class="action-btn btn-reset"   onclick="resetAll()">Reset Tags</button>
 </div>
+
+<div class="action-group-label" style="margin-top:14px;">Save &amp; Share Data</div>
+<div class="actions" style="margin-top:6px;">
+  <button class="action-btn btn-save-file" onclick="saveFile()">💾 Save File</button>
+  <button class="action-btn btn-load-file" onclick="document.getElementById('file-input').click()">📂 Load File</button>
+  <div class="actions-divider"></div>
+  <button class="action-btn btn-copy"  onclick="copyData()">📋 Copy Data</button>
+  <button class="action-btn btn-paste" onclick="pasteData()">📌 Paste &amp; Load</button>
+</div>
+<input type="file" id="file-input" accept=".json,.txt" style="display:none" onchange="loadFile(event)">
+
+<div class="toast" id="toast"></div>
 
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
   <div class="modal">
@@ -806,6 +857,87 @@ function exportBracket() {
   link.download = `wc2026_${safeName}_bracket.png`;
   link.href = canvas.toDataURL('image/png');
   link.click();
+}
+
+
+// ── SAVE / LOAD / SHARE ───────────────────────────────────────────────────────
+function buildDataPayload() {
+  const playerName = document.getElementById('player-name').value.trim();
+  return JSON.stringify({
+    version: 3,
+    name: playerName,
+    connections: connections,
+    saved: new Date().toISOString()
+  }, null, 2);
+}
+
+function applyPayload(raw) {
+  let data;
+  try { data = JSON.parse(raw); } catch(e) { showToast('Could not read that data – is it a valid bracket file?', 'error'); return; }
+  if (!data.connections) { showToast('No connection data found in file', 'error'); return; }
+  connections = data.connections;
+  save();
+  if (data.name) {
+    document.getElementById('player-name').value = data.name;
+    updateName();
+  }
+  render();
+  showToast('✅ Loaded ' + Object.keys(connections).length + ' tags for ' + (data.name || 'unknown'), 'success');
+}
+
+function saveFile() {
+  const payload = buildDataPayload();
+  const playerName = document.getElementById('player-name').value.trim() || 'bracket';
+  const safeName = playerName.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+  const blob = new Blob([payload], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'wc2026_' + safeName + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('💾 Saved as wc2026_' + safeName + '.json', 'success');
+}
+
+function loadFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => applyPayload(e.target.result);
+  reader.readAsText(file);
+  event.target.value = ''; // reset so same file can be re-loaded
+}
+
+async function copyData() {
+  const payload = buildDataPayload();
+  try {
+    await navigator.clipboard.writeText(payload);
+    showToast('📋 Copied to clipboard – paste anywhere to share', 'success');
+  } catch(e) {
+    // fallback: show in a prompt so user can manually copy
+    window.prompt('Copy this text (Ctrl+A then Ctrl+C):', payload);
+  }
+}
+
+async function pasteData() {
+  try {
+    const text = await navigator.clipboard.readText();
+    if (!text.trim()) { showToast('Clipboard is empty', 'error'); return; }
+    applyPayload(text);
+  } catch(e) {
+    // fallback: ask user to paste manually
+    const text = window.prompt('Paste your bracket data here:');
+    if (text) applyPayload(text);
+  }
+}
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + (type || '');
+  void t.offsetWidth; // force reflow
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 3000);
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
