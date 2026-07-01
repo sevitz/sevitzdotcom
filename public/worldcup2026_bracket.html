@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>World Cup 2026 – Connection Bracket v3</title>
+<title>World Cup 2026 – Connection Bracket v9</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -147,8 +147,8 @@
   .data-stamp {
     text-align: center; font-size: 0.68rem; color: #3a4460; margin-top: 10px;
   }
-  .data-stamp a { color: #3a4460; text-decoration: none; }
-  .data-stamp a:hover { color: #6b7690; }
+  .data-stamp a { color: #3b9eff; text-decoration: underline; text-underline-offset: 2px; }
+  .data-stamp a:hover { color: #7dc4ff; }
 
   /* modal */
   .modal-overlay {
@@ -240,8 +240,8 @@
 
 <header>
   <h1>World Cup <span class="gold">2026</span> &ndash; <span id="header-name">My</span> Connection Bracket</h1>
-  <p class="subtitle">Tap any team to tag your connection &middot; Live results from plaintextsports.com</p>
-  <span class="version-chip">v3</span>
+  <p class="subtitle">Tap any team to tag your connection &middot; Live results from <a href="https://plaintextsports.com/world-cup/2026/schedule" target="_blank" style="color:#3b9eff;text-underline-offset:2px;">plaintextsports.com</a></p>
+  <span class="version-chip">v9</span>
 </header>
 
 <div class="name-bar">
@@ -344,7 +344,7 @@
 // ── ROUND OF 32 FIXTURES ─────────────────────────────────────────────────────
 // matchId matches plaintextsports game numbers where known
 const ROUND32 = [
-  // Left side of bracket (matches played Sun 28 Jun – Wed 1 Jul)
+  // Left side of bracket — G73 (28 Jun) through G80 (1 Jul)
   { id:'r32_1',  gId:'G73', teams: [{id:'south-africa', name:'S. Africa',   flag:'🇿🇦', pts:'RSA'}, {id:'canada',      name:'Canada',      flag:'🇨🇦', pts:'CAN'}] },
   { id:'r32_2',  gId:'G74', teams: [{id:'germany',      name:'Germany',     flag:'🇩🇪', pts:'GER'}, {id:'paraguay',    name:'Paraguay',    flag:'🇵🇾', pts:'PAR'}] },
   { id:'r32_3',  gId:'G75', teams: [{id:'netherlands',  name:'Netherlands', flag:'🇳🇱', pts:'NED'}, {id:'morocco',     name:'Morocco',     flag:'🇲🇦', pts:'MAR'}] },
@@ -353,7 +353,7 @@ const ROUND32 = [
   { id:'r32_6',  gId:'G78', teams: [{id:'ivory-coast',  name:'Ivory Coast', flag:'🇨🇮', pts:'CIV'}, {id:'norway',      name:'Norway',      flag:'🇳🇴', pts:'NOR'}] },
   { id:'r32_7',  gId:'G79', teams: [{id:'mexico',       name:'Mexico',      flag:'🇲🇽', pts:'MEX'}, {id:'ecuador',     name:'Ecuador',     flag:'🇪🇨', pts:'ECU'}] },
   { id:'r32_8',  gId:'G80', teams: [{id:'england',      name:'England',     flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', pts:'ENG'}, {id:'dr-congo',   name:'DR Congo',    flag:'🇨🇩', pts:'COD'}] },
-  // Right side of bracket (matches played Wed 1 Jul – Fri 3 Jul)
+  // Right side of bracket — G81 (1 Jul) through G88 (3 Jul)
   { id:'r32_9',  gId:'G81', teams: [{id:'usa',          name:'USA',         flag:'🇺🇸', pts:'USA'}, {id:'bosnia',      name:'Bosnia',      flag:'🇧🇦', pts:'BIH'}] },
   { id:'r32_10', gId:'G82', teams: [{id:'belgium',      name:'Belgium',     flag:'🇧🇪', pts:'BEL'}, {id:'senegal',     name:'Senegal',     flag:'🇸🇳', pts:'SEN'}] },
   { id:'r32_11', gId:'G83', teams: [{id:'portugal',     name:'Portugal',    flag:'🇵🇹', pts:'POR'}, {id:'croatia',     name:'Croatia',     flag:'🇭🇷', pts:'CRO'}] },
@@ -368,22 +368,23 @@ const ROUND32 = [
 // winner: 0 = team[0] won, 1 = team[1] won, null = not played
 // scoreA / scoreB = goals (string, e.g. "1" or "1 3p" for pens)
 let results = {
-  'r32_1':  { winner: 1, scoreA: '0', scoreB: '1',      note: '' },     // G73: RSA 0-1 CAN
-  'r32_2':  { winner: 0, scoreA: '1', scoreB: '1',      note: 'Pen' },  // G74: GER 1-1 PAR (GER win pens)
-  'r32_3':  { winner: 1, scoreA: '1', scoreB: '1',      note: 'Pen' },  // G75: NED 1-1 MAR (MAR win pens)
-  'r32_4':  { winner: 0, scoreA: '2', scoreB: '1',      note: '' },     // G76: BRA 2-1 JPN
-  'r32_5':  { winner: null, scoreA: null, scoreB: null, note: '' },     // G77: FRA v SWE – Tue 5pm
-  'r32_6':  { winner: null, scoreA: null, scoreB: null, note: '' },     // G78: CIV v NOR – Tue 1pm
-  'r32_7':  { winner: null, scoreA: null, scoreB: null, note: '' },     // G79: MEX v ECU – Tue 9pm
-  'r32_8':  { winner: null, scoreA: null, scoreB: null, note: '' },     // G80: ENG v COD – Wed 12pm
-  'r32_9':  { winner: null, scoreA: null, scoreB: null, note: '' },     // G81: USA v BIH – Wed 8pm
-  'r32_10': { winner: null, scoreA: null, scoreB: null, note: '' },     // G82: BEL v SEN – Wed 4pm
-  'r32_11': { winner: null, scoreA: null, scoreB: null, note: '' },     // G83: POR v CRO – Thu 7pm
-  'r32_12': { winner: null, scoreA: null, scoreB: null, note: '' },     // G84: ESP v AUT – Thu 3pm
-  'r32_13': { winner: null, scoreA: null, scoreB: null, note: '' },     // G85: SUI v ALG – Thu 11pm
-  'r32_14': { winner: null, scoreA: null, scoreB: null, note: '' },     // G86: ARG v CPV – Fri 6pm
-  'r32_15': { winner: null, scoreA: null, scoreB: null, note: '' },     // G87: COL v GHA – Fri 9:30pm
-  'r32_16': { winner: null, scoreA: null, scoreB: null, note: '' },     // G88: AUS v EGY – Fri 2pm
+  // Baked-in from openfootball feed as of 1 Jul 2026. Live fetch updates these.
+  'r32_1':  { winner: 1, scoreA: '0', scoreB: '1', note: '' },      // G73: RSA 0-1 CAN
+  'r32_2':  { winner: 1, scoreA: '1', scoreB: '1', note: 'Pen' },   // G74: GER 1-1 PAR (PAR 4-3p)
+  'r32_3':  { winner: 1, scoreA: '1', scoreB: '1', note: 'Pen' },   // G75: NED 1-1 MAR (MAR 3-2p)
+  'r32_4':  { winner: 0, scoreA: '2', scoreB: '1', note: '' },      // G76: BRA 2-1 JPN
+  'r32_5':  { winner: 0, scoreA: '3', scoreB: '0', note: '' },      // G77: FRA 3-0 SWE
+  'r32_6':  { winner: 1, scoreA: '1', scoreB: '2', note: '' },      // G78: CIV 1-2 NOR
+  'r32_7':  { winner: 0, scoreA: '2', scoreB: '0', note: '' },      // G79: MEX 2-0 ECU
+  'r32_8':  { winner: null, scoreA: null, scoreB: null, note: '' }, // G80: ENG v COD – 1 Jul
+  'r32_9':  { winner: null, scoreA: null, scoreB: null, note: '' }, // G81: USA v BIH – 1 Jul
+  'r32_10': { winner: null, scoreA: null, scoreB: null, note: '' }, // G82: BEL v SEN – 1 Jul
+  'r32_11': { winner: null, scoreA: null, scoreB: null, note: '' }, // G83: POR v CRO – 2 Jul
+  'r32_12': { winner: null, scoreA: null, scoreB: null, note: '' }, // G84: ESP v AUT – 2 Jul
+  'r32_13': { winner: null, scoreA: null, scoreB: null, note: '' }, // G85: SUI v ALG – 2 Jul
+  'r32_14': { winner: null, scoreA: null, scoreB: null, note: '' }, // G86: ARG v CPV – 3 Jul
+  'r32_15': { winner: null, scoreA: null, scoreB: null, note: '' }, // G87: COL v GHA – 3 Jul
+  'r32_16': { winner: null, scoreA: null, scoreB: null, note: '' }, // G88: AUS v EGY – 3 Jul
 };
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
@@ -409,65 +410,137 @@ function updateName() {
 }
 
 // ── FETCH + PARSE RESULTS ─────────────────────────────────────────────────────
+
+// Normalise team names from the JSON feed to match our fixture ids.
+// Keys are lowercase versions of what openfootball uses.
+const NAME_TO_ID = {
+  'south africa':        'south-africa',
+  'canada':              'canada',
+  'germany':             'germany',
+  'paraguay':            'paraguay',
+  'netherlands':         'netherlands',
+  'morocco':             'morocco',
+  'brazil':              'brazil',
+  'japan':               'japan',
+  'france':              'france',
+  'sweden':              'sweden',
+  'ivory coast':         'ivory-coast',
+  'norway':              'norway',
+  'mexico':              'mexico',
+  'ecuador':             'ecuador',
+  'england':             'england',
+  'dr congo':            'dr-congo',
+  'dr. congo':           'dr-congo',
+  'congo dr':            'dr-congo',
+  'usa':                 'usa',
+  'united states':       'usa',
+  'bosnia & herzegovina':'bosnia',
+  'bosnia and herzegovina':'bosnia',
+  'belgium':             'belgium',
+  'senegal':             'senegal',
+  'portugal':            'portugal',
+  'croatia':             'croatia',
+  'spain':               'spain',
+  'austria':             'austria',
+  'switzerland':         'switzerland',
+  'algeria':             'algeria',
+  'argentina':           'argentina',
+  'cape verde':          'cape-verde',
+  'colombia':            'colombia',
+  'ghana':               'ghana',
+  'australia':           'australia',
+  'egypt':               'egypt',
+};
+
+function teamNameToId(name) {
+  return NAME_TO_ID[name.toLowerCase().trim()] || null;
+}
+
 async function fetchResults() {
   document.getElementById('last-fetched').textContent = 'fetching...';
   try {
-    const res = await fetch('https://plaintextsports.com/world-cup/2026/schedule');
-    const html = await res.text();
-    parseResults(html);
+    const res = await fetch('https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    parseResultsJSON(data);
     lastFetched = new Date();
     document.getElementById('last-fetched').textContent =
       'Updated ' + lastFetched.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
   } catch(e) {
-    document.getElementById('last-fetched').textContent = 'Could not fetch – using cached results';
+    document.getElementById('last-fetched').textContent = 'Could not fetch live data – using baked-in results';
+    console.warn('fetchResults error:', e);
   }
   render();
 }
 
-function parseResults(html) {
-  // Parse Round of 32 results from the plaintext HTML.
-  // Lines look like: G73: South Africa v Canada [0-1]
-  // or: G74: Germany v Paraguay [1-1/Pen]
-  // We also look for the bracket summary at the top: "GER 1 3p" etc.
-
-  // Map pts abbreviation -> match id
-  const ptsToMatch = {};
+function parseResultsJSON(data) {
+  // Build a lookup: teamId -> list of match ids they appear in
+  const teamToMatches = {};
   ROUND32.forEach(m => {
-    ptsToMatch[m.teams[0].pts] = { matchId: m.id, teamIdx: 0 };
-    ptsToMatch[m.teams[1].pts] = { matchId: m.id, teamIdx: 1 };
+    m.teams.forEach((t, idx) => {
+      if (!teamToMatches[t.id]) teamToMatches[t.id] = [];
+      teamToMatches[t.id].push({ matchId: m.id, teamIdx: idx });
+    });
   });
 
-  // Parse the round-of-32 schedule lines: Gxx: Team A v Team B [score]
-  const scheduleRe = /G(7[3-9]|8[0-8]):\s*(.+?)\s+\[(\d+)-(\d+)(?:\/([^\]]+))?\]/g;
-  let m;
-  while ((m = scheduleRe.exec(html)) !== null) {
-    const gameNum = 'G' + m[1];
-    const scoreA = m[3], scoreB = m[4];
-    const note = m[5] || '';
-    // find which match this corresponds to
-    const match = ROUND32.find(r => r.gId === gameNum);
-    if (!match) continue;
-    let winner;
-    if (note.toLowerCase().includes('pen')) {
-      // need to find who won on pens from the bracket summary text
-      // look for pattern like "GER 1 3p" in the bracket ASCII
-      const code0 = match.teams[0].pts;
-      const code1 = match.teams[1].pts;
-      // bracket shows winner with score, e.g. "GER 1 3p" means GER won 3-1 on pens
-      // simplified: check if team0 code appears before team1 code with "3p" suffix nearby
-      const penWinRe0 = new RegExp(code0 + '\\s+\\d+\\s+3p', 'i');
-      const penWinRe1 = new RegExp(code1 + '\\s+\\d+\\s+3p', 'i');
-      if (penWinRe0.test(html)) winner = 0;
-      else if (penWinRe1.test(html)) winner = 1;
-      else winner = parseInt(scoreA) > parseInt(scoreB) ? 0 : 1; // fallback
-    } else {
-      winner = parseInt(scoreA) > parseInt(scoreB) ? 0 : (parseInt(scoreB) > parseInt(scoreA) ? 1 : null);
-    }
-    results[match.id] = { winner, scoreA, scoreB, note };
-  }
+  // Find Round of 32 (knockout) matches in the JSON.
+  // The feed uses "Round of 16" for what FIFA calls Round of 32 in a 48-team tournament,
+  // or may use "Round of 32". We match both, plus any round whose name contains "32" or "16"
+  // and which features two of our known R32 teams.
+  const knockoutRounds = ['round of 32', 'round of 16', 'last 32', 'last 16'];
 
-  // Also check for live/in-progress scores in the bracket portion (top of page)
-  // The bracket text at top has codes like "BRA 2" "PAR 1" etc. as current scores
+  (data.matches || []).forEach(match => {
+    const round = (match.round || '').toLowerCase();
+    const isKnockout = knockoutRounds.some(r => round.includes(r))
+                    || round.includes('round of');
+
+    // Also try matching by team names regardless of round label,
+    // since the feed may not have the knockout round named yet.
+    const id1 = teamNameToId(match.team1 || '');
+    const id2 = teamNameToId(match.team2 || '');
+    if (!id1 || !id2) return;
+
+    // Find the ROUND32 fixture that has both these teams
+    const fixture = ROUND32.find(f =>
+      (f.teams[0].id === id1 && f.teams[1].id === id2) ||
+      (f.teams[0].id === id2 && f.teams[1].id === id1)
+    );
+    if (!fixture) return;
+
+    // Only update if this match has a score
+    const score = match.score && match.score.ft;
+    if (!score) return;
+
+    const flipped = fixture.teams[0].id === id2; // team order is reversed vs fixture
+    let goalsA = flipped ? score[1] : score[0];
+    let goalsB = flipped ? score[0] : score[1];
+
+    // Check for penalties (score object may have a 'p' key or score may be in goals)
+    const penScore = match.score && match.score.p;
+    let note = '';
+    let winner;
+
+    if (penScore) {
+      // Penalties decided it
+      note = 'Pen';
+      const penA = flipped ? penScore[1] : penScore[0];
+      const penB = flipped ? penScore[0] : penScore[1];
+      winner = penA > penB ? 0 : 1;
+    } else if (goalsA !== goalsB) {
+      winner = goalsA > goalsB ? 0 : 1;
+    } else {
+      // Draw at 90 min, no pen recorded yet (in progress or ET)
+      winner = null;
+      note = 'AET?';
+    }
+
+    results[fixture.id] = {
+      winner,
+      scoreA: String(goalsA),
+      scoreB: String(goalsB),
+      note
+    };
+  });
 }
 
 // ── COMPUTE SCORES ────────────────────────────────────────────────────────────
@@ -897,7 +970,7 @@ function exportBracket() {
 function buildDataPayload() {
   const playerName = document.getElementById('player-name').value.trim();
   return JSON.stringify({
-    version: 3,
+    version: 9,
     name: playerName,
     connections: connections,
     saved: new Date().toISOString()
