@@ -1,0 +1,56 @@
+---
+import TextRotator from "./TextRotator.astro";
+import { site } from "../data/site";
+---
+
+<header id="home">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="menu-wrap">
+        <nav class="menu">
+          <div class="icon-list">
+            {site.nav.map((item) => (
+              <a href={item.href}><i class={`fa fa-fw ${item.icon}`}></i><span>{item.label}</span></a>
+            ))}
+          </div>
+        </nav>
+      </div>
+      <button class="menu-button" id="open-button"></button>
+    </div>
+  </div>
+
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-1 inner">
+          <h1 class="animated fadeInDown">
+            Adr<span style="color:#FFF8E3;">i</span>an<br />
+            <span style="color:#FFF8E3">Sev</span>itz
+          </h1>
+          <br />
+          <h3 class="animated fadeInUp delay-05s">
+            <TextRotator phrases={site.hero.taglinePhrases} />
+          </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3 text-center">
+          <a href="#about" class="scrollto animated fadeInUp delay-05s">
+            <p>SEE MORE</p>
+            <p class="scrollto--arrow"><img src="/img/scroll-down.png" alt="scroll down arrow" /></p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</header>
+
+<script>
+  const openButton = document.getElementById("open-button");
+  let isOpen = false;
+
+  openButton?.addEventListener("click", () => {
+    isOpen = !isOpen;
+    document.body.classList.toggle("show-menu", isOpen);
+  });
+</script>

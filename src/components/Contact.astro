@@ -1,0 +1,62 @@
+---
+import ContactForm from "./ContactForm.astro";
+import { site } from "../data/site";
+
+const { contact } = site;
+const mailto = `mailto:${encodeURIComponent(`Adrian Sevitz<${contact.email.address}>`)}?subject=${encodeURIComponent(contact.email.subject)}`;
+---
+
+<section class="text-center section-padding contact-wrap" id="contact">
+  <a href="#top" class="up-btn"><i class="fa fa-chevron-up"></i></a>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="arrow">Drop <span>me</span> a line</h1>
+      </div>
+    </div>
+    <div class="row contact-details">
+      <div class="col-md-5">
+        <a target="_blank" rel="noopener" href={contact.location.href}>
+          <div class="dark-box box-hover">
+            <h2><i class="fa fa-map-marker"></i><span>Location</span></h2>
+            <p><span class="aboxlink">{contact.location.label}&nbsp;{contact.location.flag}</span></p>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-5">
+        <a href={contact.phone.href}>
+          <div class="dark-box box-hover">
+            <h2><i class="fa fa-phone"></i><span>Phone</span></h2>
+            <p><span class="aboxlink">{contact.phone.label}</span></p>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-5">
+        <a target="_blank" rel="noopener" href={contact.linkedin.href}>
+          <div class="dark-box box-hover">
+            <h2><i class="fa fa-linkedin"></i><span>LinkedIn</span></h2>
+            <p><span class="aboxlink">{contact.linkedin.label}</span></p>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-5">
+        <a href={mailto}>
+          <div class="dark-box box-hover">
+            <h2><i class="fa fa-paper-plane"></i><span>Email</span></h2>
+            <p><span class="aboxlink">{contact.email.label}</span></p>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-5">
+        <a rel="nofollow noindex" href={contact.cv.href}>
+          <div class="dark-box box-hover">
+            <h2><i class="fa fa-file-pdf-o"></i><span>CV</span></h2>
+            <p><span class="aboxlink">{contact.cv.label}</span></p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <ContactForm />
+  </div>
+</section>

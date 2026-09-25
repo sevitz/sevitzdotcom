@@ -1,0 +1,16 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# environment
+.env
+.dev.vars
+
+# editor/OS cruft
+.DS_Store
+
+# wrangler
+.wrangler/

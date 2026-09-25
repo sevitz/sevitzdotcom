@@ -1,0 +1,83 @@
+---
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined;
+---
+
+<form id="contact-form" class="contact" method="POST" action="/api/contact">
+  <div class="row">
+    <div class="col-md-6">
+      <input type="text" name="name" class="form-control" placeholder="Your name" required />
+    </div>
+    <div class="col-md-6">
+      <input type="email" name="email" class="form-control" placeholder="Your email" required />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <textarea name="message" class="form-control" placeholder="Your message" required></textarea>
+    </div>
+  </div>
+
+  <!-- Honeypot: hidden from humans, bots tend to fill every field -->
+  <input
+    type="text"
+    name="company"
+    autocomplete="off"
+    tabindex="-1"
+    aria-hidden="true"
+    style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;"
+  />
+
+  {turnstileSiteKey && (
+    <div class="row">
+      <div class="col-md-12">
+        <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
+      </div>
+    </div>
+  )}
+
+  <div class="row">
+    <div class="col-md-12">
+      <button type="submit" class="btn-send">Send message</button>
+      <p class="contact-form-status" aria-live="polite"></p>
+    </div>
+  </div>
+</form>
+
+{turnstileSiteKey && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const status = form?.querySelector<HTMLParagraphElement>(".contact-form-status");
+  const submitButton = form?.querySelector<HTMLButtonElement>(".btn-send");
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!status || !submitButton) return;
+
+    submitButton.disabled = true;
+    status.dataset.state = "";
+    status.textContent = "Sending…";
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+      });
+      const data = (await response.json()) as { ok: boolean; error?: string };
+
+      if (data.ok) {
+        status.dataset.state = "success";
+        status.textContent = "Thanks — your message is on its way.";
+        form.reset();
+      } else {
+        status.dataset.state = "error";
+        status.textContent = data.error ?? "Something went wrong, please try again.";
+      }
+    } catch {
+      status.dataset.state = "error";
+      status.textContent = "Something went wrong, please try again.";
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+</script>

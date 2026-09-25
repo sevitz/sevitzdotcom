@@ -1,0 +1,3 @@
+# Block Folders
+User-agent: *
+Disallow: /CV/
