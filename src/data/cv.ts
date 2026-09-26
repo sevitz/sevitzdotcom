@@ -7,9 +7,12 @@ export const cv = {
   headline: "CTO | Technology, Product and Engineering Leader",
   updated: "2026",
 
+  // Phone and email are obscured on screen (click-to-reveal, mirroring
+  // Contact.astro) and only shown in the clear when the page is printed
+  // (see the beforeprint/afterprint handling in cv/index.astro).
   contact: {
-    email: { label: "adrian@sevitz.com", href: "mailto:adrian@sevitz.com" },
-    phone: { label: "+44 7770 570 058", href: "tel:+447770570058" },
+    email: { label: "adrian@sevitz.com", address: "adrian@sevitz.com", subject: "Re: your CV" },
+    phone: { label: "+44 7770 570 058" },
     location: "London, United Kingdom",
     linkedin: { label: "linkedin.com/in/sevitz", href: "https://www.linkedin.com/in/sevitz/" },
   },

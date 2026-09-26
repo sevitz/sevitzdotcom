@@ -3,6 +3,11 @@ export const prerender = true;
 
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { cv } from "../../data/cv";
+import { encode } from "../../lib/obfuscate";
+
+const [phoneA, phoneB] = encode(cv.contact.phone.label);
+const [emailLabelA, emailLabelB] = encode(cv.contact.email.label);
+const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
 ---
 
 <BaseLayout title={`${cv.name} - CV`}>
@@ -19,13 +24,28 @@ import { cv } from "../../data/cv";
         <h1>{cv.name}</h1>
         <p class="cv-headline">{cv.headline}</p>
         <p class="cv-contact">
-          <a href={cv.contact.email.href}>{cv.contact.email.label}</a>
+          <span
+            class="cv-field"
+            data-kind="mailto"
+            data-a={emailLabelA}
+            data-b={emailLabelB}
+            data-addr-a={emailAddrA}
+            data-addr-b={emailAddrB}
+            data-subject={cv.contact.email.subject}
+          >
+            <button type="button" class="cv-reveal">Tap to reveal</button>
+          </span>
           <span aria-hidden="true">&nbsp;|&nbsp;</span>
-          <a href={cv.contact.phone.href}>{cv.contact.phone.label}</a>
+          <span class="cv-field" data-kind="tel" data-a={phoneA} data-b={phoneB}>
+            <button type="button" class="cv-reveal">Tap to reveal</button>
+          </span>
           <span aria-hidden="true">&nbsp;|&nbsp;</span>
           <span>{cv.contact.location}</span>
           <span aria-hidden="true">&nbsp;|&nbsp;</span>
           <a href={cv.contact.linkedin.href} target="_blank" rel="noopener">{cv.contact.linkedin.label}</a>
+        </p>
+        <p class="cv-print-hint no-print">
+          Phone and email are hidden from scrapers on screen &mdash; tap to reveal, or they print in the clear on the PDF.
         </p>
       </header>
 
@@ -67,7 +87,80 @@ import { cv } from "../../data/cv";
   </div>
 </BaseLayout>
 
-<style>
+<script>
+  // Mirrors src/lib/obfuscate.ts's encode() in reverse. Duplicated here
+  // (rather than imported) since this runs client-side in the browser,
+  // not in the Node build step obfuscate.ts is meant for. Also mirrored
+  // in Contact.astro's client script for the same reason.
+  function decode(a: string, b: string): string {
+    const length = a.length + b.length;
+    let reversed = "";
+    for (let i = 0; i < length; i++) {
+      reversed += i % 2 === 0 ? a[Math.floor(i / 2)] : b[Math.floor(i / 2)];
+    }
+    const shifted = reversed.split("").reverse().join("");
+    return Array.from(shifted)
+      .map((ch) => String.fromCharCode(ch.charCodeAt(0) - 1))
+      .join("");
+  }
+
+  function buildRevealButton(): HTMLButtonElement {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "cv-reveal";
+    button.textContent = "Tap to reveal";
+    return button;
+  }
+
+  function attachClickHandler(field: HTMLElement, button: HTMLButtonElement) {
+    button.addEventListener("click", () => revealField(field, { permanent: true }), { once: true });
+  }
+
+  function revealField(field: HTMLElement, { permanent }: { permanent: boolean }) {
+    if (field.dataset.revealed === "true") return;
+
+    const value = decode(field.dataset.a ?? "", field.dataset.b ?? "");
+    const anchor = document.createElement("a");
+
+    if (field.dataset.kind === "tel") {
+      anchor.href = `tel:${value}`;
+    } else {
+      const address = decode(field.dataset.addrA ?? "", field.dataset.addrB ?? "");
+      const subject = field.dataset.subject ?? "";
+      anchor.href = `mailto:${encodeURIComponent(`Adrian Sevitz<${address}>`)}?subject=${encodeURIComponent(subject)}`;
+    }
+    anchor.textContent = value;
+
+    field.replaceChildren(anchor);
+    field.dataset.revealed = permanent ? "true" : "print";
+  }
+
+  // Only reverts a print-only reveal, never a value the visitor actually clicked to show.
+  function hideField(field: HTMLElement) {
+    if (field.dataset.revealed !== "print") return;
+
+    const button = buildRevealButton();
+    field.replaceChildren(button);
+    field.dataset.revealed = "false";
+    attachClickHandler(field, button);
+  }
+
+  const fields = Array.from(document.querySelectorAll<HTMLElement>(".cv-field"));
+
+  fields.forEach((field) => {
+    const button = field.querySelector<HTMLButtonElement>(".cv-reveal");
+    if (button) attachClickHandler(field, button);
+  });
+
+  window.addEventListener("beforeprint", () => {
+    fields.forEach((field) => revealField(field, { permanent: false }));
+  });
+  window.addEventListener("afterprint", () => {
+    fields.forEach((field) => hideField(field));
+  });
+</script>
+
+<style is:global>
   .cv-page {
     background: #f3f5f8;
     min-height: 100vh;
@@ -147,6 +240,34 @@ import { cv } from "../../data/cv";
   }
   .cv-contact a:hover {
     color: #e04343;
+  }
+  .cv-field {
+    display: inline;
+  }
+  .cv-field a {
+    color: #545454;
+    border-bottom: none;
+  }
+  .cv-field a:hover {
+    color: #e04343;
+  }
+  .cv-reveal {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: #e04343;
+    border-bottom: 1px dashed;
+    cursor: pointer;
+  }
+  .cv-reveal:hover {
+    color: #353535;
+  }
+  .cv-print-hint {
+    font-size: 11px;
+    color: #b7bcc1;
+    margin: 6px 0 0;
   }
 
   .cv-section {
