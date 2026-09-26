@@ -1,0 +1,256 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { cv } from "../../data/cv";
+---
+
+<BaseLayout title={`${cv.name} - CV`}>
+  <div class="cv-page">
+    <div class="cv-toolbar no-print">
+      <a href="/#top" class="cv-back"><i class="fa fa-arrow-left"></i> Back to site</a>
+      <button type="button" class="cv-download" onclick="window.print()">
+        <i class="fa fa-file-pdf-o"></i> Download as PDF
+      </button>
+    </div>
+
+    <main class="cv-sheet">
+      <header class="cv-header">
+        <h1>{cv.name}</h1>
+        <p class="cv-headline">{cv.headline}</p>
+        <p class="cv-contact">
+          <a href={cv.contact.email.href}>{cv.contact.email.label}</a>
+          <span aria-hidden="true">&nbsp;|&nbsp;</span>
+          <a href={cv.contact.phone.href}>{cv.contact.phone.label}</a>
+          <span aria-hidden="true">&nbsp;|&nbsp;</span>
+          <span>{cv.contact.location}</span>
+          <span aria-hidden="true">&nbsp;|&nbsp;</span>
+          <a href={cv.contact.linkedin.href} target="_blank" rel="noopener">{cv.contact.linkedin.label}</a>
+        </p>
+      </header>
+
+      <section class="cv-section">
+        {cv.summary.map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+
+      <section class="cv-section">
+        <h2>Experience</h2>
+        {cv.experience.map((job) => (
+          <article class="cv-job">
+            <h3>{job.company}</h3>
+            {job.roles.map((role) => (
+              <p class="cv-role">
+                <span class="cv-role-title">{role.title}</span>
+                <span class="cv-role-dates">{role.dates}</span>
+              </p>
+            ))}
+            {job.note && <p class="cv-note">{job.note}</p>}
+            <p class="cv-context">{job.context}</p>
+            <p>{job.intro}</p>
+            <ul>
+              {job.bullets.map((bullet) => <li>{bullet}</li>)}
+            </ul>
+          </article>
+        ))}
+      </section>
+
+      <section class="cv-section">
+        <h2>Earlier Career</h2>
+        {cv.earlierCareer.map((line) => <p>{line}</p>)}
+      </section>
+
+      <section class="cv-section">
+        <h2>Education</h2>
+        {cv.education.map((line) => <p>{line}</p>)}
+      </section>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .cv-page {
+    background: #f3f5f8;
+    min-height: 100vh;
+    padding: 30px 16px 60px;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  .cv-toolbar {
+    max-width: 800px;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .cv-back {
+    color: #545454;
+    border-bottom: none;
+    font-size: 14px;
+  }
+  .cv-back:hover {
+    color: #e04343;
+  }
+
+  .cv-download {
+    background: #e04343;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .cv-download:hover {
+    background: #c93636;
+  }
+
+  .cv-sheet {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 50px 60px;
+    box-shadow: 0 3px 0 0 #e04343;
+    color: #353535;
+  }
+
+  .cv-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .cv-header h1 {
+    font-size: 32px;
+    margin: 0 0 4px;
+    letter-spacing: 1px;
+    color: #353535;
+  }
+  .cv-headline {
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #e04343;
+    margin: 0 0 10px;
+  }
+  .cv-contact {
+    font-size: 13px;
+    color: #8c9398;
+    margin: 0;
+  }
+  .cv-contact a {
+    color: #545454;
+    border-bottom: none;
+  }
+  .cv-contact a:hover {
+    color: #e04343;
+  }
+
+  .cv-section {
+    margin-bottom: 26px;
+  }
+  .cv-section h2 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #353535;
+    border-bottom: 2px solid #e04343;
+    padding-bottom: 6px;
+    margin: 0 0 14px;
+  }
+  /* global.css puts a generic ::after rule under every h2; this page draws its own rule */
+  .cv-section h2::after {
+    content: none;
+  }
+  .cv-section p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #4a4a4a;
+    margin: 0 0 10px;
+  }
+  .cv-section ul {
+    margin: 8px 0 0;
+    padding-left: 18px;
+  }
+  .cv-section li {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #4a4a4a;
+    margin-bottom: 6px;
+  }
+
+  .cv-job {
+    margin-bottom: 22px;
+  }
+  .cv-job:last-child {
+    margin-bottom: 0;
+  }
+  .cv-job h3 {
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #353535;
+    margin: 0 0 4px;
+  }
+  .cv-role {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13.5px;
+    margin: 0 0 2px;
+  }
+  .cv-role-title {
+    font-weight: bold;
+    color: #353535;
+  }
+  .cv-role-dates {
+    color: #8c9398;
+    white-space: nowrap;
+    padding-left: 12px;
+  }
+  .cv-note {
+    font-size: 13px;
+    color: #8c9398;
+    margin: 0 0 6px;
+  }
+  .cv-context {
+    font-style: italic;
+    color: #8c9398;
+  }
+
+  @media (max-width: 700px) {
+    .cv-sheet {
+      padding: 30px 22px;
+    }
+    .cv-role {
+      flex-direction: column;
+    }
+    .cv-role-dates {
+      padding-left: 0;
+    }
+  }
+
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+    .cv-page {
+      background: #fff;
+      padding: 0;
+    }
+    .cv-sheet {
+      box-shadow: none;
+      max-width: none;
+      padding: 0;
+    }
+    a {
+      color: inherit !important;
+    }
+    /* bootstrap's print stylesheet appends "(href)" after every link; too noisy for a CV */
+    a[href]::after {
+      content: none !important;
+    }
+  }
+</style>

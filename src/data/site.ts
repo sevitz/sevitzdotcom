@@ -4,7 +4,7 @@ export const site = {
   nav: [
     { label: "Home", href: "#home", icon: "fa-home" },
     { label: "About", href: "#about", icon: "fa-quote-left" },
-    { label: "CV", href: "/CV/Adrian_Sevitz_CV_2023.pdf", icon: "fa-file-pdf-o" },
+    { label: "CV", href: "/cv/", icon: "fa-file-pdf-o" },
     { label: "Contact", href: "#contact", icon: "fa-envelope-o" },
   ],
 
@@ -38,6 +38,6 @@ export const site = {
       address: "adrian+website@sevitz.com",
       subject: "Connecting via your website",
     },
-    cv: { label: "Curriculum vitae", href: "/CV/Adrian_Sevitz_CV_2023.pdf" },
+    cv: { label: "Curriculum vitae", href: "/cv/" },
   },
 } as const;
