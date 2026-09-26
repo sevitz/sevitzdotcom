@@ -6,19 +6,17 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "wrangler pages dev ./dist",
+    "preview": "astro preview",
     "check": "astro check",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.6.0",
     "astro": "^5.9.0",
     "bootstrap": "^3.4.1",
     "font-awesome": "^4.7.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
-    "typescript": "^5.9.0",
-    "wrangler": "^4.20.0"
+    "typescript": "^5.9.0"
   }
 }

@@ -31,14 +31,16 @@ export const site = {
       flag: "\u{1F1EC}\u{1F1E7}",
       href: "https://www.google.com/maps/place/New+Malden/",
     },
-    phone: { label: "+44-7770-570-058", href: "tel:+44-7770-570-058" },
+    // Stubbed placeholders: real phone/email are intentionally kept out of the
+    // shipped page so they aren't scrapable. Pending a click-to-reveal build
+    // (see the plan doc) that serves the real values only on a real click.
+    phone: { label: "09990 999 999", href: "tel:09990999999" },
     linkedin: { label: "linkedin.com/in/sevitz", href: "https://www.linkedin.com/in/sevitz/" },
     email: {
-      label: "adrian@sevitz.com",
-      address: "adrian+website@sevitz.com",
+      label: "xxxx@yyy.com",
+      address: "xxxx@yyy.com",
       subject: "Connecting via your website",
     },
     cv: { label: "Curriculum vitae", href: "/CV/Adrian_Sevitz_CV_2023.pdf" },
-    recipient: "adrian@sevitz.com",
   },
 } as const;

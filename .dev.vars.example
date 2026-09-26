@@ -1,5 +1,0 @@
-# Copy to .dev.vars for local `wrangler pages dev` testing (gitignored).
-# In production these are set as Cloudflare Pages environment variables/secrets
-# in the dashboard, not committed here.
-RESEND_API_KEY=
-TURNSTILE_SECRET_KEY=

@@ -4,7 +4,7 @@ Personal portfolio site for Adrian Sevitz.
 
 Live site: https://sevitz.com
 
-Built with [Astro](https://astro.build), deployed on [Cloudflare Pages](https://pages.cloudflare.com). Originally based on a template from [themewagon.com](https://themewagon.com/themes/johndoe-free-one-page-portfolio-website-template/), later migrated off GitHub Pages.
+Built with [Astro](https://astro.build), deployed on [Cloudflare Pages](https://pages.cloudflare.com) as a static site. Originally based on a template from [themewagon.com](https://themewagon.com/themes/johndoe-free-one-page-portfolio-website-template/), later migrated off GitHub Pages.
 
 ## Development
 
@@ -12,23 +12,14 @@ Built with [Astro](https://astro.build), deployed on [Cloudflare Pages](https://
 npm install
 npm run dev       # local dev server
 npm run build     # production build to dist/
-npm run preview   # serve the build locally via wrangler (Cloudflare Pages runtime)
+npm run preview   # preview the build locally
 ```
 
-Site copy (bio, tagline, contact details, nav) lives in `src/data/site.ts` — edit that file for content changes rather than the components.
+Site copy (bio, tagline, contact details, nav) lives in `src/data/site.ts`. Edit that file for content changes rather than the components.
 
-## Contact form
+## Contact details
 
-`src/pages/api/contact.ts` is a Cloudflare Pages Function that verifies a Cloudflare Turnstile challenge and sends mail via [Resend](https://resend.com). It needs two secrets, set as Cloudflare Pages environment variables (Production and Preview) in the dashboard:
-
-- `RESEND_API_KEY`
-- `TURNSTILE_SECRET_KEY`
-
-And one public build-time variable for the Turnstile widget's site key:
-
-- `PUBLIC_TURNSTILE_SITE_KEY`
-
-Copy `.dev.vars.example` to `.dev.vars` (gitignored) to test locally with `npm run preview`. Without `RESEND_API_KEY` configured, the form fails gracefully with a message pointing at a direct email instead.
+Phone and email in `src/data/site.ts` are stubbed placeholders (`09990 999 999`, `xxxx@yyy.com`) rather than the real values, so they aren't sitting in the shipped page as plain, scrapable text. Location and LinkedIn are unstubbed since those aren't targeted by the same kind of scraping. Real contact details are planned to be served through a click-to-reveal mechanism instead; see the plan doc for the design.
 
 ## Deployment
 
