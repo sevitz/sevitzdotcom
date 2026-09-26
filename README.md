@@ -19,7 +19,7 @@ Site copy (bio, tagline, contact details, nav) lives in `src/data/site.ts`. Edit
 
 ## Contact details
 
-Phone and email in `src/data/site.ts` are stubbed placeholders (`09990 999 999`, `xxxx@yyy.com`) rather than the real values, so they aren't sitting in the shipped page as plain, scrapable text. Location and LinkedIn are unstubbed since those aren't targeted by the same kind of scraping. Real contact details are planned to be served through a click-to-reveal mechanism instead; see the plan doc for the design.
+Phone and email are real values in `src/data/site.ts`, but the Phone and Email boxes on the page don't show them until clicked. `src/lib/obfuscate.ts` scrambles each value at build time (shift, reverse, split into two parts) into what actually gets printed into the HTML; the real value never appears as a contiguous string in the shipped output. A click-handler in `Contact.astro` reverses the scramble in the browser and swaps the button for a real `mailto:`/`tel:` link. Not a security boundary, just enough to defeat the regex/HTML scrapers that harvest plain-text contact details. Location, LinkedIn, and CV are unstubbed since they aren't targeted the same way.
 
 ## Deployment
 

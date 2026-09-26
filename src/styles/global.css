@@ -130,6 +130,18 @@ p {
 	-moz-box-shadow: 0px 3px 0px 0px #FFE801;
 	box-shadow: 0px 3px 0px 0px #FFE801;
 }
+/* Reset button chrome so a "click to reveal" box matches the plain <a> boxes */
+.reveal-box {
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: none;
+	font: inherit;
+	text-align: inherit;
+	cursor: pointer;
+}
 .box-hover {
 	transition:all 500ms ease-in-out;
 	-webkit-transition:all 500ms ease-in-out;

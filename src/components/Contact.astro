@@ -1,8 +1,12 @@
 ---
 import { site } from "../data/site";
+import { encode } from "../lib/obfuscate";
 
 const { contact } = site;
-const mailto = `mailto:${encodeURIComponent(`Adrian Sevitz<${contact.email.address}>`)}?subject=${encodeURIComponent(contact.email.subject)}`;
+
+const [phoneA, phoneB] = encode(contact.phone.label);
+const [emailLabelA, emailLabelB] = encode(contact.email.label);
+const [emailAddrA, emailAddrB] = encode(contact.email.address);
 ---
 
 <section class="text-center section-padding contact-wrap" id="contact">
@@ -23,12 +27,12 @@ const mailto = `mailto:${encodeURIComponent(`Adrian Sevitz<${contact.email.addre
         </a>
       </div>
       <div class="col-md-5">
-        <a href={contact.phone.href}>
+        <button type="button" class="reveal-box" data-kind="tel" data-a={phoneA} data-b={phoneB}>
           <div class="dark-box box-hover">
             <h2><i class="fa fa-phone"></i><span>Phone</span></h2>
-            <p><span class="aboxlink">{contact.phone.label}</span></p>
+            <p><span class="aboxlink reveal-text">Tap to reveal</span></p>
           </div>
-        </a>
+        </button>
       </div>
       <div class="col-md-5">
         <a target="_blank" rel="noopener" href={contact.linkedin.href}>
@@ -39,12 +43,21 @@ const mailto = `mailto:${encodeURIComponent(`Adrian Sevitz<${contact.email.addre
         </a>
       </div>
       <div class="col-md-5">
-        <a href={mailto}>
+        <button
+          type="button"
+          class="reveal-box"
+          data-kind="mailto"
+          data-a={emailLabelA}
+          data-b={emailLabelB}
+          data-addr-a={emailAddrA}
+          data-addr-b={emailAddrB}
+          data-subject={contact.email.subject}
+        >
           <div class="dark-box box-hover">
             <h2><i class="fa fa-paper-plane"></i><span>Email</span></h2>
-            <p><span class="aboxlink">{contact.email.label}</span></p>
+            <p><span class="aboxlink reveal-text">Tap to reveal</span></p>
           </div>
-        </a>
+        </button>
       </div>
       <div class="col-md-5">
         <a rel="nofollow noindex" href={contact.cv.href}>
@@ -57,3 +70,49 @@ const mailto = `mailto:${encodeURIComponent(`Adrian Sevitz<${contact.email.addre
     </div>
   </div>
 </section>
+
+<script>
+  // Mirrors src/lib/obfuscate.ts's encode() in reverse. Duplicated here
+  // (rather than imported) since this runs client-side in the browser,
+  // not in the Node build step obfuscate.ts is meant for.
+  function decode(a: string, b: string): string {
+    const length = a.length + b.length;
+    let reversed = "";
+    for (let i = 0; i < length; i++) {
+      reversed += i % 2 === 0 ? a[Math.floor(i / 2)] : b[Math.floor(i / 2)];
+    }
+    const shifted = reversed.split("").reverse().join("");
+    return Array.from(shifted)
+      .map((ch) => String.fromCharCode(ch.charCodeAt(0) - 1))
+      .join("");
+  }
+
+  document.querySelectorAll<HTMLButtonElement>(".reveal-box").forEach((button) => {
+    button.addEventListener(
+      "click",
+      () => {
+        const value = decode(button.dataset.a ?? "", button.dataset.b ?? "");
+
+        const anchor = document.createElement("a");
+        anchor.innerHTML = button.innerHTML;
+
+        if (button.dataset.kind === "tel") {
+          anchor.href = `tel:${value}`;
+        } else {
+          const address = decode(button.dataset.addrA ?? "", button.dataset.addrB ?? "");
+          const subject = button.dataset.subject ?? "";
+          anchor.href = `mailto:${encodeURIComponent(`Adrian Sevitz<${address}>`)}?subject=${encodeURIComponent(subject)}`;
+        }
+
+        const textEl = anchor.querySelector<HTMLElement>(".reveal-text");
+        if (textEl) {
+          textEl.textContent = value;
+          textEl.classList.remove("reveal-text");
+        }
+
+        button.replaceWith(anchor);
+      },
+      { once: true }
+    );
+  });
+</script>
