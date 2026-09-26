@@ -2,7 +2,7 @@
 export const prerender = true;
 
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { cv } from "../../data/cv";
+import { cv, standardCv, detailedCv } from "../../data/cv";
 import { encode } from "../../lib/obfuscate";
 
 const [phoneA, phoneB] = encode(cv.contact.phone.label);
@@ -14,12 +14,17 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
   <div class="cv-page">
     <div class="cv-toolbar no-print">
       <a href="/#top" class="cv-back"><i class="fa fa-arrow-left"></i> Back to site</a>
-      <button type="button" class="cv-download" onclick="window.print()">
-        <i class="fa fa-file-pdf-o"></i> Download as PDF
-      </button>
+      <div class="cv-toolbar-actions">
+        <button type="button" id="cv-toggle" class="cv-toggle" data-target-mode="detailed">
+          Detailed Version (4 Pages)
+        </button>
+        <button type="button" class="cv-download" onclick="window.print()">
+          <i class="fa fa-file-pdf-o"></i> Download as PDF
+        </button>
+      </div>
     </div>
 
-    <main class="cv-sheet">
+    <main class="cv-sheet" id="cv-sheet" data-mode="standard">
       <header class="cv-header">
         <h1>{cv.name}</h1>
         <p class="cv-headline">{cv.headline}</p>
@@ -49,40 +54,133 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
         </p>
       </header>
 
-      <section class="cv-section">
-        {cv.summary.map((paragraph) => <p>{paragraph}</p>)}
-      </section>
+      <div class="cv-variant cv-variant-standard">
+        <section class="cv-section">
+          {standardCv.summary.map((paragraph) => <p>{paragraph}</p>)}
+        </section>
 
-      <section class="cv-section">
-        <h2>Experience</h2>
-        {cv.experience.map((job) => (
-          <article class="cv-job">
-            <h3>{job.company}</h3>
-            {job.roles.map((role) => (
+        <section class="cv-section">
+          <h2>Experience</h2>
+          {standardCv.experience.map((job) => (
+            <article class="cv-job">
+              <h3>{job.company}</h3>
+              {job.roles.map((role) => (
+                <p class="cv-role">
+                  <span class="cv-role-title">{role.title}</span>
+                  <span class="cv-role-dates">{role.dates}</span>
+                </p>
+              ))}
+              {job.note && <p class="cv-note">{job.note}</p>}
+              <p class="cv-context">{job.context}</p>
+              <p>{job.intro}</p>
+              <ul>
+                {job.bullets.map((bullet) => <li>{bullet}</li>)}
+              </ul>
+            </article>
+          ))}
+        </section>
+
+        <section class="cv-section">
+          <h2>Earlier Career</h2>
+          {standardCv.earlierCareer.map((line) => <p>{line}</p>)}
+        </section>
+
+        <section class="cv-section">
+          <h2>Education</h2>
+          {standardCv.education.map((line) => <p>{line}</p>)}
+        </section>
+      </div>
+
+      <div class="cv-variant cv-variant-detailed">
+        <section class="cv-section">
+          {detailedCv.summary.map((paragraph) => <p>{paragraph}</p>)}
+        </section>
+
+        <section class="cv-section">
+          <h2>Career Highlights</h2>
+          <ul>
+            {detailedCv.highlights.map((highlight) => <li>{highlight}</li>)}
+          </ul>
+        </section>
+
+        <section class="cv-section">
+          <h2>Core Skills</h2>
+          <p class="cv-skills">{detailedCv.coreSkills.join(" · ")}</p>
+        </section>
+
+        <section class="cv-section">
+          <h2>Experience</h2>
+          {detailedCv.experience.map((job) => (
+            <article class="cv-job">
+              <h3>{job.company}</h3>
+              {job.context && <p class="cv-context">{job.context}</p>}
+              {job.roles.map((role) => (
+                <div class="cv-role-block">
+                  <p class="cv-role">
+                    <span class="cv-role-title">{role.title}</span>
+                    <span class="cv-role-dates">{role.dates}</span>
+                  </p>
+                  {role.context && <p class="cv-context">{role.context}</p>}
+                  {role.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+                  {role.bullets && (
+                    <ul>
+                      {role.bullets.map((bullet) => <li>{typeof bullet === "string" ? bullet : bullet.text}</li>)}
+                    </ul>
+                  )}
+                  {role.achievements && (
+                    <Fragment>
+                      <p class="cv-achievements-heading">{role.achievements.heading}</p>
+                      <ul>
+                        {role.achievements.items.map((item) =>
+                          typeof item === "string" ? (
+                            <li>{item}</li>
+                          ) : (
+                            <li>
+                              {item.text}
+                              <ul>
+                                {item.subBullets.map((subBullet) => <li>{subBullet}</li>)}
+                              </ul>
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </Fragment>
+                  )}
+                </div>
+              ))}
+            </article>
+          ))}
+        </section>
+
+        <section class="cv-section">
+          <h2>Earlier Career</h2>
+          {detailedCv.earlierCareer.map((job) => (
+            <article class="cv-job">
+              <h3>{job.company}</h3>
               <p class="cv-role">
-                <span class="cv-role-title">{role.title}</span>
-                <span class="cv-role-dates">{role.dates}</span>
+                <span class="cv-role-title">{job.role}</span>
+                <span class="cv-role-dates">{job.dates}</span>
               </p>
-            ))}
-            {job.note && <p class="cv-note">{job.note}</p>}
-            <p class="cv-context">{job.context}</p>
-            <p>{job.intro}</p>
-            <ul>
-              {job.bullets.map((bullet) => <li>{bullet}</li>)}
-            </ul>
-          </article>
-        ))}
-      </section>
+              <ul>
+                {job.bullets.map((bullet) => <li>{bullet}</li>)}
+              </ul>
+            </article>
+          ))}
+        </section>
 
-      <section class="cv-section">
-        <h2>Earlier Career</h2>
-        {cv.earlierCareer.map((line) => <p>{line}</p>)}
-      </section>
-
-      <section class="cv-section">
-        <h2>Education</h2>
-        {cv.education.map((line) => <p>{line}</p>)}
-      </section>
+        <section class="cv-section">
+          <h2>Education</h2>
+          {detailedCv.education.map((edu) => (
+            <div class="cv-edu-item">
+              <p class="cv-role">
+                <span class="cv-role-title">{edu.institution}</span>
+                <span class="cv-role-dates">{edu.dates}</span>
+              </p>
+              <p class="cv-note">{edu.detail}</p>
+            </div>
+          ))}
+        </section>
+      </div>
     </main>
   </div>
 </BaseLayout>
@@ -160,6 +258,34 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
   });
 </script>
 
+<script>
+  // Toggles between the standard (2-page) and detailed (4-page) versions.
+  // Both are rendered up front (see the .cv-variant-* blocks above); this
+  // just flips which one is visible via data-mode, which the CSS and the
+  // print output both key off.
+  const sheet = document.getElementById("cv-sheet");
+  const toggle = document.getElementById("cv-toggle");
+
+  const MODE_LABEL: Record<string, string> = {
+    standard: "Standard Version (2 Pages)",
+    detailed: "Detailed Version (4 Pages)",
+  };
+
+  function setMode(mode: string) {
+    if (!sheet || !toggle) return;
+    const otherMode = mode === "standard" ? "detailed" : "standard";
+    sheet.dataset.mode = mode;
+    toggle.textContent = MODE_LABEL[otherMode];
+    toggle.dataset.targetMode = otherMode;
+  }
+
+  toggle?.addEventListener("click", () => {
+    setMode(toggle.dataset.targetMode ?? "detailed");
+  });
+
+  setMode(sheet?.dataset.mode ?? "standard");
+</script>
+
 <style is:global>
   .cv-page {
     background: #f3f5f8;
@@ -176,6 +302,12 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
     align-items: center;
     flex-wrap: wrap;
     gap: 12px;
+  }
+
+  .cv-toolbar-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
   }
 
   .cv-back {
@@ -202,13 +334,56 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
     background: #c93636;
   }
 
+  .cv-toggle {
+    background: #fff;
+    border: 2px solid #e04343;
+    color: #e04343;
+    padding: 10px 22px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .cv-toggle[data-target-mode="detailed"] {
+    border-color: #2b4c7e;
+    color: #2b4c7e;
+  }
+  .cv-toggle[data-target-mode="standard"] {
+    border-color: #e04343;
+    color: #e04343;
+  }
+  .cv-toggle[data-target-mode="detailed"]:hover {
+    background: #2b4c7e;
+    color: #fff;
+  }
+  .cv-toggle[data-target-mode="standard"]:hover {
+    background: #e04343;
+    color: #fff;
+  }
+
   .cv-sheet {
+    --cv-accent: #e04343;
     max-width: 800px;
     margin: 0 auto;
     background: #fff;
     padding: 50px 60px;
-    box-shadow: 0 3px 0 0 #e04343;
+    box-shadow: 0 3px 0 0 var(--cv-accent);
     color: #353535;
+  }
+  .cv-sheet[data-mode="detailed"] {
+    --cv-accent: #2b4c7e;
+  }
+
+  .cv-variant-detailed {
+    display: none;
+  }
+  .cv-sheet[data-mode="detailed"] .cv-variant-standard {
+    display: none;
+  }
+  .cv-sheet[data-mode="detailed"] .cv-variant-detailed {
+    display: block;
   }
 
   .cv-header {
@@ -226,7 +401,7 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #e04343;
+    color: var(--cv-accent);
     margin: 0 0 10px;
   }
   .cv-contact {
@@ -239,7 +414,7 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
     border-bottom: none;
   }
   .cv-contact a:hover {
-    color: #e04343;
+    color: var(--cv-accent);
   }
   .cv-field {
     display: inline;
@@ -249,7 +424,7 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
     border-bottom: none;
   }
   .cv-field a:hover {
-    color: #e04343;
+    color: var(--cv-accent);
   }
   .cv-reveal {
     background: none;
@@ -257,7 +432,7 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
     padding: 0;
     margin: 0;
     font: inherit;
-    color: #e04343;
+    color: var(--cv-accent);
     border-bottom: 1px dashed;
     cursor: pointer;
   }
@@ -278,7 +453,7 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #353535;
-    border-bottom: 2px solid #e04343;
+    border-bottom: 2px solid var(--cv-accent);
     padding-bottom: 6px;
     margin: 0 0 14px;
   }
@@ -302,6 +477,11 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
     color: #4a4a4a;
     margin-bottom: 6px;
   }
+  .cv-skills {
+    text-align: center;
+    font-weight: 600;
+    color: #353535;
+  }
 
   .cv-job {
     margin-bottom: 22px;
@@ -315,6 +495,12 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
     letter-spacing: 0.5px;
     color: #353535;
     margin: 0 0 4px;
+  }
+  .cv-role-block {
+    margin-bottom: 16px;
+  }
+  .cv-role-block:last-child {
+    margin-bottom: 0;
   }
   .cv-role {
     display: flex;
@@ -339,6 +525,20 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
   .cv-context {
     font-style: italic;
     color: #8c9398;
+  }
+  .cv-achievements-heading {
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #353535;
+    margin: 10px 0 4px;
+  }
+  .cv-edu-item {
+    margin-bottom: 14px;
+  }
+  .cv-edu-item:last-child {
+    margin-bottom: 0;
   }
 
   @media (max-width: 700px) {
