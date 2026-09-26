@@ -544,3 +544,14 @@ button,button:focus,button:hover,button:active {
 .col-md-5 {
 	width: 20%;
 }
+/* ==========================================================================Footer========================================================================== */
+.site-footer {
+	text-align: center;
+	padding: 14px 0;
+}
+.site-footer p {
+	margin: 0;
+	font-size: 11px;
+	letter-spacing: 0.5px;
+	color: #c2c2c2;
+}

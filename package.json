@@ -1,7 +1,7 @@
 {
   "name": "sevitzdotcom",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "dev": "astro dev",
@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "@types/node": "^26.6.3",
     "typescript": "^5.9.0"
   }
 }
