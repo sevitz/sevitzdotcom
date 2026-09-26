@@ -11,15 +11,16 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
 ---
 
 <BaseLayout title={`${cv.name} - CV`}>
-  <div class="cv-page">
+  <div class="cv-page" id="cv-page" data-mode="standard">
     <div class="cv-toolbar no-print">
       <a href="/#top" class="cv-back"><i class="fa fa-arrow-left"></i> Back to site</a>
       <div class="cv-toolbar-actions">
-        <button type="button" id="cv-toggle" class="cv-toggle" data-target-mode="detailed">
-          Detailed Version (4 Pages)
-        </button>
-        <button type="button" class="cv-download" onclick="window.print()">
-          <i class="fa fa-file-pdf-o"></i> Download as PDF
+        <div class="cv-mode-switch" role="group" aria-label="CV version">
+          <button type="button" class="cv-mode-btn is-active" data-mode-btn="standard">Standard</button>
+          <button type="button" class="cv-mode-btn" data-mode-btn="detailed">Detailed</button>
+        </div>
+        <button type="button" class="cv-download" id="cv-download" onclick="window.print()">
+          <i class="fa fa-file-pdf-o"></i> <span id="cv-download-label">Download Standard (PDF)</span>
         </button>
       </div>
     </div>
@@ -38,19 +39,20 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
             data-addr-b={emailAddrB}
             data-subject={cv.contact.email.subject}
           >
-            <button type="button" class="cv-reveal">Tap to reveal</button>
+            <button type="button" class="cv-reveal">
+              <span class="cv-reveal-desktop">Click for Email</span><span class="cv-reveal-touch">Tap for Email</span>
+            </button>
           </span>
           <span aria-hidden="true">&nbsp;|&nbsp;</span>
           <span class="cv-field" data-kind="tel" data-a={phoneA} data-b={phoneB}>
-            <button type="button" class="cv-reveal">Tap to reveal</button>
+            <button type="button" class="cv-reveal">
+              <span class="cv-reveal-desktop">Click for Phone</span><span class="cv-reveal-touch">Tap for Phone</span>
+            </button>
           </span>
           <span aria-hidden="true">&nbsp;|&nbsp;</span>
           <span>{cv.contact.location}</span>
           <span aria-hidden="true">&nbsp;|&nbsp;</span>
           <a href={cv.contact.linkedin.href} target="_blank" rel="noopener">{cv.contact.linkedin.label}</a>
-        </p>
-        <p class="cv-print-hint no-print">
-          Phone and email are hidden from scrapers on screen &mdash; tap to reveal, or they print in the clear on the PDF.
         </p>
       </header>
 
@@ -202,11 +204,21 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
       .join("");
   }
 
-  function buildRevealButton(): HTMLButtonElement {
+  function buildRevealButton(kind: string | undefined): HTMLButtonElement {
+    const label = kind === "tel" ? "Phone" : "Email";
     const button = document.createElement("button");
     button.type = "button";
     button.className = "cv-reveal";
-    button.textContent = "Tap to reveal";
+
+    const desktop = document.createElement("span");
+    desktop.className = "cv-reveal-desktop";
+    desktop.textContent = `Click for ${label}`;
+
+    const touch = document.createElement("span");
+    touch.className = "cv-reveal-touch";
+    touch.textContent = `Tap for ${label}`;
+
+    button.append(desktop, touch);
     return button;
   }
 
@@ -237,7 +249,7 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
   function hideField(field: HTMLElement) {
     if (field.dataset.revealed !== "print") return;
 
-    const button = buildRevealButton();
+    const button = buildRevealButton(field.dataset.kind);
     field.replaceChildren(button);
     field.dataset.revealed = "false";
     attachClickHandler(field, button);
@@ -259,39 +271,47 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
 </script>
 
 <script>
-  // Toggles between the standard (2-page) and detailed (4-page) versions.
+  // Switches between the standard (2-page) and detailed (4-page) versions.
   // Both are rendered up front (see the .cv-variant-* blocks above); this
   // just flips which one is visible via data-mode, which the CSS and the
   // print output both key off.
+  const page = document.getElementById("cv-page");
   const sheet = document.getElementById("cv-sheet");
-  const toggle = document.getElementById("cv-toggle");
+  const modeButtons = Array.from(document.querySelectorAll<HTMLButtonElement>(".cv-mode-btn"));
+  const downloadLabel = document.getElementById("cv-download-label");
 
-  const MODE_LABEL: Record<string, string> = {
-    standard: "Standard Version (2 Pages)",
-    detailed: "Detailed Version (4 Pages)",
+  const DOWNLOAD_LABEL: Record<string, string> = {
+    standard: "Download Standard (PDF)",
+    detailed: "Download Detailed (PDF)",
   };
 
   function setMode(mode: string) {
-    if (!sheet || !toggle) return;
-    const otherMode = mode === "standard" ? "detailed" : "standard";
+    if (!page || !sheet) return;
+    page.dataset.mode = mode;
     sheet.dataset.mode = mode;
-    toggle.textContent = MODE_LABEL[otherMode];
-    toggle.dataset.targetMode = otherMode;
+    modeButtons.forEach((button) => {
+      button.classList.toggle("is-active", button.dataset.modeBtn === mode);
+    });
+    if (downloadLabel) downloadLabel.textContent = DOWNLOAD_LABEL[mode] ?? DOWNLOAD_LABEL.standard;
   }
 
-  toggle?.addEventListener("click", () => {
-    setMode(toggle.dataset.targetMode ?? "detailed");
+  modeButtons.forEach((button) => {
+    button.addEventListener("click", () => setMode(button.dataset.modeBtn ?? "standard"));
   });
 
-  setMode(sheet?.dataset.mode ?? "standard");
+  setMode(page?.dataset.mode ?? "standard");
 </script>
 
 <style is:global>
   .cv-page {
+    --cv-accent: #e04343;
     background: #f3f5f8;
     min-height: 100vh;
     padding: 30px 16px 60px;
     font-family: "Open Sans", sans-serif;
+  }
+  .cv-page[data-mode="detailed"] {
+    --cv-accent: #2f80ed;
   }
 
   .cv-toolbar {
@@ -320,7 +340,7 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
   }
 
   .cv-download {
-    background: #e04343;
+    background: var(--cv-accent, #e04343);
     color: #fff;
     border: none;
     padding: 12px 24px;
@@ -331,49 +351,48 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
     transition: background 0.3s;
   }
   .cv-download:hover {
-    background: #c93636;
+    filter: brightness(0.9);
   }
 
-  .cv-toggle {
+  .cv-mode-switch {
+    display: inline-flex;
+    border: 2px solid #d8dbe0;
+  }
+  .cv-mode-btn {
     background: #fff;
-    border: 2px solid #e04343;
-    color: #e04343;
+    border: none;
     padding: 10px 22px;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 13px;
     font-weight: bold;
+    color: #8c9398;
     cursor: pointer;
     transition: all 0.3s;
   }
-  .cv-toggle[data-target-mode="detailed"] {
-    border-color: #2b4c7e;
-    color: #2b4c7e;
+  .cv-mode-btn:first-child {
+    border-right: 2px solid #d8dbe0;
   }
-  .cv-toggle[data-target-mode="standard"] {
-    border-color: #e04343;
-    color: #e04343;
+  .cv-mode-btn:not(.is-active):hover {
+    background: #f3f5f8;
+    color: #353535;
   }
-  .cv-toggle[data-target-mode="detailed"]:hover {
-    background: #2b4c7e;
+  .cv-mode-btn[data-mode-btn="standard"].is-active {
+    background: #e04343;
     color: #fff;
   }
-  .cv-toggle[data-target-mode="standard"]:hover {
-    background: #e04343;
+  .cv-mode-btn[data-mode-btn="detailed"].is-active {
+    background: #2f80ed;
     color: #fff;
   }
 
   .cv-sheet {
-    --cv-accent: #e04343;
     max-width: 800px;
     margin: 0 auto;
     background: #fff;
     padding: 50px 60px;
     box-shadow: 0 3px 0 0 var(--cv-accent);
     color: #353535;
-  }
-  .cv-sheet[data-mode="detailed"] {
-    --cv-accent: #2b4c7e;
   }
 
   .cv-variant-detailed {
@@ -439,10 +458,16 @@ const [emailAddrA, emailAddrB] = encode(cv.contact.email.address);
   .cv-reveal:hover {
     color: #353535;
   }
-  .cv-print-hint {
-    font-size: 11px;
-    color: #b7bcc1;
-    margin: 6px 0 0;
+  .cv-reveal-touch {
+    display: none;
+  }
+  @media (hover: none) and (pointer: coarse) {
+    .cv-reveal-desktop {
+      display: none;
+    }
+    .cv-reveal-touch {
+      display: inline;
+    }
   }
 
   .cv-section {
