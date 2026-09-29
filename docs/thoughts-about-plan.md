@@ -1,13 +1,13 @@
 # Plan: "Thoughts about ..."
 
-A small public stream of thoughts. Noodled in Google Drive, shaped with Claude, published as markdown on GitHub, shown on sevitz.com and cross posted to LinkedIn, Bluesky and Threads.
+A small public stream of thoughts. Noodled in a private Obsidian vault, shaped with Claude Code, published as markdown on GitHub, shown on sevitz.com and cross posted to LinkedIn, Bluesky and Threads.
 
 Status: proposal. Nothing here is built yet.
 
 ## 1. Principles
 
 1. **GitHub is the source of truth for published posts.** Every post is a markdown file in the public repo `sevitz/thoughts-about`. Edits to published posts happen there and nowhere else. Git history is the edit log.
-2. **Google Drive is the private scratchpad.** Noodles and drafts live in Drive until they are ready. Only finished posts reach GitHub.
+2. **A private Obsidian vault is the scratchpad.** Noodles and drafts live there (backed by a private repo) until they are ready. Only finished posts reach the public repo.
 3. **sevitz.com is the canonical URL.** Search engines, LinkedIn and the social posts all point at `sevitz.com/thoughts-about/<slug>`. The GitHub repo is where the words live; sevitz.com is where people read them. (This is the "POSSE" pattern: Publish on your Own Site, Syndicate Elsewhere.)
 4. **Syndication is one way.** Social platforms get copies or teasers. Nothing flows back into the markdown except the URLs of those copies.
 5. **sevitz.com shows every public reference.** Each post page lists its GitHub source, history and every place it was cross posted.
@@ -135,46 +135,48 @@ No comments or reactions on sevitz.com.
 
 ## 5. Publishing workflow
 
-### 5.1 Drafting in Google Drive
+### 5.1 Drafting in an Obsidian vault
 
-Drive folder `Thoughts about/`:
+Drafts are plain markdown in a private Obsidian vault named `Thoughts About`, so Claude can edit them in place and every change has history.
 
 ```
-Thoughts about/
-  Noodles/    # loose ideas, fragments, links, voice notes transcribed
-  Drafts/     # one Google Doc per post in progress
-  Ready/      # finished drafts waiting to be published
+Thoughts About/              # Obsidian vault, private git repo sevitz/thoughts-about-drafts
+  CLAUDE.md                  # voice, structure and frontmatter rules (same as the public repo)
+  STYLE.md
+  Noodles/                   # loose ideas, fragments, links
+  Drafts/
+    <slug>/index.md          # already in the final post format, frontmatter included
+  Ready/
+    <slug>/index.md          # finished, waiting to be published
 ```
 
-Nothing in Drive is public. Play around freely.
+Sync:
 
-### 5.2 Shaping and publishing with Claude
+1. The vault lives in iCloud so it opens in Obsidian on the Mac, iPhone and iPad (see 10.1 for the exact location).
+2. The **Obsidian Git** plugin on the Mac commits and pushes the vault to the **private** repo `sevitz/thoughts-about-drafts`. It does not run on iOS (expect a small error on launch there); phone edits reach the Mac through iCloud and are pushed on the next Mac sync.
 
-1. A **Claude Project** called "Thoughts about" with `CLAUDE.md` and `STYLE.md` from the repo as project knowledge, so voice and format stay consistent across chats.
-2. In a chat, Claude reads the draft through the **Google Drive connector**, then iterates on argument and structure with you.
-3. When ready, Claude produces:
-   * the full `index.md` with frontmatter
-   * the LinkedIn post
-   * the Bluesky / Threads thread (see 6.2)
-4. Claude opens a PR on `sevitz/thoughts-about` through the **GitHub connector**. Fallbacks: paste into the GitHub web editor, or use Claude Code on the web.
+Nothing in the vault is public.
 
-Note: branches and PRs in the repo are public too, so only push once a draft has moved to `Ready/`.
+### 5.2 Shaping and publishing with Claude Code
 
-### 5.3 Drafting tool: Google Docs or Obsidian
+Claude Code works on the vault directly, from any of:
 
-[Obsidian](https://obsidian.md/) is a markdown notes app working on a local folder ("vault").
+* the Terminal extension inside Obsidian on the Mac
+* the same session from phone or iPad via Remote Control
+* a Claude Code cloud session on `sevitz/thoughts-about-drafts` (sees whatever the Mac has pushed)
 
-| | Google Docs | Obsidian |
-|---|---|---|
-| Format | Rich text, converted to markdown by Claude | Native markdown, no conversion |
-| Claude chat access | Yes, via the Google Drive connector | Not directly; Claude chat cannot read a local vault |
-| Phone | Google Docs app, synced | Needs Obsidian Sync (paid) or iCloud, neither reachable by Claude chat |
-| Linking noodles together | Basic | Excellent (backlinks, graph) |
-| Offline | Partial | Full |
+Flow:
 
-Middle option: keep the Obsidian vault inside a Google Drive folder synced to your desktop. Obsidian edits `.md` files, Claude reads them through the Drive connector. Works well on desktop, awkward on iOS.
+1. Noodle in `Noodles/`. When an idea has legs, ask Claude to start `Drafts/<slug>/index.md` from the template.
+2. Iterate with Claude editing the file in place. Git history keeps every version.
+3. When done, Claude fills in `social.linkedin` and `social.thread`, and the draft moves to `Ready/`.
+4. Publishing: Claude Code copies `Ready/<slug>/` into `posts/<slug>/` in the public `sevitz/thoughts-about` repo and opens a PR. After merge, the draft can be deleted or kept in a `Published/` folder.
 
-Recommendation: start with Google Docs because it already works everywhere Claude does. Revisit Obsidian if the noodle collection grows and linking ideas together starts to matter.
+Note: branches and PRs in the public repo are public, so only publish from `Ready/`.
+
+### 5.3 Why not Google Docs
+
+Claude can read and create Google Docs but cannot modify them in place. Every revision means either merging changes by hand or creating a new document and losing edit history. Markdown files in a git backed vault avoid both, and need no conversion at publish time.
 
 ### 5.4 Validation (on PR)
 
@@ -230,7 +232,7 @@ LinkedIn reaches fewer people when a post leads with an external link, so:
 
 | Phase | Scope | Where |
 |---|---|---|
-| 1 | Create `thoughts-about` repo, templates, `CLAUDE.md`, `STYLE.md`, schema, validate workflow, first post. Set up the Drive folders and Claude Project. | New repo, Drive, Claude |
+| 1 | Create `thoughts-about` repo, templates, `CLAUDE.md`, `STYLE.md`, schema, validate workflow, first post. Set up the `Thoughts About` vault, its private repo and Obsidian Git. | New repo, vault |
 | 2 | Content collection, index, post page, RSS, sitemap, nav link, social images, deploy hook | sevitzdotcom |
 | 3 | `publish.yml`: deploy hook trigger, live check, social copy in job summary, README index | New repo |
 | 4 | "Record syndication" issue form and URL write back | New repo |
@@ -261,15 +263,22 @@ Also: branch protection on `main` requiring `validate.yml` to pass.
 | URL | `sevitz.com/thoughts-about/<slug>` |
 | Repo | `sevitz/thoughts-about`, public |
 | Licence | CC BY 4.0 for text, MIT for code snippets |
-| Drafting | Google Drive (private), publish on GitHub |
+| Drafting | Private Obsidian vault `Thoughts About`, synced by iCloud and backed by private repo `sevitz/thoughts-about-drafts`; Claude Code edits in place. Not Google Docs (see 5.3). |
 | Cross posting | Manual v1, then automate Bluesky, Threads, LinkedIn in that order |
 | Thread format | Opener with image and link, 3 to 5 body posts, closer with image and link |
 | GitHub source and history links on posts | Yes |
 | Comments on sevitz.com | No |
 | X | Never |
 
-## 10. Open questions
+## 10. Local setup and cleanup
 
-| # | Question | Recommendation |
-|---|---|---|
-| Q1 | Google Docs or Obsidian for drafting | Google Docs to start (see 5.3) |
+### 10.1 Vault location
+
+The vault lives at `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Thoughts About`, the iCloud Drive Obsidian folder, so it opens in Obsidian on the Mac, iPhone and iPad.
+
+### 10.2 Clean up old vaults
+
+Two earlier vaults exist and should be removed from Obsidian's vault list and from disk once the new one is set up (check they hold nothing worth keeping first):
+
+* `Thoughts-About` at `/Users/sevitz/Library/Mobile Documents/com~apple~CloudDocs` (iCloud Drive root)
+* `Sev's Thoughts About` at `/Users/sevitz/Documents/Sev Thoughts About`
