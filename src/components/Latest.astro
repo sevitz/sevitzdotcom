@@ -1,0 +1,39 @@
+---
+import { site } from "../data/site";
+
+export interface PostSummary {
+  slug: string;
+  tag: string;
+  title: string;
+  summary: string;
+}
+
+interface Props {
+  posts: PostSummary[];
+}
+
+const { posts } = Astro.props;
+const base = site.links.thoughts.href;
+---
+
+<section class="latest" aria-labelledby="latest-label">
+  <div class="section-head">
+    <h2 class="section-label" id="latest-label">Latest thoughts</h2>
+    <a class="eyebrow" href={base}>All →</a>
+  </div>
+  {
+    posts.length > 0 ? (
+      <div class="posts">
+        {posts.map((post) => (
+          <a class="post" href={`${base}${post.slug}/`}>
+            <span class="post-tag">{post.tag}</span>
+            <span class="post-title">{post.title}</span>
+            <span class="post-summary">{post.summary}</span>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p class="posts-empty">First posts are on the way.</p>
+    )
+  }
+</section>

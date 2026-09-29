@@ -1,0 +1,86 @@
+---
+import { site, type Hero } from "../data/site";
+
+// Widen from the `as const` literal so every image mode type-checks.
+const hero: Hero = site.hero;
+const { nav } = site;
+const images = hero.imageMode === "off" ? [] : hero.images;
+const hasImage = images.length > 0;
+// "random" picks its layer in the inline script below, before first paint.
+const initial = hero.imageMode === "random" ? -1 : 0;
+---
+
+<header
+  class="hero"
+  id="top"
+  data-mode={hero.imageMode}
+  data-rotate-ms={hero.rotateSeconds * 1000}
+  data-tagline-ms={hero.taglineSeconds * 1000}
+>
+  {
+    images.map((image, i) => (
+      <div
+        class:list={["hero-layer", { "is-active": i === initial }]}
+        style={`background-image:url('${image.src}');background-position:${image.focus}`}
+        aria-hidden="true"
+      />
+    ))
+  }
+  <script is:inline>
+    (() => {
+      const hero = document.currentScript.parentElement;
+      if (hero.dataset.mode !== "random") return;
+      const layers = hero.querySelectorAll(".hero-layer");
+      if (layers.length) layers[Math.floor(Math.random() * layers.length)].classList.add("is-active");
+    })();
+  </script>
+  <div class:list={["hero-scrim", { "is-glow": !hasImage }]} aria-hidden="true"></div>
+
+  <div class="hero-bar eyebrow">
+    <a class="wordmark" href="/" aria-label={`${hero.firstName} ${hero.lastName}, home`}>{hero.wordmark}<span class="dot">.</span></a>
+    <nav class="hero-nav" aria-label="Main">
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+  </div>
+
+  <div class="hero-body">
+    <p class="hero-name">{hero.firstName} {hero.lastName}</p>
+    <h1 class="hero-title">{hero.wordmark}<span class="dot">.</span></h1>
+    <div class="tagline">
+      {hero.taglinePhrases.map((phrase, i) => (
+        <p class:list={{ "is-active": i === 0 }} aria-hidden={i === 0 ? undefined : "true"}>{phrase}</p>
+      ))}
+    </div>
+  </div>
+</header>
+
+<script>
+  const hero = document.querySelector<HTMLElement>(".hero");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Show items[next] and hide the rest. aria-hidden keeps screen readers on the visible one.
+  function cycle(items: HTMLElement[], ms: number, ariaHide: boolean) {
+    if (items.length < 2 || !ms) return;
+    let index = Math.max(
+      0,
+      items.findIndex((el) => el.classList.contains("is-active"))
+    );
+    setInterval(() => {
+      index = (index + 1) % items.length;
+      items.forEach((el, i) => {
+        el.classList.toggle("is-active", i === index);
+        if (ariaHide) {
+          if (i === index) el.removeAttribute("aria-hidden");
+          else el.setAttribute("aria-hidden", "true");
+        }
+      });
+    }, ms);
+  }
+
+  if (hero && !reduceMotion) {
+    cycle(Array.from(hero.querySelectorAll<HTMLElement>(".tagline p")), Number(hero.dataset.taglineMs), true);
+    if (hero.dataset.mode === "rotate") {
+      cycle(Array.from(hero.querySelectorAll<HTMLElement>(".hero-layer")), Number(hero.dataset.rotateMs), false);
+    }
+  }
+</script>

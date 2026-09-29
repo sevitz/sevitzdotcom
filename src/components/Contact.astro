@@ -1,6 +1,7 @@
 ---
 import { site } from "../data/site";
 import { encode } from "../lib/obfuscate";
+import Footer from "./Footer.astro";
 
 const { contact } = site;
 
@@ -9,67 +10,37 @@ const [emailLabelA, emailLabelB] = encode(contact.email.label);
 const [emailAddrA, emailAddrB] = encode(contact.email.address);
 ---
 
-<section class="text-center section-padding contact-wrap" id="contact">
-  <a href="#top" class="up-btn"><i class="fa fa-chevron-up"></i></a>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h1 class="arrow">Drop <span>me</span> a line</h1>
-      </div>
-    </div>
-    <div class="row contact-details">
-      <div class="col-md-5">
-        <a target="_blank" rel="noopener" href={contact.location.href}>
-          <div class="dark-box box-hover">
-            <h2><i class="fa fa-map-marker"></i><span>Location</span></h2>
-            <p><span class="aboxlink">{contact.location.label}&nbsp;{contact.location.flag}</span></p>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-5">
-        <button type="button" class="reveal-box" data-kind="tel" data-a={phoneA} data-b={phoneB}>
-          <div class="dark-box box-hover">
-            <h2><i class="fa fa-phone"></i><span>Phone</span></h2>
-            <p><span class="aboxlink reveal-text">Tap to reveal</span></p>
-          </div>
-        </button>
-      </div>
-      <div class="col-md-5">
-        <a target="_blank" rel="noopener" href={contact.linkedin.href}>
-          <div class="dark-box box-hover">
-            <h2><i class="fa fa-linkedin"></i><span>LinkedIn</span></h2>
-            <p><span class="aboxlink">{contact.linkedin.label}</span></p>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-5">
-        <button
-          type="button"
-          class="reveal-box"
-          data-kind="mailto"
-          data-a={emailLabelA}
-          data-b={emailLabelB}
-          data-addr-a={emailAddrA}
-          data-addr-b={emailAddrB}
-          data-subject={contact.email.subject}
-        >
-          <div class="dark-box box-hover">
-            <h2><i class="fa fa-paper-plane"></i><span>Email</span></h2>
-            <p><span class="aboxlink reveal-text">Tap to reveal</span></p>
-          </div>
-        </button>
-      </div>
-      <div class="col-md-5">
-        <a rel="nofollow noindex" href={contact.cv.href}>
-          <div class="dark-box box-hover">
-            <h2><i class="fa fa-file-pdf-o"></i><span>CV</span></h2>
-            <p><span class="aboxlink">{contact.cv.label}</span></p>
-          </div>
-        </a>
-      </div>
-    </div>
+<footer class="contact" id="contact">
+  <h2 class="sr-only">Contact</h2>
+  <div class="contact-grid">
+    <a class="contact-item" target="_blank" rel="noopener" href={contact.linkedin.href}>
+      <span class="contact-label">LinkedIn</span>
+      <span class="contact-value">{contact.linkedin.label}</span>
+    </a>
+    <button
+      type="button"
+      class="contact-item reveal"
+      data-kind="mailto"
+      data-a={emailLabelA}
+      data-b={emailLabelB}
+      data-addr-a={emailAddrA}
+      data-addr-b={emailAddrB}
+      data-subject={contact.email.subject}
+    >
+      <span class="contact-label">Email</span>
+      <span class="contact-value reveal-text">Tap to reveal</span>
+    </button>
+    <button type="button" class="contact-item reveal" data-kind="tel" data-a={phoneA} data-b={phoneB}>
+      <span class="contact-label">Phone</span>
+      <span class="contact-value reveal-text">Tap to reveal</span>
+    </button>
+    <a class="contact-item" target="_blank" rel="noopener" href={contact.location.href}>
+      <span class="contact-label">Location</span>
+      <span class="contact-value">{contact.location.label}</span>
+    </a>
   </div>
-</section>
+  <Footer />
+</footer>
 
 <script>
   // Mirrors src/lib/obfuscate.ts's encode() in reverse. Duplicated here
@@ -87,13 +58,14 @@ const [emailAddrA, emailAddrB] = encode(contact.email.address);
       .join("");
   }
 
-  document.querySelectorAll<HTMLButtonElement>(".reveal-box").forEach((button) => {
+  document.querySelectorAll<HTMLButtonElement>(".reveal").forEach((button) => {
     button.addEventListener(
       "click",
       () => {
         const value = decode(button.dataset.a ?? "", button.dataset.b ?? "");
 
         const anchor = document.createElement("a");
+        anchor.className = "contact-item";
         anchor.innerHTML = button.innerHTML;
 
         if (button.dataset.kind === "tel") {
@@ -111,6 +83,7 @@ const [emailAddrA, emailAddrB] = encode(contact.email.address);
         }
 
         button.replaceWith(anchor);
+        anchor.focus();
       },
       { once: true }
     );

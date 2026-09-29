@@ -1,16 +1,24 @@
 ---
 export const prerender = true;
 
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/Header.astro";
+import HomeLayout from "../layouts/HomeLayout.astro";
+import Hero from "../components/Hero.astro";
+import Links from "../components/Links.astro";
+import Latest, { type PostSummary } from "../components/Latest.astro";
 import About from "../components/About.astro";
 import Contact from "../components/Contact.astro";
-import Footer from "../components/Footer.astro";
+
+// Filled from the Thoughts about content collection (docs/thoughts-about-plan.md,
+// phase 2): the 3 newest `status: published` posts. Empty until then.
+const posts: PostSummary[] = [];
 ---
 
-<BaseLayout>
-  <Header />
-  <About />
+<HomeLayout>
+  <Hero />
+  <main>
+    <Links hasPosts={posts.length > 0} />
+    <Latest posts={posts.slice(0, 3)} />
+    <About />
+  </main>
   <Contact />
-  <Footer />
-</BaseLayout>
+</HomeLayout>

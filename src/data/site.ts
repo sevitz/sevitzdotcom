@@ -1,34 +1,65 @@
 export const site = {
   title: "Adrian Sevitz - Director, CTO, Nerd",
+  description:
+    "Adrian Sevitz: founder, CTO and technology director. Building technology businesses, and the teams behind them.",
 
   nav: [
-    { label: "Home", href: "#home", icon: "fa-home" },
-    { label: "About", href: "#about", icon: "fa-quote-left" },
-    { label: "CV", href: "/cv/", icon: "fa-file-pdf-o" },
-    { label: "Contact", href: "#contact", icon: "fa-envelope-o" },
+    { label: "CV", href: "/cv/" },
+    { label: "Thoughts", href: "/thoughts-about/" },
+    { label: "Contact", href: "#contact" },
   ],
 
   hero: {
     firstName: "Adrian",
     lastName: "Sevitz",
+    wordmark: "Sev",
     taglinePhrases: [
       "Technical and Product Leader",
+      "I build technology businesses, and the teams behind them",
       "Once edited a script with Oliver Stone",
-      "Experience from Startups to Scale-ups to Enterprises",
+      "Founder turned CTO. Happiest where technology has clear business value",
     ],
+    // Spare phrases, swap any of these into taglinePhrases above:
+    //   "Experience from Startups to Scale-ups to Enterprises"
+    //   "Using technology to solve problems that actually matter"
+    taglineSeconds: 3.2,
+
+    // Background photo(s) behind the hero. `focus` is a CSS background-position.
+    //   single: always images[0]
+    //   rotate: crossfade through images every rotateSeconds
+    //   random: pick one per page load
+    //   off:    no photo, solid warm dark with a soft glow
+    images: [{ src: "/img/header-bg.jpg", focus: "70% 30%" }],
+    imageMode: "single",
+    rotateSeconds: 7,
+  } satisfies Hero,
+
+  links: {
+    cv: {
+      eyebrow: "Curriculum vitae",
+      title: "CV",
+      blurb: "Founder, CTO, technology director. 25+ years from startups to enterprises.",
+      href: "/cv/",
+    },
+    thoughts: {
+      eyebrow: "Writing",
+      title: "Thoughts about…",
+      blurb: "Notes on technology, teams and the decisions in between",
+      blurbEmpty: "Coming soon: notes on technology, teams and decisions",
+      href: "/thoughts-about/",
+    },
   },
 
   about: {
     paragraphs: [
-      "Co-founded vzaar limited, took the company from initial concept and inception through to acquisition by DaCast Inc. Grew from zero staff and pre-revenue to 20 people and profitability. Led and executed exit process.",
-      "Ex ‘big 4’ management consultant with experience across all business and technology lifecycles.",
+      "Co-founded vzaar and took it from concept to profitability and acquisition by DaCast. Since then, led technology and product teams of 100+ on platforms serving 1.5m+ members, employers and advisers.",
     ],
+    footnote: "Ex-Accenture and eBay. Electrical engineer by training.",
   },
 
   contact: {
     location: {
       label: "New Malden, London",
-      flag: "\u{1F1EC}\u{1F1E7}",
       href: "https://www.google.com/maps/place/New+Malden/",
     },
     phone: { label: "+44-7770-570-058", href: "tel:+44-7770-570-058" },
@@ -38,6 +69,16 @@ export const site = {
       address: "adrian+website@sevitz.com",
       subject: "Connecting via your website",
     },
-    cv: { label: "Curriculum vitae", href: "/cv/" },
   },
 } as const;
+
+export type Hero = {
+  firstName: string;
+  lastName: string;
+  wordmark: string;
+  taglinePhrases: readonly string[];
+  taglineSeconds: number;
+  images: readonly { readonly src: string; readonly focus: string }[];
+  imageMode: "single" | "rotate" | "random" | "off";
+  rotateSeconds: number;
+};
