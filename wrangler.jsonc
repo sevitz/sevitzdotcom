@@ -1,11 +1,14 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
+  // Static Astro site served as Worker static assets; no adapter needed.
+  // Having this file stops `wrangler deploy` auto-config from running `astro add cloudflare`.
   "name": "sevitzdotcom",
   "compatibility_date": "2026-09-29",
-  // Every page is prerendered, so the Worker only serves the static build.
+  "build": {
+    "command": "npm run build"
+  },
   "assets": {
-    "directory": "./dist",
-    "not_found_handling": "404-page"
+    "directory": "./dist"
   },
   "workers_dev": true,
   "preview_urls": true,
