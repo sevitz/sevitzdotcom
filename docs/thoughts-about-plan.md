@@ -7,7 +7,7 @@ Status: proposal. Nothing here is built yet.
 ## 1. Principles
 
 1. **GitHub is the source of truth for published posts.** Every post is a markdown file in the public repo `sevitz/thoughts-about`. Edits to published posts happen there and nowhere else. Git history is the edit log.
-2. **A private Obsidian vault is the scratchpad.** Noodles and drafts live there (backed by a private repo) until they are ready. Only finished posts reach the public repo.
+2. **A private Obsidian vault in iCloud is the scratchpad.** Noodles and drafts live there until they are ready. Once published, a post is only ever edited in the public repo.
 3. **sevitz.com is the canonical URL.** Search engines, LinkedIn and the social posts all point at `sevitz.com/thoughts-about/<slug>`. The GitHub repo is where the words live; sevitz.com is where people read them. (This is the "POSSE" pattern: Publish on your Own Site, Syndicate Elsewhere.)
 4. **Syndication is one way.** Social platforms get copies or teasers. Nothing flows back into the markdown except the URLs of those copies.
 5. **sevitz.com shows every public reference.** Each post page lists its GitHub source, history and every place it was cross posted.
@@ -137,10 +137,10 @@ No comments or reactions on sevitz.com.
 
 ### 5.1 Drafting in an Obsidian vault
 
-Drafts are plain markdown in a private Obsidian vault named `Thoughts About`, so Claude can edit them in place and every change has history.
+Drafts are plain markdown in a private Obsidian vault named `Thoughts About`, so Claude can edit them in place.
 
 ```
-Thoughts About/              # Obsidian vault, private git repo sevitz/thoughts-about-drafts
+Thoughts About/              # Obsidian vault in iCloud
   CLAUDE.md                  # voice, structure and frontmatter rules (same as the public repo)
   STYLE.md
   Noodles/                   # loose ideas, fragments, links
@@ -150,33 +150,29 @@ Thoughts About/              # Obsidian vault, private git repo sevitz/thoughts-
     <slug>/index.md          # finished, waiting to be published
 ```
 
-Sync:
-
-1. The vault lives in iCloud so it opens in Obsidian on the Mac, iPhone and iPad (see 10.1 for the exact location).
-2. The **Obsidian Git** plugin on the Mac commits and pushes the vault to the **private** repo `sevitz/thoughts-about-drafts`. It does not run on iOS (expect a small error on launch there); phone edits reach the Mac through iCloud and are pushed on the next Mac sync.
+The vault lives in iCloud so it opens in Obsidian on the Mac, iPhone and iPad (see 10.1 for the exact location). There is no git repo for drafts.
 
 Nothing in the vault is public.
 
 ### 5.2 Shaping and publishing with Claude Code
 
-Claude Code works on the vault directly, from any of:
+Claude Code works on the vault directly, from either:
 
 * the Terminal extension inside Obsidian on the Mac
 * the same session from phone or iPad via Remote Control
-* a Claude Code cloud session on `sevitz/thoughts-about-drafts` (sees whatever the Mac has pushed)
 
 Flow:
 
 1. Noodle in `Noodles/`. When an idea has legs, ask Claude to start `Drafts/<slug>/index.md` from the template.
-2. Iterate with Claude editing the file in place. Git history keeps every version.
+2. Iterate with Claude editing the file in place.
 3. When done, Claude fills in `social.linkedin` and `social.thread`, and the draft moves to `Ready/`.
-4. Publishing: Claude Code copies `Ready/<slug>/` into `posts/<slug>/` in the public `sevitz/thoughts-about` repo and opens a PR. After merge, the draft can be deleted or kept in a `Published/` folder.
+4. Publishing: Claude Code copies `Ready/<slug>/` into `posts/<slug>/` in the public `sevitz/thoughts-about` repo and opens a PR. After merge, the draft is deleted from `Ready/`. From then on, edits happen in `sevitz/thoughts-about` only, never back in the vault.
 
 Note: branches and PRs in the public repo are public, so only publish from `Ready/`.
 
 ### 5.3 Why not Google Docs
 
-Claude can read and create Google Docs but cannot modify them in place. Every revision means either merging changes by hand or creating a new document and losing edit history. Markdown files in a git backed vault avoid both, and need no conversion at publish time.
+Claude can read and create Google Docs but cannot modify them in place. Every revision means either merging changes by hand or creating a new document and losing edit history. Markdown files in the vault avoid both, and need no conversion at publish time.
 
 ### 5.4 Validation (on PR)
 
@@ -232,7 +228,7 @@ LinkedIn reaches fewer people when a post leads with an external link, so:
 
 | Phase | Scope | Where |
 |---|---|---|
-| 1 | Create `thoughts-about` repo, templates, `CLAUDE.md`, `STYLE.md`, schema, validate workflow, first post. Set up the `Thoughts About` vault, its private repo and Obsidian Git. | New repo, vault |
+| 1 | Create `thoughts-about` repo, templates, `CLAUDE.md`, `STYLE.md`, schema, validate workflow, first post. Set up the `Thoughts About` vault folders and `CLAUDE.md`. | New repo, vault |
 | 2 | Content collection, index, post page, RSS, sitemap, nav link, social images, deploy hook | sevitzdotcom |
 | 3 | `publish.yml`: deploy hook trigger, live check, social copy in job summary, README index | New repo |
 | 4 | "Record syndication" issue form and URL write back | New repo |
@@ -263,7 +259,7 @@ Also: branch protection on `main` requiring `validate.yml` to pass.
 | URL | `sevitz.com/thoughts-about/<slug>` |
 | Repo | `sevitz/thoughts-about`, public |
 | Licence | CC BY 4.0 for text, MIT for code snippets |
-| Drafting | Private Obsidian vault `Thoughts About`, synced by iCloud and backed by private repo `sevitz/thoughts-about-drafts`; Claude Code edits in place. Not Google Docs (see 5.3). |
+| Drafting | Private Obsidian vault `Thoughts About` in iCloud; Claude Code edits in place. Published posts are edited only on GitHub. No private drafts repo. Not Google Docs (see 5.3). |
 | Cross posting | Manual v1, then automate Bluesky, Threads, LinkedIn in that order |
 | Thread format | Opener with image and link, 3 to 5 body posts, closer with image and link |
 | GitHub source and history links on posts | Yes |
