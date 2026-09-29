@@ -174,7 +174,7 @@ Note: branches and PRs in the repo are public too, so only push once a draft has
 
 Middle option: keep the Obsidian vault inside a Google Drive folder synced to your desktop. Obsidian edits `.md` files, Claude reads them through the Drive connector. Works well on desktop, awkward on iOS.
 
-Recommendation: start with Google Docs because it already works everywhere Claude does. Revisit Obsidian if the noodle collection grows and linking ideas together starts to matter.
+Decision: start with Google Docs because it already works everywhere Claude does. Revisit Obsidian if the noodle collection grows and linking ideas together starts to matter.
 
 ### 5.4 Validation (on PR)
 
@@ -261,15 +261,9 @@ Also: branch protection on `main` requiring `validate.yml` to pass.
 | URL | `sevitz.com/thoughts-about/<slug>` |
 | Repo | `sevitz/thoughts-about`, public |
 | Licence | CC BY 4.0 for text, MIT for code snippets |
-| Drafting | Google Drive (private), publish on GitHub |
+| Drafting | Google Docs in Google Drive (private), publish on GitHub. Obsidian can be revisited later (see 5.3). |
 | Cross posting | Manual v1, then automate Bluesky, Threads, LinkedIn in that order |
 | Thread format | Opener with image and link, 3 to 5 body posts, closer with image and link |
 | GitHub source and history links on posts | Yes |
 | Comments on sevitz.com | No |
 | X | Never |
-
-## 10. Open questions
-
-| # | Question | Recommendation |
-|---|---|---|
-| Q1 | Google Docs or Obsidian for drafting | Google Docs to start (see 5.3) |
