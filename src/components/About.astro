@@ -2,31 +2,10 @@
 import { site } from "../data/site";
 ---
 
-<section class="intro text-center section-padding color-bg" id="about">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2 wp1">
-        <h1 class="arrow">A little <span>about</span> me</h1>
-        {site.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-      </div>
-    </div>
+<section class="about" id="about" aria-labelledby="about-label">
+  <h2 class="section-label" id="about-label">About</h2>
+  <div class="about-copy">
+    {site.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    <p class="about-footnote">{site.about.footnote}</p>
   </div>
 </section>
-
-<script>
-  const target = document.querySelector(".wp1");
-  if (target) {
-    const observer = new IntersectionObserver(
-      (entries, obs) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animated", "fadeInLeft");
-            obs.unobserve(entry.target);
-          }
-        }
-      },
-      { rootMargin: "0px 0px -25% 0px" }
-    );
-    observer.observe(target);
-  }
-</script>

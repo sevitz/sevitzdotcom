@@ -1,0 +1,24 @@
+---
+export const prerender = true;
+
+import HomeLayout from "../../layouts/HomeLayout.astro";
+import Footer from "../../components/Footer.astro";
+import { site } from "../../data/site";
+
+// Placeholder until the content collection lands (docs/thoughts-about-plan.md).
+---
+
+<HomeLayout title={`Thoughts about… | ${site.hero.firstName} ${site.hero.lastName}`}>
+  <div class="page-bar eyebrow">
+    <a class="wordmark" href="/">{site.hero.wordmark}<span class="dot">.</span></a>
+    <nav class="hero-nav" aria-label="Main">
+      {site.nav.map((item) => <a href={item.href === "#contact" ? "/#contact" : item.href}>{item.label}</a>)}
+    </nav>
+  </div>
+  <main class="page-main">
+    <p class="eyebrow" style="margin:0;color:var(--accent)">Writing</p>
+    <h1 class="page-title">Thoughts about…</h1>
+    <p class="page-lede">{site.links.thoughts.blurbEmpty}. First posts are on the way.</p>
+  </main>
+  <footer class="contact"><Footer /></footer>
+</HomeLayout>

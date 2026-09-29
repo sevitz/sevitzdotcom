@@ -1,0 +1,27 @@
+---
+import { site } from "../data/site";
+
+interface Props {
+  hasPosts: boolean;
+}
+
+const { hasPosts } = Astro.props;
+const { cv, thoughts } = site.links;
+---
+
+<section class="cards" aria-label="Start here">
+  <a class="card card-cv" href={cv.href}>
+    <span class="card-top eyebrow"><span>{cv.eyebrow}</span><span class="card-arrow" aria-hidden="true">↗</span></span>
+    <span class="card-bottom">
+      <span class="card-title">{cv.title}</span>
+      <span class="card-blurb">{cv.blurb}</span>
+    </span>
+  </a>
+  <a class="card card-thoughts" href={thoughts.href}>
+    <span class="card-top eyebrow"><span>{thoughts.eyebrow}</span><span class="card-arrow" aria-hidden="true">↗</span></span>
+    <span class="card-bottom">
+      <span class="card-title">{thoughts.title}</span>
+      <span class="card-blurb">{hasPosts ? thoughts.blurb : thoughts.blurbEmpty}</span>
+    </span>
+  </a>
+</section>

@@ -1,7 +1,7 @@
 ---
 import pkg from "../../package.json";
 
-let commit = process.env.CF_PAGES_COMMIT_SHA?.slice(0, 7);
+let commit = (process.env.WORKERS_CI_COMMIT_SHA ?? process.env.CF_PAGES_COMMIT_SHA)?.slice(0, 7);
 if (!commit) {
   try {
     const { execSync } = await import("node:child_process");
@@ -12,6 +12,4 @@ if (!commit) {
 }
 ---
 
-<footer class="site-footer">
-  <p>v{pkg.version} &middot; {commit}</p>
-</footer>
+<p class="site-version">v{pkg.version} &middot; {commit}</p>
