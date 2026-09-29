@@ -137,10 +137,10 @@ No comments or reactions on sevitz.com.
 
 ### 5.1 Drafting in an Obsidian vault
 
-Drafts are plain markdown in a private Obsidian vault named `Thoughts-About`, so Claude can edit them in place and every change has history.
+Drafts are plain markdown in a private Obsidian vault named `Thoughts About`, so Claude can edit them in place and every change has history.
 
 ```
-Thoughts-About/              # Obsidian vault, private git repo sevitz/thoughts-about-drafts
+Thoughts About/              # Obsidian vault, private git repo sevitz/thoughts-about-drafts
   CLAUDE.md                  # voice, structure and frontmatter rules (same as the public repo)
   STYLE.md
   Noodles/                   # loose ideas, fragments, links
@@ -232,7 +232,7 @@ LinkedIn reaches fewer people when a post leads with an external link, so:
 
 | Phase | Scope | Where |
 |---|---|---|
-| 1 | Create `thoughts-about` repo, templates, `CLAUDE.md`, `STYLE.md`, schema, validate workflow, first post. Set up the `Thoughts-About` vault, its private repo and Obsidian Git. | New repo, vault |
+| 1 | Create `thoughts-about` repo, templates, `CLAUDE.md`, `STYLE.md`, schema, validate workflow, first post. Set up the `Thoughts About` vault, its private repo and Obsidian Git. | New repo, vault |
 | 2 | Content collection, index, post page, RSS, sitemap, nav link, social images, deploy hook | sevitzdotcom |
 | 3 | `publish.yml`: deploy hook trigger, live check, social copy in job summary, README index | New repo |
 | 4 | "Record syndication" issue form and URL write back | New repo |
@@ -263,7 +263,7 @@ Also: branch protection on `main` requiring `validate.yml` to pass.
 | URL | `sevitz.com/thoughts-about/<slug>` |
 | Repo | `sevitz/thoughts-about`, public |
 | Licence | CC BY 4.0 for text, MIT for code snippets |
-| Drafting | Private Obsidian vault `Thoughts-About`, synced by iCloud and backed by private repo `sevitz/thoughts-about-drafts`; Claude Code edits in place. Not Google Docs (see 5.3). |
+| Drafting | Private Obsidian vault `Thoughts About`, synced by iCloud and backed by private repo `sevitz/thoughts-about-drafts`; Claude Code edits in place. Not Google Docs (see 5.3). |
 | Cross posting | Manual v1, then automate Bluesky, Threads, LinkedIn in that order |
 | Thread format | Opener with image and link, 3 to 5 body posts, closer with image and link |
 | GitHub source and history links on posts | Yes |
@@ -274,11 +274,7 @@ Also: branch protection on `main` requiring `validate.yml` to pass.
 
 ### 10.1 Vault location
 
-The new vault was created at `/Users/sevitz/Documents/Thoughts-About`. Check before relying on phone access:
-
-* That path only reaches iCloud if **Desktop & Documents Folders** sync is on in System Settings > Apple Account > iCloud > iCloud Drive.
-* Obsidian on iPhone and iPad can only open vaults stored in the iCloud Drive **Obsidian** folder (`~/Library/Mobile Documents/iCloud~md~obsidian/Documents/`). A vault elsewhere in iCloud will not show up on iOS.
-* If phone access matters, move the vault to `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Thoughts-About` and reopen it in Obsidian.
+The vault lives at `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Thoughts About`, the iCloud Drive Obsidian folder, so it opens in Obsidian on the Mac, iPhone and iPad.
 
 ### 10.2 Clean up old vaults
 
