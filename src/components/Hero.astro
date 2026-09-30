@@ -8,6 +8,9 @@ const images = hero.imageMode === "off" ? [] : hero.images;
 const hasImage = images.length > 0;
 // "random" picks its layer in the inline script below, before first paint.
 const initial = hero.imageMode === "random" ? -1 : 0;
+// Only the first photo is in the markup; the rest are set from data-src when
+// they are about to show, so a visit downloads one photo rather than all of them.
+const bg = (src: string) => `background-image:url('${src}');`;
 ---
 
 <header
@@ -21,7 +24,8 @@ const initial = hero.imageMode === "random" ? -1 : 0;
     images.map((image, i) => (
       <div
         class:list={["hero-layer", { "is-active": i === initial }]}
-        style={`background-image:url('${image.src}');background-position:${image.focus}`}
+        data-src={image.src}
+        style={`${i === initial ? bg(image.src) : ""}background-position:${image.focus}`}
         aria-hidden="true"
       />
     ))
@@ -31,7 +35,10 @@ const initial = hero.imageMode === "random" ? -1 : 0;
       const hero = document.currentScript.parentElement;
       if (hero.dataset.mode !== "random") return;
       const layers = hero.querySelectorAll(".hero-layer");
-      if (layers.length) layers[Math.floor(Math.random() * layers.length)].classList.add("is-active");
+      if (!layers.length) return;
+      const layer = layers[Math.floor(Math.random() * layers.length)];
+      layer.style.backgroundImage = `url('${layer.dataset.src}')`;
+      layer.classList.add("is-active");
     })();
   </script>
   <div class:list={["hero-scrim", { "is-glow": !hasImage }]} aria-hidden="true"></div>
@@ -60,15 +67,23 @@ const initial = hero.imageMode === "random" ? -1 : 0;
   const hero = document.querySelector<HTMLElement>(".hero");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // Set a photo layer's background from data-src, if it isn't set yet.
+  function load(layer: HTMLElement) {
+    if (!layer.style.backgroundImage) layer.style.backgroundImage = `url('${layer.dataset.src}')`;
+  }
+
   // Show items[next] and hide the rest. aria-hidden keeps screen readers on the visible one.
-  function cycle(items: HTMLElement[], ms: number, ariaHide: boolean) {
+  // prepare(item) runs one step ahead, so the next photo is loading before it fades in.
+  function cycle(items: HTMLElement[], ms: number, ariaHide: boolean, prepare?: (el: HTMLElement) => void) {
     if (items.length < 2 || !ms) return;
     let index = Math.max(
       0,
       items.findIndex((el) => el.classList.contains("is-active"))
     );
+    prepare?.(items[(index + 1) % items.length]);
     setInterval(() => {
       index = (index + 1) % items.length;
+      prepare?.(items[(index + 1) % items.length]);
       items.forEach((el, i) => {
         el.classList.toggle("is-active", i === index);
         if (ariaHide) {
@@ -82,7 +97,7 @@ const initial = hero.imageMode === "random" ? -1 : 0;
   if (hero && !reduceMotion) {
     cycle(Array.from(hero.querySelectorAll<HTMLElement>(".tagline p")), Number(hero.dataset.taglineMs), true);
     if (hero.dataset.mode === "rotate") {
-      cycle(Array.from(hero.querySelectorAll<HTMLElement>(".hero-layer")), Number(hero.dataset.rotateMs), false);
+      cycle(Array.from(hero.querySelectorAll<HTMLElement>(".hero-layer")), Number(hero.dataset.rotateMs), false, load);
     }
   }
 </script>
