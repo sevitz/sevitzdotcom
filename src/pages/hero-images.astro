@@ -1,0 +1,46 @@
+---
+export const prerender = true;
+
+// Unlinked, noindex view of every hero photo: its crop, file name and status.
+// Change a status in src/data/site.ts (hero.images).
+import HomeLayout from "../layouts/HomeLayout.astro";
+import { site, shownHeroImages, type Hero } from "../data/site";
+
+const hero: Hero = site.hero;
+const shown = new Set(shownHeroImages(hero.images));
+const holding = hero.images.some((image) => image.status === "hold");
+const editUrl = "https://github.com/sevitz/sevitzdotcom/edit/master/src/data/site.ts";
+
+const label = (image: Hero["images"][number]) =>
+  image.status === "skip" ? "Skip" : image.status === "hold" ? "Hold" : shown.has(image) ? "Shown" : "Not shown (hold on)";
+---
+
+<HomeLayout title="Hero images" noindex>
+  <div class="page-bar eyebrow">
+    <a class="wordmark" href="/">{hero.wordmark}<span class="dot">.</span></a>
+    <a href={editUrl}>Edit on GitHub →</a>
+  </div>
+  <main class="page-main hero-admin">
+    <h1 class="page-title">Hero images</h1>
+    <p class="page-lede">
+      {`${shown.size} of ${hero.images.length} shown${holding ? ", hold is on" : ""}. Mode: ${hero.imageMode}. Click to rotate: ${hero.clickToRotate ? "on" : "off"}.`}
+    </p>
+    <ul class="hero-admin-grid">
+      {
+        hero.images.map((image) => (
+          <li class:list={["hero-admin-item", { "is-hidden": !shown.has(image) }]}>
+            <div class="hero-admin-crops">
+              <img class="crop-desktop" src={image.src} alt="" loading="lazy" style={`object-position:${image.focus}`} />
+              <img class="crop-mobile" src={image.src} alt="" loading="lazy" style={`object-position:${image.focus}`} />
+            </div>
+            <span class="hero-admin-name">{image.src.split("/").pop()}</span>
+            <span class="hero-admin-meta">
+              <span class:list={["hero-admin-status", `is-${label(image).split(" ")[0].toLowerCase()}`]}>{label(image)}</span>
+              focus {image.focus}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</HomeLayout>

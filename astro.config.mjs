@@ -3,5 +3,6 @@ import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
   site: "https://sevitz.com",
-  integrations: [sitemap()],
+  // /hero-images/ is an unlinked admin view, so keep it out of the sitemap.
+  integrations: [sitemap({ filter: (page) => !page.includes("/hero-images/") })],
 });

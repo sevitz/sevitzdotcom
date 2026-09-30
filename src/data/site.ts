@@ -25,10 +25,10 @@ export const site = {
     taglineSeconds: 3.2,
 
     // Background photo(s) behind the hero. `focus` is a CSS background-position.
-    //   single: always images[0]
-    //   rotate: crossfade through images every rotateSeconds
-    //   random: pick one per page load
-    //   off:    no photo, solid warm dark with a soft glow
+    // Optional `status`:
+    //   "skip": never shown
+    //   "hold": if any photo is on hold, only held photos are shown
+    // See every photo, its crop and its status at /hero-images/ (unlinked, noindex).
     images: [
       { src: "/img/header-bg.jpg", focus: "70% 30%" },
       { src: "/img/hero/adrian-portrait.webp", focus: "50% 38%" },
@@ -39,9 +39,27 @@ export const site = {
       { src: "/img/hero/sunrise-above-clouds.webp", focus: "70% 42%" },
       { src: "/img/hero/savanna-sunset.webp", focus: "50% 45%" },
       { src: "/img/hero/sea-turtle.webp", focus: "65% 30%" },
+      { src: "/img/hero/kruger-elephant.webp", focus: "60% 35%" },
+      { src: "/img/hero/kruger-cheetah.webp", focus: "65% 55%" },
+      { src: "/img/hero/kruger-eagle.webp", focus: "40% 30%" },
+      { src: "/img/hero/kruger-roller.webp", focus: "40% 25%" },
+      { src: "/img/hero/kruger-weaver.webp", focus: "60% 55%" },
+      { src: "/img/hero/kruger-rock-trees.webp", focus: "50% 40%" },
+      { src: "/img/hero/kruger-sunset.webp", focus: "65% 50%" },
+      { src: "/img/hero/oslo-harbour-sunset.webp", focus: "50% 45%" },
+      { src: "/img/hero/oslo-fjord-sunset.webp", focus: "80% 42%" },
+      { src: "/img/hero/oslo-fjord-clouds.webp", focus: "70% 45%" },
+      { src: "/img/hero/oslo-park-river.webp", focus: "60% 45%" },
+      { src: "/img/hero/oslo-concrete-atrium.webp", focus: "50% 30%" },
     ],
+    //   single: always the first shown photo
+    //   rotate: crossfade through photos every rotateSeconds
+    //   random: pick one per page load
+    //   off:    no photo, solid warm dark with a soft glow
     imageMode: "random",
     rotateSeconds: 7,
+    // true: clicking the photo moves to the next one. Handy for checking crops.
+    clickToRotate: true,
   } satisfies Hero,
 
   links: {
@@ -88,7 +106,20 @@ export type Hero = {
   wordmark: string;
   taglinePhrases: readonly string[];
   taglineSeconds: number;
-  images: readonly { readonly src: string; readonly focus: string }[];
+  images: readonly HeroImage[];
   imageMode: "single" | "rotate" | "random" | "off";
   rotateSeconds: number;
+  clickToRotate: boolean;
 };
+
+export type HeroImage = {
+  readonly src: string;
+  readonly focus: string;
+  readonly status?: "skip" | "hold";
+};
+
+// The photos the hero can show: never "skip", and only "hold" when any are held.
+export function shownHeroImages(images: readonly HeroImage[]): readonly HeroImage[] {
+  const held = images.filter((image) => image.status === "hold");
+  return held.length > 0 ? held : images.filter((image) => image.status !== "skip");
+}
