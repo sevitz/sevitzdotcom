@@ -9,10 +9,19 @@ import { site, shownHeroImages, type Hero } from "../data/site";
 const hero: Hero = site.hero;
 const shown = new Set(shownHeroImages(hero.images));
 const holding = hero.images.some((image) => image.status === "hold");
+const deleting = hero.images.filter((image) => image.status === "delete").length;
 const editUrl = "https://github.com/sevitz/sevitzdotcom/edit/master/src/data/site.ts";
 
 const label = (image: Hero["images"][number]) =>
-  image.status === "skip" ? "Skip" : image.status === "hold" ? "Hold" : shown.has(image) ? "Shown" : "Not shown (hold on)";
+  image.status === "skip"
+    ? "Skip"
+    : image.status === "delete"
+      ? "Delete"
+      : image.status === "hold"
+        ? "Hold"
+        : shown.has(image)
+          ? "Shown"
+          : "Not shown (hold on)";
 ---
 
 <HomeLayout title="Hero images" noindex>
@@ -23,7 +32,7 @@ const label = (image: Hero["images"][number]) =>
   <main class="page-main hero-admin">
     <h1 class="page-title">Hero images</h1>
     <p class="page-lede">
-      {`${shown.size} of ${hero.images.length} shown${holding ? ", hold is on" : ""}. Mode: ${hero.imageMode}. Click to rotate: ${hero.clickToRotate ? "on" : "off"}.`}
+      {`${shown.size} of ${hero.images.length} shown${holding ? ", hold is on" : ""}. Mode: ${hero.imageMode}. Click to rotate: ${hero.clickToRotate ? "on" : "off"}.${deleting ? ` ${deleting} flagged for delete.` : ""}`}
     </p>
     <ul class="hero-admin-grid">
       {

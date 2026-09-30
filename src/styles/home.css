@@ -747,6 +747,11 @@ a:hover {
   background: var(--band);
 }
 
+.hero-admin-status.is-delete {
+  background: var(--ink);
+  color: var(--bg);
+}
+
 .hero-admin-status.is-hold {
   background: var(--accent);
   color: var(--on-accent);
