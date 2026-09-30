@@ -32,7 +32,6 @@ export const site = {
     images: [
       { src: "/img/header-bg.jpg", focus: "70% 30%" },
       { src: "/img/hero/adrian-portrait.webp", focus: "50% 38%" },
-      { src: "/img/hero/vzaar-team.webp", focus: "50% 20%" },
       { src: "/img/hero/thames-sunset.webp", focus: "50% 45%" },
       { src: "/img/hero/misty-park-morning.webp", focus: "65% 40%" },
       { src: "/img/hero/forest-rainbow.webp", focus: "60% 54%" },
