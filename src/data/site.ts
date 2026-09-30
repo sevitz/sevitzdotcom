@@ -14,10 +14,11 @@ export const site = {
     lastName: "Sevitz",
     wordmark: "Sev",
     taglinePhrases: [
-      "Technical and Product Leader",
-      "I build technology businesses, and the teams behind them",
       "Once edited a script with Oliver Stone",
-      "Founder turned CTO. Happiest where technology has clear business value",
+      "Technical and Product Leadership",
+      "Building technology, building technology teams",
+      "Once edited a script with Oliver Stone",
+      "Ex-Big 4 Consulting, Startup, Scaleup, Enterprise",
     ],
     // Spare phrases, swap any of these into taglinePhrases above:
     //   "Experience from Startups to Scale-ups to Enterprises"
@@ -36,13 +37,13 @@ export const site = {
     images: [
       { src: "/img/header-bg.jpg", focus: "70% 30%", status: "skip" },
       { src: "/img/hero/adrian-portrait.webp", focus: "50% 38%", status: "show", caption: "New Malden, 2024" },
-      { src: "/img/hero/thames-sunset.webp", focus: "50% 45%", status: "show", caption: "London, 2016" },
+      { src: "/img/hero/thames-sunset.webp", focus: "50% 45%", status: "show", caption: "Waterloo Bridge, 2016" },
       { src: "/img/hero/misty-park-morning.webp", focus: "65% 40%", status: "show", caption: "Cambridge, 2016" },
       { src: "/img/hero/forest-rainbow.webp", focus: "60% 54%", status: "show", caption: "New Forest, 2019" },
-      { src: "/img/hero/frosted-grass.webp", focus: "50% 60%", status: "show", caption: "London, 2022" },
-      { src: "/img/hero/sunrise-above-clouds.webp", focus: "70% 42%", status: "show", caption: "Haleakalā, Maui, 2022" },
+      { src: "/img/hero/frosted-grass.webp", focus: "50% 60%", status: "show", caption: "Wimbeldon, 2022" },
+      { src: "/img/hero/sunrise-above-clouds.webp", focus: "70% 42%", status: "show", caption: "Haleakalā, 2022" },
       { src: "/img/hero/savanna-sunset.webp", focus: "50% 45%", status: "show", caption: "Kruger National Park, 2010" },
-      { src: "/img/hero/sea-turtle.webp", focus: "65% 30%", status: "show", caption: "Maui, Hawaii, 2022" },
+      { src: "/img/hero/sea-turtle.webp", focus: "65% 30%", status: "show", caption: "Maui, 2022" },
       { src: "/img/hero/kruger-elephant.webp", focus: "60% 35%", status: "show", caption: "Kruger National Park, 2010" },
       { src: "/img/hero/kruger-cheetah.webp", focus: "65% 55%", status: "show", caption: "Kruger National Park, 2010" },
       { src: "/img/hero/kruger-weaver.webp", focus: "60% 55%", status: "show", caption: "Kruger National Park, 2025" },
@@ -82,7 +83,7 @@ export const site = {
     paragraphs: [
       "Co-founded vzaar and took it from concept to profitability and acquisition by DaCast. Since then, led technology and product teams of 100+ on platforms serving 1.5m+ members, employers and advisers.",
     ],
-    footnote: "Ex-Accenture and eBay. Electrical engineer by training.",
+    footnote: "Electrical Engineer. Big 4 Consulting, Startup, Scale-up and Enterprise",
   },
 
   contact: {
