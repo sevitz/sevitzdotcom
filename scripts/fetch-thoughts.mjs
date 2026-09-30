@@ -12,7 +12,9 @@ const dest = ".content/thoughts-about";
 const publicDir = "public/thoughts-about";
 
 async function download() {
-  const res = await fetch(TARBALL);
+  const res = await fetch(TARBALL).catch((err) => {
+    throw new Error(`GET ${TARBALL} failed: ${err.message}`);
+  });
   if (!res.ok) throw new Error(`GET ${TARBALL} returned ${res.status}`);
   const tmp = mkdtempSync(join(tmpdir(), "thoughts-"));
   const file = join(tmp, "repo.tar.gz");
