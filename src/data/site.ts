@@ -23,7 +23,7 @@ export const site = {
     // Spare phrases, swap any of these into taglinePhrases above:
     //   "Experience from Startups to Scale-ups to Enterprises"
     //   "Using technology to solve problems that actually matter"
-    taglineSeconds: 3.2,
+    taglineSeconds: 5.2,
 
     // Background photo(s) behind the hero. `focus` is a CSS background-position.
     // `caption` (optional): "Place, Year", shown small at the bottom right of the hero.
