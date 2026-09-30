@@ -14,3 +14,7 @@ node_modules/
 
 # wrangler
 .wrangler/
+
+# thoughts-about content, fetched at build time
+.content/
+public/thoughts-about/

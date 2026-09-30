@@ -1,0 +1,58 @@
+---
+export const prerender = true;
+
+import { render } from "astro:content";
+import HomeLayout from "../../layouts/HomeLayout.astro";
+import Footer from "../../components/Footer.astro";
+import PostFooter from "../../components/PostFooter.astro";
+import { site } from "../../data/site";
+import { formatDate, getPublishedPosts } from "../../lib/thoughts";
+
+export async function getStaticPaths() {
+  return (await getPublishedPosts()).map((post) => ({ params: { slug: post.data.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { data } = post;
+const { Content } = await render(post);
+const image = data.image ? `/thoughts-about/${data.slug}/${data.image.src}` : undefined;
+---
+
+<HomeLayout
+  title={`${data.title} | ${site.hero.firstName} ${site.hero.lastName}`}
+  description={data.summary}
+  ogType="article"
+  ogImage={image}
+  rss
+>
+  <div class="page-bar eyebrow">
+    <a class="wordmark" href="/">{site.hero.wordmark}<span class="dot">.</span></a>
+    <nav class="hero-nav" aria-label="Main">
+      {site.nav.map((item) => <a href={item.href === "#contact" ? "/#contact" : item.href}>{item.label}</a>)}
+    </nav>
+  </div>
+  <main class="page-main post-page">
+    <a class="eyebrow" style="color:var(--accent)" href="/thoughts-about/">← Thoughts about…</a>
+    <article>
+      <header class="post-header">
+        <p class="post-meta">
+          {formatDate(data.date)}
+          {data.updated && ` · Updated ${formatDate(data.updated)}`}
+          {data.readingTimeMinutes && ` · ${data.readingTimeMinutes} min read`}
+        </p>
+        <h1 class="post-title-main">{data.title}</h1>
+        {data.subtitle && <p class="page-lede">{data.subtitle}</p>}
+      </header>
+      <div class="prose"><Content /></div>
+      {
+        data.tags.length > 0 && (
+          <ul class="post-tags" aria-label="Tags">
+            {data.tags.map((t) => <li>{t}</li>)}
+          </ul>
+        )
+      }
+    </article>
+    <PostFooter slug={data.slug} syndication={data.syndication} />
+  </main>
+  <footer class="contact"><Footer /></footer>
+</HomeLayout>

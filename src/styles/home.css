@@ -491,3 +491,141 @@ a:hover {
     transform: none;
   }
 }
+
+/* ---------- Thoughts about: index, posts ---------- */
+
+.post-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  max-width: 68ch;
+}
+
+.post-list li {
+  border-top: 1px solid var(--line);
+}
+
+.post-list a {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 24px 0;
+}
+
+.post-list-title {
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.post-list a:hover .post-list-title {
+  color: var(--accent);
+}
+
+.post-list-summary {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.post-meta {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.post-page article,
+.post-elsewhere {
+  max-width: 68ch;
+}
+
+.post-header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.post-title-main {
+  margin: 0;
+  font-size: clamp(36px, 6vw, 60px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.prose {
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.prose p,
+.prose ol,
+.prose ul,
+.prose blockquote {
+  margin: 0 0 1.1em;
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.prose blockquote {
+  padding-left: 16px;
+  border-left: 3px solid var(--line);
+  color: var(--muted);
+}
+
+.prose h2,
+.prose h3 {
+  margin: 1.6em 0 0.5em;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.post-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0 0;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.post-tags li {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+.post-elsewhere {
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+
+.post-elsewhere ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.post-elsewhere a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
