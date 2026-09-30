@@ -33,7 +33,7 @@ export const site = {
     //             photos (file and line) on the next hero update
     // See every photo, its crop and its status at /hero-images/ (unlinked, noindex).
     images: [
-      { src: "/img/header-bg.jpg", focus: "70% 30%", status: "show" },
+      { src: "/img/header-bg.jpg", focus: "70% 30%", status: "hide" },
       { src: "/img/hero/adrian-portrait.webp", focus: "50% 38%", status: "show" },
       { src: "/img/hero/thames-sunset.webp", focus: "50% 45%", status: "show" },
       { src: "/img/hero/misty-park-morning.webp", focus: "65% 40%", status: "show" },
@@ -44,16 +44,16 @@ export const site = {
       { src: "/img/hero/sea-turtle.webp", focus: "65% 30%", status: "show" },
       { src: "/img/hero/kruger-elephant.webp", focus: "60% 35%", status: "show" },
       { src: "/img/hero/kruger-cheetah.webp", focus: "65% 55%", status: "show" },
-      { src: "/img/hero/kruger-eagle.webp", focus: "40% 30%", status: "show" },
-      { src: "/img/hero/kruger-roller.webp", focus: "40% 25%", status: "show" },
+      { src: "/img/hero/kruger-eagle.webp", focus: "40% 30%", status: "delete" },
+      { src: "/img/hero/kruger-roller.webp", focus: "40% 25%", status: "delete" },
       { src: "/img/hero/kruger-weaver.webp", focus: "60% 55%", status: "show" },
       { src: "/img/hero/kruger-rock-trees.webp", focus: "50% 40%", status: "show" },
       { src: "/img/hero/kruger-sunset.webp", focus: "65% 50%", status: "show" },
       { src: "/img/hero/oslo-harbour-sunset.webp", focus: "50% 45%", status: "show" },
       { src: "/img/hero/oslo-fjord-sunset.webp", focus: "80% 42%", status: "show" },
       { src: "/img/hero/oslo-fjord-clouds.webp", focus: "70% 45%", status: "show" },
-      { src: "/img/hero/oslo-park-river.webp", focus: "60% 45%", status: "show" },
-      { src: "/img/hero/oslo-concrete-atrium.webp", focus: "50% 30%", status: "show" },
+      { src: "/img/hero/oslo-park-river.webp", focus: "60% 45%", status: "delete" },
+      { src: "/img/hero/oslo-concrete-atrium.webp", focus: "50% 30%", status: "delete" },
     ],
     //   single: always the first shown photo
     //   rotate: crossfade through photos every rotateSeconds
