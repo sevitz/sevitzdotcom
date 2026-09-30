@@ -7,10 +7,15 @@ import Links from "../components/Links.astro";
 import Latest, { type PostSummary } from "../components/Latest.astro";
 import About from "../components/About.astro";
 import Contact from "../components/Contact.astro";
+import { getPublishedPosts } from "../lib/thoughts";
 
-// Filled from the Thoughts about content collection (docs/thoughts-about-plan.md,
-// phase 2): the 3 newest `status: published` posts. Empty until then.
-const posts: PostSummary[] = [];
+// The 3 newest `status: published` Thoughts about posts; empty until one is published.
+const posts: PostSummary[] = (await getPublishedPosts()).map(({ data }) => ({
+  slug: data.slug,
+  tag: data.tags[0] ?? "Note",
+  title: data.title,
+  summary: data.summary,
+}));
 ---
 
 <HomeLayout>

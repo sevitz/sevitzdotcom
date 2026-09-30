@@ -29,3 +29,11 @@ Cloudflare Workers Builds is connected to this repo. Config lives in `wrangler.j
 - **Branch previews:** a push to any other branch runs `npm run build` then `npx wrangler preview`, which creates or updates a [Worker Preview](https://developers.cloudflare.com/workers/previews/) for that branch on a `workers.dev` Preview URL. Production is untouched, and Cloudflare comments the Preview URL on the PR.
 - Previews sit behind Cloudflare Access (Worker, then Settings, then Domains & Routes), so only allowed emails can open them.
 - The `previews` block in `wrangler.jsonc` holds preview-only settings. It is empty because the site has no bindings or secrets.
+
+## Thoughts about content
+
+Posts live in the public repo [`sevitz/thoughts-about`](https://github.com/sevitz/thoughts-about), not here. `npm run build` and `npm run dev` first run `scripts/fetch-thoughts.mjs`, which downloads `main` into the gitignored `.content/thoughts-about/`. Only `status: published` posts get pages, feed entries and sitemap entries.
+
+- Local fixture: `THOUGHTS_CONTENT_DIR=/path/with/posts npm run build`.
+- With `CI` set, a failed download fails the build; locally it only warns.
+- A merge to the posts repo rebuilds the site through a Workers Builds deploy hook (secret `CF_PAGES_DEPLOY_HOOK_URL` in the posts repo). The hook URL is never committed.

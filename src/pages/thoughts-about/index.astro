@@ -4,11 +4,12 @@ export const prerender = true;
 import HomeLayout from "../../layouts/HomeLayout.astro";
 import Footer from "../../components/Footer.astro";
 import { site } from "../../data/site";
+import { formatDate, getPublishedPosts, postPath } from "../../lib/thoughts";
 
-// Placeholder until the content collection lands (docs/thoughts-about-plan.md).
+const posts = await getPublishedPosts();
 ---
 
-<HomeLayout title={`Thoughts about… | ${site.hero.firstName} ${site.hero.lastName}`}>
+<HomeLayout title={`Thoughts about… | ${site.hero.firstName} ${site.hero.lastName}`} rss>
   <div class="page-bar eyebrow">
     <a class="wordmark" href="/">{site.hero.wordmark}<span class="dot">.</span></a>
     <nav class="hero-nav" aria-label="Main">
@@ -18,7 +19,26 @@ import { site } from "../../data/site";
   <main class="page-main">
     <p class="eyebrow" style="margin:0;color:var(--accent)">Writing</p>
     <h1 class="page-title">Thoughts about…</h1>
-    <p class="page-lede">{site.links.thoughts.blurbEmpty}. First posts are on the way.</p>
+    {
+      posts.length > 0 ? (
+        <ol class="post-list">
+          {posts.map((post) => (
+            <li>
+              <a href={postPath(post)}>
+                <span class="post-list-title">{post.data.title}</span>
+                <span class="post-list-summary">{post.data.summary}</span>
+                <span class="post-meta">
+                  {formatDate(post.data.date)}
+                  {post.data.readingTimeMinutes && ` · ${post.data.readingTimeMinutes} min read`}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p class="page-lede">{site.links.thoughts.blurbEmpty}. First posts are on the way.</p>
+      )
+    }
   </main>
   <footer class="contact"><Footer /></footer>
 </HomeLayout>

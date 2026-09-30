@@ -1,0 +1,24 @@
+---
+import { historyUrl, sourceUrl } from "../lib/thoughts";
+
+interface Props {
+  slug: string;
+  syndication?: { linkedin?: string; bluesky?: string; threads?: string };
+}
+
+const { slug, syndication = {} } = Astro.props;
+const links = [
+  { label: "Source on GitHub", href: sourceUrl(slug) },
+  { label: "Edit history", href: historyUrl(slug) },
+  ...(syndication.linkedin ? [{ label: "LinkedIn", href: syndication.linkedin }] : []),
+  ...(syndication.bluesky ? [{ label: "Bluesky", href: syndication.bluesky }] : []),
+  ...(syndication.threads ? [{ label: "Threads", href: syndication.threads }] : []),
+];
+---
+
+<aside class="post-elsewhere" aria-labelledby="elsewhere-label">
+  <h2 class="section-label" id="elsewhere-label">This post elsewhere</h2>
+  <ul>
+    {links.map((l) => <li><a href={l.href} rel="noopener">{l.label}</a></li>)}
+  </ul>
+</aside>
