@@ -1,10 +1,10 @@
 ---
-import { site, type Hero } from "../data/site";
+import { site, shownHeroImages, type Hero } from "../data/site";
 
 // Widen from the `as const` literal so every image mode type-checks.
 const hero: Hero = site.hero;
 const { nav } = site;
-const images = hero.imageMode === "off" ? [] : hero.images;
+const images = hero.imageMode === "off" ? [] : shownHeroImages(hero.images);
 const hasImage = images.length > 0;
 // "random" picks its layer in the inline script below, before first paint.
 const initial = hero.imageMode === "random" ? -1 : 0;
@@ -19,6 +19,7 @@ const bg = (src: string) => `background-image:url('${src}');`;
   data-mode={hero.imageMode}
   data-rotate-ms={hero.rotateSeconds * 1000}
   data-tagline-ms={hero.taglineSeconds * 1000}
+  data-click-rotate={hero.clickToRotate && images.length > 1 ? "" : undefined}
 >
   {
     images.map((image, i) => (
@@ -92,6 +93,17 @@ const bg = (src: string) => `background-image:url('${src}');`;
         }
       });
     }, ms);
+  }
+
+  // clickToRotate: a click on the photo (not a link) shows the next one.
+  if (hero?.hasAttribute("data-click-rotate")) {
+    const layers = Array.from(hero.querySelectorAll<HTMLElement>(".hero-layer"));
+    hero.addEventListener("click", (event) => {
+      if ((event.target as HTMLElement).closest("a")) return;
+      const next = (layers.findIndex((el) => el.classList.contains("is-active")) + 1) % layers.length;
+      load(layers[next]);
+      layers.forEach((el, i) => el.classList.toggle("is-active", i === next));
+    });
   }
 
   if (hero && !reduceMotion) {

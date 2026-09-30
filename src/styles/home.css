@@ -671,3 +671,88 @@ a:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* ---------- /hero-images/ admin view ---------- */
+
+.hero-admin {
+  max-width: none;
+}
+
+.hero-admin-grid {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+  gap: 32px 24px;
+}
+
+.hero-admin-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hero-admin-item.is-hidden img {
+  opacity: 0.35;
+}
+
+/* Desktop crop at the hero's ~1440x368 shape, phone crop at ~375x325. */
+.hero-admin-crops {
+  display: grid;
+  grid-template-columns: 1fr 22%;
+  gap: 8px;
+  align-items: end;
+}
+
+.hero-admin-crops img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  background: var(--line);
+}
+
+.crop-desktop {
+  aspect-ratio: 1440 / 368;
+}
+
+.crop-mobile {
+  aspect-ratio: 375 / 325;
+}
+
+.hero-admin-name {
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+
+.hero-admin-meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.hero-admin-status {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  background: var(--line);
+  color: var(--ink);
+}
+
+.hero-admin-status.is-shown {
+  background: var(--band);
+}
+
+.hero-admin-status.is-hold {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* Click to rotate: the photo acts as a button. */
+.hero[data-click-rotate] {
+  cursor: pointer;
+}
