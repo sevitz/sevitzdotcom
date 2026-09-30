@@ -2,14 +2,14 @@
 import { historyUrl, sourceUrl } from "../lib/thoughts";
 
 interface Props {
-  slug: string;
+  folder: string;
   syndication?: { linkedin?: string; bluesky?: string; threads?: string };
 }
 
-const { slug, syndication = {} } = Astro.props;
+const { folder, syndication = {} } = Astro.props;
 const links = [
-  { label: "Source on GitHub", href: sourceUrl(slug) },
-  { label: "Edit history", href: historyUrl(slug) },
+  { label: "Source on GitHub", href: sourceUrl(folder) },
+  { label: "Edit history", href: historyUrl(folder) },
   ...(syndication.linkedin ? [{ label: "LinkedIn", href: syndication.linkedin }] : []),
   ...(syndication.bluesky ? [{ label: "Bluesky", href: syndication.bluesky }] : []),
   ...(syndication.threads ? [{ label: "Threads", href: syndication.threads }] : []),

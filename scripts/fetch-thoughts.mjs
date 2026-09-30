@@ -3,7 +3,7 @@
 // Set THOUGHTS_CONTENT_DIR to a local directory containing posts/ to use it instead.
 // A failed download is fatal when CI is set, otherwise it warns and reuses any existing copy.
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -33,15 +33,35 @@ function useLocal(dir) {
   if (existsSync(join(dir, "posts"))) cpSync(join(dir, "posts"), join(dest, "posts"), { recursive: true });
 }
 
+// Minimal frontmatter read: the `slug:` line inside the leading --- block.
+function readSlug(indexPath) {
+  if (!existsSync(indexPath)) return undefined;
+  const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(readFileSync(indexPath, "utf8"));
+  const m = fm && /^slug:[ \t]*(?:"([^"\r\n]*)"|'([^'\r\n]*)'|([^\s#]+))[ \t]*(?:#.*)?\r?$/m.exec(fm[1]);
+  const v = m && (m[1] ?? m[2] ?? m[3]);
+  return v && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v) ? v : undefined;
+}
+
+// Folders may be dated (2026-10-01-foo) while the URL key is the frontmatter slug (foo).
 function copyAssets() {
   rmSync(publicDir, { recursive: true, force: true });
   const posts = join(dest, "posts");
-  for (const slug of readdirSync(posts, { withFileTypes: true })) {
-    if (!slug.isDirectory()) continue;
-    for (const file of readdirSync(join(posts, slug.name), { withFileTypes: true })) {
+  for (const folder of readdirSync(posts, { withFileTypes: true })) {
+    if (!folder.isDirectory()) continue;
+    let slug = readSlug(join(posts, folder.name, "index.md"));
+    if (!slug) {
+      const msg = `${folder.name}/index.md has no readable slug`;
+      if (process.env.CI) {
+        console.error(`fetch-thoughts: ${msg}`);
+        process.exit(1);
+      }
+      console.warn(`fetch-thoughts: ${msg}; falling back to folder name`);
+      slug = folder.name;
+    }
+    for (const file of readdirSync(join(posts, folder.name), { withFileTypes: true })) {
       if (!file.isFile() || file.name.endsWith(".md")) continue;
-      mkdirSync(join(publicDir, slug.name), { recursive: true });
-      cpSync(join(posts, slug.name, file.name), join(publicDir, slug.name, file.name));
+      mkdirSync(join(publicDir, slug), { recursive: true });
+      cpSync(join(posts, folder.name, file.name), join(publicDir, slug, file.name));
     }
   }
 }
