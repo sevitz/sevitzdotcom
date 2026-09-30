@@ -48,17 +48,14 @@ const bg = (src: string) => `background-image:url('${src}');`;
   <p class="hero-caption" aria-label="Photo caption"></p>
 
   <div class="hero-bar eyebrow">
-    <a class="wordmark" href="/" aria-label={`${hero.firstName} ${hero.lastName}, home`}>{hero.wordmark}<span class="dot">.</span></a>
+    <p class="hero-name">{hero.firstName} {hero.lastName}</p>
     <nav class="hero-nav" aria-label="Main">
       {nav.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
   </div>
 
   <div class="hero-body">
-    <div class="hero-mark">
-      <p class="hero-name">{hero.firstName} {hero.lastName}</p>
-      <h1 class="hero-title">{hero.wordmark}<span class="dot">.</span></h1>
-    </div>
+    <h1 class="hero-title">{hero.wordmark}<span class="dot">.</span></h1>
     <div class="tagline">
       {hero.taglinePhrases.map((phrase, i) => (
         <p class:list={{ "is-active": i === 0 }} aria-hidden={i === 0 ? undefined : "true"}>{phrase}</p>

@@ -184,12 +184,6 @@ a:hover {
   gap: clamp(24px, 4vw, 56px);
 }
 
-.hero-mark {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
 .hero-name {
   margin: 0;
   font-size: 15px;
@@ -202,7 +196,7 @@ a:hover {
 .hero-title {
   margin: 0;
   font-weight: 700;
-  font-size: clamp(88px, 11vw, 160px);
+  font-size: clamp(96px, 13vw, 190px);
   line-height: 0.8;
   letter-spacing: -0.06em;
 }
@@ -514,6 +508,15 @@ a:hover {
   .tagline {
     padding-left: 0;
     border-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  /* The name now shares the top bar with the nav, so keep it on one line. */
+  .hero-bar .hero-name {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
   }
 }
 
