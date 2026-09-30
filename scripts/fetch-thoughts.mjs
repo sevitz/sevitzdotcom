@@ -37,8 +37,9 @@ function useLocal(dir) {
 function readSlug(indexPath) {
   if (!existsSync(indexPath)) return undefined;
   const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(readFileSync(indexPath, "utf8"));
-  const m = fm && /^slug:\s*["']?([a-z0-9]+(?:-[a-z0-9]+)*)["']?\s*$/m.exec(fm[1]);
-  return m ? m[1] : undefined;
+  const m = fm && /^slug:[ \t]*(?:"([^"\r\n]*)"|'([^'\r\n]*)'|([^\s#]+))[ \t]*(?:#.*)?\r?$/m.exec(fm[1]);
+  const v = m && (m[1] ?? m[2] ?? m[3]);
+  return v && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v) ? v : undefined;
 }
 
 // Folders may be dated (2026-10-01-foo) while the URL key is the frontmatter slug (foo).
