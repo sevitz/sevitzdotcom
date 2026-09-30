@@ -6,7 +6,7 @@ import HomeLayout from "../../layouts/HomeLayout.astro";
 import Footer from "../../components/Footer.astro";
 import PostFooter from "../../components/PostFooter.astro";
 import { site } from "../../data/site";
-import { formatDate, getPublishedPosts } from "../../lib/thoughts";
+import { formatDate, getPublishedPosts, postFolder } from "../../lib/thoughts";
 
 export async function getStaticPaths() {
   return (await getPublishedPosts()).map((post) => ({ params: { slug: post.data.slug }, props: { post } }));
@@ -52,7 +52,7 @@ const image = data.image ? `/thoughts-about/${data.slug}/${data.image.src}` : un
         )
       }
     </article>
-    <PostFooter slug={data.slug} syndication={data.syndication} />
+    <PostFooter folder={postFolder(post)} syndication={data.syndication} />
   </main>
   <footer class="contact"><Footer /></footer>
 </HomeLayout>
