@@ -29,8 +29,18 @@ export const site = {
     //   rotate: crossfade through images every rotateSeconds
     //   random: pick one per page load
     //   off:    no photo, solid warm dark with a soft glow
-    images: [{ src: "/img/header-bg.jpg", focus: "70% 30%" }],
-    imageMode: "single",
+    images: [
+      { src: "/img/header-bg.jpg", focus: "70% 30%" },
+      { src: "/img/hero/adrian-portrait.webp", focus: "50% 38%" },
+      { src: "/img/hero/thames-sunset.webp", focus: "50% 45%" },
+      { src: "/img/hero/misty-park-morning.webp", focus: "65% 40%" },
+      { src: "/img/hero/forest-rainbow.webp", focus: "60% 54%" },
+      { src: "/img/hero/frosted-grass.webp", focus: "50% 60%" },
+      { src: "/img/hero/sunrise-above-clouds.webp", focus: "70% 42%" },
+      { src: "/img/hero/savanna-sunset.webp", focus: "50% 45%" },
+      { src: "/img/hero/sea-turtle.webp", focus: "65% 30%" },
+    ],
+    imageMode: "random",
     rotateSeconds: 7,
   } satisfies Hero,
 
