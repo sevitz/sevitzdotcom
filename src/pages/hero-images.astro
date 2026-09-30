@@ -43,6 +43,7 @@ const label = (image: Hero["images"][number]) =>
               <img class="crop-mobile" src={image.src} alt="" loading="lazy" style={`object-position:${image.focus}`} />
             </div>
             <span class="hero-admin-name">{image.src.split("/").pop()}</span>
+            <span class="hero-admin-caption">{image.caption ?? "No caption"}</span>
             <span class="hero-admin-meta">
               <span class:list={["hero-admin-status", `is-${label(image).split(" ")[0].toLowerCase()}`]}>{label(image)}</span>
               focus {image.focus}

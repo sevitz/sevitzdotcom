@@ -25,6 +25,7 @@ export const site = {
     taglineSeconds: 3.2,
 
     // Background photo(s) behind the hero. `focus` is a CSS background-position.
+    // `caption` (optional): "Place, Year", shown small at the bottom right of the hero.
     // `status` (optional, defaults to "show"):
     //   "show":   in the rotation
     //   "skip":   never shown
@@ -33,27 +34,23 @@ export const site = {
     //             photos (file and line) on the next hero update
     // See every photo, its crop and its status at /hero-images/ (unlinked, noindex).
     images: [
-      { src: "/img/header-bg.jpg", focus: "70% 30%", status: "hide" },
-      { src: "/img/hero/adrian-portrait.webp", focus: "50% 38%", status: "show" },
-      { src: "/img/hero/thames-sunset.webp", focus: "50% 45%", status: "show" },
-      { src: "/img/hero/misty-park-morning.webp", focus: "65% 40%", status: "show" },
-      { src: "/img/hero/forest-rainbow.webp", focus: "60% 54%", status: "show" },
-      { src: "/img/hero/frosted-grass.webp", focus: "50% 60%", status: "show" },
-      { src: "/img/hero/sunrise-above-clouds.webp", focus: "70% 42%", status: "show" },
-      { src: "/img/hero/savanna-sunset.webp", focus: "50% 45%", status: "show" },
-      { src: "/img/hero/sea-turtle.webp", focus: "65% 30%", status: "show" },
-      { src: "/img/hero/kruger-elephant.webp", focus: "60% 35%", status: "show" },
-      { src: "/img/hero/kruger-cheetah.webp", focus: "65% 55%", status: "show" },
-      { src: "/img/hero/kruger-eagle.webp", focus: "40% 30%", status: "delete" },
-      { src: "/img/hero/kruger-roller.webp", focus: "40% 25%", status: "delete" },
-      { src: "/img/hero/kruger-weaver.webp", focus: "60% 55%", status: "show" },
-      { src: "/img/hero/kruger-rock-trees.webp", focus: "50% 40%", status: "show" },
-      { src: "/img/hero/kruger-sunset.webp", focus: "65% 50%", status: "show" },
-      { src: "/img/hero/oslo-harbour-sunset.webp", focus: "50% 45%", status: "show" },
-      { src: "/img/hero/oslo-fjord-sunset.webp", focus: "80% 42%", status: "show" },
-      { src: "/img/hero/oslo-fjord-clouds.webp", focus: "70% 45%", status: "show" },
-      { src: "/img/hero/oslo-park-river.webp", focus: "60% 45%", status: "delete" },
-      { src: "/img/hero/oslo-concrete-atrium.webp", focus: "50% 30%", status: "delete" },
+      { src: "/img/header-bg.jpg", focus: "70% 30%", status: "skip" },
+      { src: "/img/hero/adrian-portrait.webp", focus: "50% 38%", status: "show", caption: "New Malden, 2024" },
+      { src: "/img/hero/thames-sunset.webp", focus: "50% 45%", status: "show", caption: "London, 2016" },
+      { src: "/img/hero/misty-park-morning.webp", focus: "65% 40%", status: "show", caption: "Cambridge, 2016" },
+      { src: "/img/hero/forest-rainbow.webp", focus: "60% 54%", status: "show", caption: "New Forest, 2019" },
+      { src: "/img/hero/frosted-grass.webp", focus: "50% 60%", status: "show", caption: "London, 2022" },
+      { src: "/img/hero/sunrise-above-clouds.webp", focus: "70% 42%", status: "show", caption: "Haleakalā, Maui, 2022" },
+      { src: "/img/hero/savanna-sunset.webp", focus: "50% 45%", status: "show", caption: "Kruger National Park, 2010" },
+      { src: "/img/hero/sea-turtle.webp", focus: "65% 30%", status: "show", caption: "Maui, Hawaii, 2022" },
+      { src: "/img/hero/kruger-elephant.webp", focus: "60% 35%", status: "show", caption: "Kruger National Park, 2010" },
+      { src: "/img/hero/kruger-cheetah.webp", focus: "65% 55%", status: "show", caption: "Kruger National Park, 2010" },
+      { src: "/img/hero/kruger-weaver.webp", focus: "60% 55%", status: "show", caption: "Kruger National Park, 2025" },
+      { src: "/img/hero/kruger-rock-trees.webp", focus: "50% 40%", status: "show", caption: "Kruger National Park, 2025" },
+      { src: "/img/hero/kruger-sunset.webp", focus: "65% 50%", status: "show", caption: "Kruger National Park, 2025" },
+      { src: "/img/hero/oslo-harbour-sunset.webp", focus: "50% 45%", status: "show", caption: "Oslo, 2024" },
+      { src: "/img/hero/oslo-fjord-sunset.webp", focus: "80% 42%", status: "show", caption: "Oslo, 2024" },
+      { src: "/img/hero/oslo-fjord-clouds.webp", focus: "70% 45%", status: "show", caption: "Oslo, 2024" },
     ],
     //   single: always the first shown photo
     //   rotate: crossfade through photos every rotateSeconds
@@ -118,6 +115,7 @@ export type Hero = {
 export type HeroImage = {
   readonly src: string;
   readonly focus: string;
+  readonly caption?: string;
   readonly status?: "show" | "skip" | "hold" | "delete";
 };
 

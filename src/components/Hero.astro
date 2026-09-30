@@ -26,6 +26,7 @@ const bg = (src: string) => `background-image:url('${src}');`;
       <div
         class:list={["hero-layer", { "is-active": i === initial }]}
         data-src={image.src}
+        data-caption={image.caption}
         style={`${i === initial ? bg(image.src) : ""}background-position:${image.focus}`}
         aria-hidden="true"
       />
@@ -43,6 +44,8 @@ const bg = (src: string) => `background-image:url('${src}');`;
     })();
   </script>
   <div class:list={["hero-scrim", { "is-glow": !hasImage }]} aria-hidden="true"></div>
+
+  <p class="hero-caption" aria-label="Photo caption"></p>
 
   <div class="hero-bar eyebrow">
     <a class="wordmark" href="/" aria-label={`${hero.firstName} ${hero.lastName}, home`}>{hero.wordmark}<span class="dot">.</span></a>
@@ -93,6 +96,18 @@ const bg = (src: string) => `background-image:url('${src}');`;
         }
       });
     }, ms);
+  }
+
+  // Keep the bottom-right caption in step with whichever photo layer is active,
+  // however it changed (random pick, rotate, or click).
+  const caption = hero?.querySelector<HTMLElement>(".hero-caption");
+  function showCaption() {
+    const active = hero?.querySelector<HTMLElement>(".hero-layer.is-active");
+    if (caption) caption.textContent = active?.dataset.caption ?? "";
+  }
+  if (hero && caption) {
+    showCaption();
+    new MutationObserver(showCaption).observe(hero, { subtree: true, attributes: true, attributeFilter: ["class"] });
   }
 
   // clickToRotate: a click on the photo (not a link) shows the next one.

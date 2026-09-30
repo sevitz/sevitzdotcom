@@ -128,6 +128,26 @@ a:hover {
   background-image: radial-gradient(120% 90% at 85% 10%, oklch(0.32 0.07 40) 0%, oklch(0.2 0.03 45 / 0) 60%);
 }
 
+/* Photo caption, bottom right. Sits below the hero-body bottom padding, clear of the tagline. */
+.hero-caption {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 9px;
+  z-index: 1;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  color: var(--hero-ink);
+  opacity: 0.75;
+  text-shadow: 0 1px 3px oklch(0.14 0.03 45 / 0.8);
+  pointer-events: none;
+}
+
+.hero-caption:empty {
+  display: none;
+}
+
 .hero-bar {
   padding: 28px var(--gutter) 0;
   display: flex;
@@ -723,6 +743,11 @@ a:hover {
 .hero-admin-name {
   font-family: var(--font-mono);
   font-size: 14px;
+}
+
+.hero-admin-caption {
+  font-size: 14px;
+  color: var(--muted);
 }
 
 .hero-admin-meta {
