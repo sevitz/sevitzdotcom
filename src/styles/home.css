@@ -697,6 +697,13 @@ a:hover {
   text-underline-offset: 3px;
 }
 
+.elsewhere-icon {
+  width: 1em;
+  height: 1em;
+  margin-right: 0.4em;
+  vertical-align: -0.12em;
+}
+
 /* ---------- /hero-images/ admin view ---------- */
 
 .hero-admin {
