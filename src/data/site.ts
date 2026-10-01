@@ -66,7 +66,6 @@ export const site = {
       { src: "/img/hero/daylily.webp", focus: "40% 40%", status: "show", caption: "New Malden, 2022" },
       { src: "/img/hero/cherry-blossom.webp", focus: "60% 50%", status: "show", caption: "New Malden, 2021" },
       { src: "/img/hero/kew-tulips.webp", focus: "50% 55%", status: "show", caption: "Kew Gardens, 2021" },
-      { src: "/img/hero/eisriesenwelt-ice-cave.webp", focus: "65% 50%", status: "show", caption: "Eisriesenwelt, 2025" },
     ],
     //   single: always the first shown photo
     //   rotate: crossfade through photos every rotateSeconds
