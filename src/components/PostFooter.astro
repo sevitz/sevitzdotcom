@@ -8,10 +8,10 @@ interface Props {
 
 const { folder, syndication = {} } = Astro.props;
 const links = [
-  { id: "github", label: "Source on GitHub", href: sourceUrl(folder) },
   ...(syndication.linkedin ? [{ id: "linkedin", label: "LinkedIn", href: syndication.linkedin }] : []),
   ...(syndication.bluesky ? [{ id: "bluesky", label: "Bluesky", href: syndication.bluesky }] : []),
   ...(syndication.threads ? [{ id: "threads", label: "Threads", href: syndication.threads }] : []),
+  { id: "github", label: "GitHub (Source)", href: sourceUrl(folder) },
 ];
 
 const icons: Record<string, { viewBox: string; d: string }> = {
