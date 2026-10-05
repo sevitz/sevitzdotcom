@@ -1,0 +1,63 @@
+---
+import type { Day } from "../../lib/stats";
+
+interface Props {
+  calendar: Day[];
+}
+
+const { calendar } = Astro.props;
+
+const CELL = 10;
+const PITCH = 13;
+const LEFT = 30;
+const TOP = 18;
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+const startOffset = calendar.length > 0 ? new Date(calendar[0].date).getUTCDay() : 0;
+const cells = calendar.map((day, i) => ({
+  ...day,
+  col: Math.floor((i + startOffset) / 7),
+  row: (i + startOffset) % 7,
+}));
+const cols = cells.length > 0 ? cells[cells.length - 1].col + 1 : 0;
+
+const monthLabels: { col: number; text: string }[] = [];
+for (const c of cells) {
+  if (new Date(c.date).getUTCDate() !== 1) continue;
+  const last = monthLabels[monthLabels.length - 1];
+  if (last && c.col - last.col < 3) continue;
+  monthLabels.push({ col: c.col, text: MONTHS[new Date(c.date).getUTCMonth()] });
+}
+
+const width = LEFT + cols * PITCH;
+const height = TOP + 7 * PITCH;
+const dayLabels = [
+  { row: 1, text: "Mon" },
+  { row: 3, text: "Wed" },
+  { row: 5, text: "Fri" },
+];
+---
+
+{
+  cells.length > 0 ? (
+    <svg class="stats-svg heatmap" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Contribution heatmap for the last year">
+      {monthLabels.map((m) => (
+        <text x={LEFT + m.col * PITCH} y={10}>
+          {m.text}
+        </text>
+      ))}
+      {dayLabels.map((d) => (
+        <text x={0} y={TOP + d.row * PITCH + CELL - 1}>
+          {d.text}
+        </text>
+      ))}
+      {cells.map((c) => (
+        <rect class={`hm-${c.level}`} x={LEFT + c.col * PITCH} y={TOP + c.row * PITCH} width={CELL} height={CELL} rx="2">
+          <title>{`${c.count} contribution${c.count === 1 ? "" : "s"} on ${c.date}`}</title>
+        </rect>
+      ))}
+    </svg>
+  ) : (
+    <p class="stats-empty">No contribution data yet.</p>
+  )
+}

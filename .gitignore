@@ -15,6 +15,9 @@ node_modules/
 # wrangler
 .wrangler/
 
+# private stats config, checked out by the stats workflow
+.stats-config/
+
 # thoughts-about content, fetched at build time
 .content/
 public/thoughts-about/

@@ -1,0 +1,86 @@
+---
+import { formatNumber, type Week } from "../../lib/stats";
+
+interface Props {
+  weeks: Week[];
+}
+
+const { weeks } = Astro.props;
+
+const W = 700;
+const H = 214;
+const PAD_L = 24;
+const PAD_R = 24;
+const LINE_TOP = 22;
+const LINE_BOTTOM = 104;
+const AXIS = 154;
+const UP = 38;
+const DOWN = 32;
+
+const n = weeks.length;
+const span = W - PAD_L - PAD_R;
+const step = n > 1 ? span / (n - 1) : 0;
+const barW = Math.max(3, Math.min(18, (span / Math.max(n, 1)) * 0.6));
+const x = (i: number) => (n > 1 ? PAD_L + i * step : W / 2);
+
+const peakBar = Math.max(...weeks.flatMap((w) => [w.added, w.removed]), 1);
+const peakLoc = Math.max(...weeks.map((w) => w.loc), 1);
+const lineY = (loc: number) => LINE_BOTTOM - (loc / peakLoc) * (LINE_BOTTOM - LINE_TOP);
+
+const path = weeks.map((w, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${lineY(w.loc).toFixed(1)}`).join(" ");
+const last = weeks[n - 1];
+const endX = last ? x(n - 1) : 0;
+const endY = last ? lineY(last.loc) : 0;
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const crossesYears = n > 0 && weeks[0].start.slice(0, 4) !== weeks[n - 1].start.slice(0, 4);
+const monthLabels: { x: number; text: string }[] = [];
+weeks.forEach((w, i) => {
+  const d = new Date(w.start);
+  const month = d.getUTCMonth();
+  const prev = i > 0 ? new Date(weeks[i - 1].start).getUTCMonth() : -1;
+  if (month === prev) return;
+  const text = MONTHS[month] + (crossesYears && month === 0 ? ` ’${String(d.getUTCFullYear()).slice(2)}` : "");
+  const prevLabel = monthLabels[monthLabels.length - 1];
+  if (prevLabel && x(i) - prevLabel.x < 36) return;
+  monthLabels.push({ x: x(i), text });
+});
+
+const summary = last
+  ? `Total lines of code grew to ${formatNumber(last.loc)} between ${weeks[0].start} and ${last.start}, with weekly lines added above the axis and removed below.`
+  : "";
+---
+
+{
+  n > 0 ? (
+    <svg class="stats-svg loc-chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={summary}>
+      <line class="axis" x1={PAD_L - 8} y1={AXIS} x2={W - PAD_R + 8} y2={AXIS} />
+      {weeks.map((w, i) => (
+        <>
+          {w.added > 0 && (
+            <rect class="bar-add" x={x(i) - barW / 2} y={AXIS - (w.added / peakBar) * UP} width={barW} height={(w.added / peakBar) * UP}>
+              <title>{`Week of ${w.start}: +${formatNumber(w.added)} / -${formatNumber(w.removed)}`}</title>
+            </rect>
+          )}
+          {w.removed > 0 && (
+            <rect class="bar-rem" x={x(i) - barW / 2} y={AXIS} width={barW} height={(w.removed / peakBar) * DOWN}>
+              <title>{`Week of ${w.start}: +${formatNumber(w.added)} / -${formatNumber(w.removed)}`}</title>
+            </rect>
+          )}
+        </>
+      ))}
+      <path class="loc-line" d={path} />
+      <circle class="loc-dot" cx={endX} cy={endY} r="3.5" />
+      <text class="loc-total" x={Math.min(endX, W - PAD_R)} y={Math.max(endY - 10, 12)} text-anchor="end">
+        {formatNumber(last.loc)} lines
+      </text>
+      {monthLabels.map((m) => (
+        <text x={m.x} y={H - 6}>
+          {m.text}
+        </text>
+      ))}
+    </svg>
+  ) : (
+    <p class="stats-empty">No history yet.</p>
+  )
+}

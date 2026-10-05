@@ -9,6 +9,7 @@
   --accent: oklch(0.6 0.19 25);
   --band: oklch(0.83 0.12 75);
   --on-accent: oklch(0.99 0.01 90);
+  --add: oklch(0.58 0.15 150);
 
   /* Hero sits on a dark photo in both themes, so its colours are fixed. */
   --hero-bg: oklch(0.2 0.03 45);
@@ -34,6 +35,7 @@
     --accent: oklch(0.7 0.17 28);
     --band: oklch(0.35 0.06 60);
     --on-accent: oklch(0.16 0.01 40);
+    --add: oklch(0.72 0.15 150);
   }
 }
 
@@ -459,6 +461,26 @@ a:hover {
   text-align: center;
 }
 
+.footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0 0 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.footer-links a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer-links a:hover {
+  color: var(--ink);
+}
+
 /* ---------- Plain content pages (e.g. Thoughts about placeholder) ---------- */
 
 .page-bar {
@@ -797,4 +819,264 @@ a:hover {
 /* Click to rotate: the photo acts as a button. */
 .hero[data-click-rotate] {
   cursor: pointer;
+}
+
+/* ---------- /stats-for-geeks/ ---------- */
+
+.stats-main {
+  max-width: 1000px;
+  gap: 28px;
+}
+
+.stats-updated {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.stats-card {
+  border: 1px solid var(--line);
+  background: var(--card);
+  padding: 20px clamp(14px, 3vw, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.stats-card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.stats-card-title .muted {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.stats-caption {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.stats-caption .key-add {
+  color: var(--add);
+}
+
+.stats-caption .key-rem {
+  color: var(--accent);
+}
+
+.stats-empty {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.stats-contrib {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 210px;
+  gap: 20px;
+  align-items: center;
+}
+
+.stats-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.stats-svg text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--muted);
+}
+
+.stats-svg .axis {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.hm-0 {
+  fill: var(--line);
+}
+
+.hm-1 {
+  fill: color-mix(in oklab, var(--add) 30%, var(--line));
+}
+
+.hm-2 {
+  fill: color-mix(in oklab, var(--add) 55%, var(--line));
+}
+
+.hm-3 {
+  fill: var(--add);
+}
+
+.hm-4 {
+  fill: color-mix(in oklab, var(--add) 70%, var(--ink));
+}
+
+.radar-shape {
+  fill: color-mix(in oklab, var(--add) 35%, transparent);
+  stroke: var(--add);
+  stroke-width: 1.5;
+}
+
+.bar-add,
+.spark-add {
+  fill: var(--add);
+}
+
+.bar-rem,
+.spark-rem {
+  fill: var(--accent);
+}
+
+.loc-line {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.loc-dot {
+  fill: var(--ink);
+}
+
+.stats-svg .loc-total {
+  fill: var(--ink);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.spark {
+  display: block;
+}
+
+.repo-table-wrap {
+  overflow-x: auto;
+}
+
+.repo-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.repo-table th,
+.repo-table td {
+  padding: 6px 12px 6px 0;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  font-weight: 400;
+  vertical-align: middle;
+}
+
+.repo-table thead th {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  padding-bottom: 8px;
+}
+
+.repo-table .num {
+  text-align: right;
+  font-family: var(--font-mono);
+  padding-right: 20px;
+}
+
+.repo-table thead .num {
+  padding-right: 20px;
+}
+
+.repo-table tfoot th,
+.repo-table tfoot td {
+  font-weight: 600;
+  border-bottom: 0;
+}
+
+.repo-name a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.repo-name .ext {
+  margin-left: 3px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.pill {
+  margin-left: 8px;
+  padding: 0 7px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.repo-desc {
+  color: var(--muted);
+  max-width: 34ch;
+}
+
+.repo-desc summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.repo-desc summary::-webkit-details-marker {
+  display: none;
+}
+
+.repo-desc .d-full {
+  display: none;
+}
+
+.repo-desc[open] {
+  white-space: normal;
+}
+
+.repo-desc[open] .d-short {
+  display: none;
+}
+
+.repo-desc[open] .d-full {
+  display: inline;
+}
+
+.repo-desc .d-toggle {
+  margin-left: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.repo-desc .d-toggle::after {
+  content: "more";
+}
+
+.repo-desc[open] .d-toggle::after {
+  content: "less";
+}
+
+@media (max-width: 720px) {
+  .stats-contrib {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-contrib .radar {
+    max-width: 240px;
+  }
 }
