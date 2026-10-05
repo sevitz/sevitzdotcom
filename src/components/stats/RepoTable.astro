@@ -1,5 +1,6 @@
 ---
-import { clipDescription, formatNumber, type RepoStat, type Stats } from "../../lib/stats";
+import { clipDescription, formatDate, formatNumber, type RepoStat, type Stats } from "../../lib/stats";
+import { relativeTime } from "../../lib/relative-time";
 import Sparkline from "./Sparkline.astro";
 
 interface Props {
@@ -12,6 +13,8 @@ const { repos, totals, weeks } = Astro.props;
 
 const totalWeekly = weeks.map(({ added, removed }) => ({ added, removed }));
 const nameOf = (r: RepoStat) => (r.kind === "retired" ? `Retired repos (${r.count ?? 0})` : r.label);
+const latest = repos.map((r) => r.updated).filter((d): d is string => Boolean(d)).sort().at(-1);
+const buildTime = new Date();
 ---
 
 <div class="repo-table-wrap">
@@ -22,7 +25,8 @@ const nameOf = (r: RepoStat) => (r.kind === "retired" ? `Retired repos (${r.coun
         <th scope="col">Description</th>
         <th scope="col" class="num">Commits</th>
         <th scope="col" class="num">Lines now</th>
-        <th scope="col">Added / removed (weekly)</th>
+        <th scope="col">Last updated</th>
+        <th scope="col">Weekly Activity</th>
       </tr>
     </thead>
     <tbody>
@@ -63,6 +67,13 @@ const nameOf = (r: RepoStat) => (r.kind === "retired" ? `Retired repos (${r.coun
               </td>
               <td class="num">{formatNumber(r.commits)}</td>
               <td class="num">{formatNumber(r.loc)}</td>
+              <td class="updated">
+                {r.updated && (
+                  <time class="rel" datetime={r.updated} title={formatDate(r.updated)}>
+                    {relativeTime(r.updated, buildTime)}
+                  </time>
+                )}
+              </td>
               <td>
                 <Sparkline weekly={r.weekly} label={nameOf(r)} />
               </td>
@@ -77,6 +88,13 @@ const nameOf = (r: RepoStat) => (r.kind === "retired" ? `Retired repos (${r.coun
         <td />
         <td class="num">{formatNumber(totals.commits)}</td>
         <td class="num">{formatNumber(totals.loc)}</td>
+        <td class="updated">
+          {latest && (
+            <time class="rel" datetime={latest} title={formatDate(latest)}>
+              {relativeTime(latest, buildTime)}
+            </time>
+          )}
+        </td>
         <td>
           <Sparkline weekly={totalWeekly} label="All repos" />
         </td>
@@ -84,3 +102,12 @@ const nameOf = (r: RepoStat) => (r.kind === "retired" ? `Retired repos (${r.coun
     </tfoot>
   </table>
 </div>
+
+<script>
+  // The page is rebuilt only when the data changes, so refresh the wording against today's date in the browser.
+  import { relativeTime } from "../../lib/relative-time";
+
+  document.querySelectorAll<HTMLTimeElement>("time.rel").forEach((el) => {
+    el.textContent = relativeTime(el.dateTime);
+  });
+</script>

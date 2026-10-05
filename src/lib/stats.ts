@@ -9,6 +9,8 @@ export type RepoStat = {
   visibility?: "public" | "private";
   url?: string;
   desc?: string;
+  /** Latest commit to the repo (ISO, UTC); for a retired row, the latest of the group. */
+  updated?: string;
   /** Number of repos folded into a "retired" row. */
   count?: number;
   commits: number;
