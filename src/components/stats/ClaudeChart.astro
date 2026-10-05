@@ -1,0 +1,91 @@
+---
+import { dayBuckets, dayTotal, formatShortDate, formatTokens, niceScale, modelName, type UsageView } from "../../lib/claude-usage";
+
+interface Props {
+  view: UsageView;
+}
+
+const { view } = Astro.props;
+
+const W = 700;
+const H = 214;
+const PAD_L = 44;
+const PAD_R = 8;
+const TOP = 10;
+const BASE = 182;
+
+const days = view.days;
+const n = days.length;
+const peak = Math.max(...days.map((d) => dayTotal(d.models)), 0);
+const scale = niceScale(peak);
+const slot = (W - PAD_L - PAD_R) / Math.max(n, 1);
+const barW = Math.max(1.5, slot * 0.76);
+const y = (v: number) => BASE - (v / scale.max) * (BASE - TOP);
+
+const bars = days.map((d, i) => {
+  const x = PAD_L + i * slot + (slot - barW) / 2;
+  let top = BASE;
+  const segments = dayBuckets(d, view.stack).map((value, k) => {
+    const height = (value / scale.max) * (BASE - TOP);
+    top -= height;
+    return { value, k, y: top, height };
+  });
+  return { i, x, date: d.date, segments: segments.filter((s) => s.value > 0) };
+});
+
+const labelEvery = Math.max(1, Math.ceil(n / 6));
+const labels = days.map((d, i) => ({ i, d })).filter(({ i }) => i % labelEvery === 0);
+const nameOf = (k: number) => (view.stack[k] === "other" ? "Other" : modelName(view.stack[k]));
+
+const peakDay = days.reduce((best, d) => (dayTotal(d.models) > dayTotal(best.models) ? d : best), days[0]);
+const labelBase = n > 0 ? `Daily Claude Code tokens by model, ${formatShortDate(days[0].date)} to ${formatShortDate(days[n - 1].date)}` : "";
+const summary = n > 0 ? `${labelBase}; peak ${formatTokens(peak)} on ${formatShortDate(peakDay.date)}.` : "";
+---
+
+{
+  n > 0 ? (
+    <svg
+      class="stats-svg claude-chart"
+      viewBox={`0 0 ${W} ${H}`}
+      role="img"
+      aria-label={summary}
+      data-label={labelBase}
+      data-base={BASE}
+      data-top={TOP}
+    >
+      {[0, 1, 2, 3, 4].map((g) => (
+        <>
+          <line class="axis" x1={PAD_L} y1={y(scale.step * g)} x2={W - PAD_R} y2={y(scale.step * g)} />
+          <text class="cs-ylab" data-g={g} x={PAD_L - 6} y={y(scale.step * g) + 3} text-anchor="end">
+            {g === 0 ? "0" : formatTokens(scale.step * g)}
+          </text>
+        </>
+      ))}
+      {bars.map((b) =>
+        b.segments.map((s) => (
+          <rect
+            class={`cs-c${view.rows.find((r) => r.id === view.stack[s.k])?.color ?? s.k}`}
+            data-day={b.i}
+            data-date={formatShortDate(b.date)}
+            data-k={s.k}
+            data-v={s.value}
+            data-model={view.stack[s.k]}
+            x={b.x}
+            y={s.y}
+            width={barW}
+            height={s.height}
+          >
+            <title>{`${formatShortDate(b.date)} · ${nameOf(s.k)}: ${formatTokens(s.value)} tokens`}</title>
+          </rect>
+        )),
+      )}
+      {labels.map(({ i, d }) => (
+        <text x={PAD_L + i * slot + slot / 2} y={H - 6} text-anchor="middle">
+          {formatShortDate(d.date)}
+        </text>
+      ))}
+    </svg>
+  ) : (
+    <p class="stats-empty">No Claude usage yet.</p>
+  )
+}
