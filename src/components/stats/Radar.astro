@@ -1,0 +1,64 @@
+---
+interface Props {
+  breakdown: { commits: number; pullRequests: number; issues: number; reviews: number };
+}
+
+const { breakdown } = Astro.props;
+
+const total = breakdown.commits + breakdown.pullRequests + breakdown.issues + breakdown.reviews;
+const pct = (n: number) => (total > 0 ? (n / total) * 100 : 0);
+const share = {
+  commits: pct(breakdown.commits),
+  pullRequests: pct(breakdown.pullRequests),
+  issues: pct(breakdown.issues),
+  reviews: pct(breakdown.reviews),
+};
+
+const CX = 110;
+const CY = 88;
+const R = 56;
+const peak = Math.max(share.commits, share.pullRequests, share.issues, share.reviews, 1);
+const len = (p: number) => (p / peak) * R;
+
+// Axes: code review up, commits left, issues right, pull requests down.
+const points = [
+  [CX, CY - len(share.reviews)],
+  [CX + len(share.issues), CY],
+  [CX, CY + len(share.pullRequests)],
+  [CX - len(share.commits), CY],
+]
+  .map(([x, y]) => `${x},${y}`)
+  .join(" ");
+
+const label = (p: number, name: string) => (p >= 0.5 ? `${Math.round(p)}% ${name}` : name);
+const spoken = (p: number, name: string) => `${Math.round(p)}% ${name}`;
+---
+
+{
+  total > 0 ? (
+    <svg
+      class="stats-svg radar"
+      viewBox="0 0 220 176"
+      role="img"
+      aria-label={`Activity split: ${spoken(share.commits, "commits")}, ${spoken(share.pullRequests, "pull requests")}, ${spoken(share.issues, "issues")}, ${spoken(share.reviews, "code review")}`}
+    >
+      <line class="axis" x1={CX} y1={CY - R} x2={CX} y2={CY + R} />
+      <line class="axis" x1={CX - R} y1={CY} x2={CX + R} y2={CY} />
+      <polygon class="radar-shape" points={points} />
+      <text x={CX} y="12" text-anchor="middle">
+        {label(share.reviews, "Code review")}
+      </text>
+      <text x={CX - R - 6} y={CY + 3} text-anchor="end">
+        {label(share.commits, "Commits")}
+      </text>
+      <text x={CX + R + 6} y={CY + 3} text-anchor="start">
+        {label(share.issues, "Issues")}
+      </text>
+      <text x={CX} y="170" text-anchor="middle">
+        {label(share.pullRequests, "Pull requests")}
+      </text>
+    </svg>
+  ) : (
+    <p class="stats-empty">No activity yet.</p>
+  )
+}

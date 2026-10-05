@@ -1,0 +1,38 @@
+---
+import type { WeekDelta } from "../../lib/stats";
+
+interface Props {
+  weekly: WeekDelta[];
+  /** Names the chart for screen readers, e.g. the repo. */
+  label: string;
+  /** How many of the most recent weeks to draw. */
+  weeks?: number;
+}
+
+const { weekly, label, weeks = 26 } = Astro.props;
+
+const W = 112;
+const H = 18;
+const MID = H / 2;
+
+const series = weekly.slice(-weeks);
+const peak = Math.max(...series.flatMap((w) => [w.added, w.removed]), 1);
+const step = series.length > 0 ? W / series.length : W;
+const barW = Math.max(1.5, step - 1.5);
+const bars = series.map((w, i) => ({
+  x: i * step + (step - barW) / 2,
+  up: (w.added / peak) * (MID - 0.5),
+  down: (w.removed / peak) * (MID - 0.5),
+}));
+---
+
+<svg class="spark" viewBox={`0 0 ${W} ${H}`} width={W} height={H} role="img" aria-label={`${label}: lines added and removed per week, last ${series.length} ${series.length === 1 ? "week" : "weeks"}`}>
+  {
+    bars.map((b) => (
+      <>
+        {b.up > 0 && <rect class="spark-add" x={b.x} y={MID - b.up} width={barW} height={b.up} />}
+        {b.down > 0 && <rect class="spark-rem" x={b.x} y={MID} width={barW} height={b.down} />}
+      </>
+    ))
+  }
+</svg>

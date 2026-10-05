@@ -1,0 +1,86 @@
+---
+import { clipDescription, formatNumber, type RepoStat, type Stats } from "../../lib/stats";
+import Sparkline from "./Sparkline.astro";
+
+interface Props {
+  repos: RepoStat[];
+  totals: Stats["totals"];
+  weeks: Stats["weeks"];
+}
+
+const { repos, totals, weeks } = Astro.props;
+
+const totalWeekly = weeks.map(({ added, removed }) => ({ added, removed }));
+const nameOf = (r: RepoStat) => (r.kind === "retired" ? `Retired repos (${r.count ?? 0})` : r.label);
+---
+
+<div class="repo-table-wrap">
+  <table class="repo-table">
+    <thead>
+      <tr>
+        <th scope="col">Repo</th>
+        <th scope="col">Description</th>
+        <th scope="col" class="num">Commits</th>
+        <th scope="col" class="num">Lines now</th>
+        <th scope="col">Added / removed (weekly)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        repos.map((r) => {
+          const desc = r.desc ? clipDescription(r.desc) : null;
+          return (
+            <tr>
+              <th scope="row" class="repo-name">
+                {r.url ? (
+                  <a href={r.url} rel="noopener">
+                    {nameOf(r)}
+                    <span class="ext" aria-hidden="true">
+                      ↗
+                    </span>
+                  </a>
+                ) : (
+                  nameOf(r)
+                )}
+                {r.visibility === "private" && <span class="pill">private</span>}
+              </th>
+              <td>
+                {desc &&
+                  (desc.clipped ? (
+                    <details class="repo-desc">
+                      <summary>
+                        <span class="d-short">{desc.short}…</span>
+                        <span class="d-full">{r.desc}</span>
+                        <span class="d-toggle">
+                          <span class="t-more">more</span>
+                          <span class="t-less">less</span>
+                        </span>
+                      </summary>
+                    </details>
+                  ) : (
+                    <span class="repo-desc">{desc.short}</span>
+                  ))}
+              </td>
+              <td class="num">{formatNumber(r.commits)}</td>
+              <td class="num">{formatNumber(r.loc)}</td>
+              <td>
+                <Sparkline weekly={r.weekly} label={nameOf(r)} />
+              </td>
+            </tr>
+          );
+        })
+      }
+    </tbody>
+    <tfoot>
+      <tr>
+        <th scope="row" class="repo-name">Total ({totals.repos} repos)</th>
+        <td />
+        <td class="num">{formatNumber(totals.commits)}</td>
+        <td class="num">{formatNumber(totals.loc)}</td>
+        <td>
+          <Sparkline weekly={totalWeekly} label="All repos" />
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
