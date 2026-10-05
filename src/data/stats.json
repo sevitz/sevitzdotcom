@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-05T08:38:24.421Z",
+  "generatedAt": "2026-10-05T16:48:31.216Z",
   "totals": {
     "repos": 14,
-    "commits": 873,
-    "loc": 109975
+    "commits": 899,
+    "loc": 111958
   },
   "weeks": [
     {
@@ -116,9 +116,9 @@
     },
     {
       "start": "2026-10-05",
-      "added": 1340,
-      "removed": 12,
-      "loc": 109975
+      "added": 3399,
+      "removed": 88,
+      "loc": 111958
     }
   ],
   "repos": [
@@ -650,6 +650,94 @@
       ]
     },
     {
+      "label": "sevitzdotcom",
+      "kind": "repo",
+      "visibility": "public",
+      "url": "https://sevitz.com",
+      "desc": "Putting the Sev in the Dot",
+      "updated": "2026-10-05T16:46:53.000Z",
+      "commits": 140,
+      "loc": 5568,
+      "weekly": [
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 304,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 1626,
+          "removed": 567
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 2288,
+          "removed": 14059
+        },
+        {
+          "added": 2363,
+          "removed": 921
+        },
+        {
+          "added": 2078,
+          "removed": 24
+        }
+      ]
+    },
+    {
       "label": "app-ops",
       "kind": "repo",
       "visibility": "private",
@@ -733,94 +821,6 @@
         {
           "added": 0,
           "removed": 0
-        }
-      ]
-    },
-    {
-      "label": "sevitzdotcom",
-      "kind": "repo",
-      "visibility": "public",
-      "url": "https://sevitz.com",
-      "desc": "Putting the Sev in the Dot",
-      "updated": "2026-10-05T08:35:24.000Z",
-      "commits": 137,
-      "loc": 4782,
-      "weekly": [
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 304,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 1626,
-          "removed": 567
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 2288,
-          "removed": 14059
-        },
-        {
-          "added": 2363,
-          "removed": 921
-        },
-        {
-          "added": 1271,
-          "removed": 3
         }
       ]
     },
@@ -912,6 +912,180 @@
       ]
     },
     {
+      "label": "claude-library",
+      "kind": "repo",
+      "visibility": "private",
+      "desc": "My Claude skills and agents",
+      "updated": "2026-10-05T16:47:59.000Z",
+      "commits": 36,
+      "loc": 2440,
+      "weekly": [
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 916,
+          "removed": 243
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 273,
+          "removed": 82
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 654,
+          "removed": 106
+        },
+        {
+          "added": 1046,
+          "removed": 18
+        }
+      ]
+    },
+    {
+      "label": "sevHouse",
+      "kind": "repo",
+      "visibility": "private",
+      "desc": "Home automation and general home-tech: setup docs, reference notes, and scripts",
+      "updated": "2026-10-05T16:44:58.000Z",
+      "commits": 63,
+      "loc": 1997,
+      "weekly": [
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 1958,
+          "removed": 190
+        },
+        {
+          "added": 275,
+          "removed": 46
+        }
+      ]
+    },
+    {
       "label": "thoughts-about-playbooks",
       "kind": "repo",
       "visibility": "private",
@@ -995,180 +1169,6 @@
         {
           "added": 0,
           "removed": 0
-        }
-      ]
-    },
-    {
-      "label": "sevHouse",
-      "kind": "repo",
-      "visibility": "private",
-      "desc": "Home automation and general home-tech: setup docs, reference notes, and scripts",
-      "updated": "2026-10-05T07:21:07.000Z",
-      "commits": 44,
-      "loc": 1799,
-      "weekly": [
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 1958,
-          "removed": 190
-        },
-        {
-          "added": 32,
-          "removed": 1
-        }
-      ]
-    },
-    {
-      "label": "claude-library",
-      "kind": "repo",
-      "visibility": "private",
-      "desc": "My Claude skills and agents",
-      "updated": "2026-10-05T08:35:41.000Z",
-      "commits": 32,
-      "loc": 1441,
-      "weekly": [
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 916,
-          "removed": 243
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 273,
-          "removed": 82
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 654,
-          "removed": 106
-        },
-        {
-          "added": 37,
-          "removed": 8
         }
       ]
     },
@@ -1349,11 +1349,11 @@
     }
   ],
   "contributions": {
-    "total": 917,
+    "total": 947,
     "repoCount": 14,
     "breakdown": {
-      "commits": 740,
-      "pullRequests": 151,
+      "commits": 759,
+      "pullRequests": 162,
       "issues": 25,
       "reviews": 0
     },
@@ -3180,8 +3180,8 @@
       },
       {
         "date": "2026-10-05",
-        "count": 10,
-        "level": 1
+        "count": 40,
+        "level": 3
       }
     ]
   }
