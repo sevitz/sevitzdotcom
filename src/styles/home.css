@@ -824,7 +824,7 @@ a:hover {
 /* ---------- /stats-for-geeks/ ---------- */
 
 .stats-main {
-  max-width: 1000px;
+  max-width: 1080px;
   gap: 28px;
 }
 
@@ -990,11 +990,17 @@ a:hover {
 .repo-table .num {
   text-align: right;
   font-family: var(--font-mono);
-  padding-right: 20px;
+  padding-right: 14px;
 }
 
 .repo-table thead .num {
-  padding-right: 20px;
+  padding-right: 14px;
+}
+
+/* The last column ends at the card edge, so the newest sparkline bar is never clipped. */
+.repo-table th:last-child,
+.repo-table td:last-child {
+  padding-right: 0;
 }
 
 .repo-table tfoot th,
@@ -1005,11 +1011,11 @@ a:hover {
 
 .repo-table .updated {
   color: var(--muted);
-  padding-right: 20px;
+  padding-right: 14px;
 }
 
 .repo-table thead th:nth-last-child(2) {
-  padding-right: 20px;
+  padding-right: 14px;
 }
 
 .repo-table tfoot .updated {
@@ -1040,7 +1046,7 @@ a:hover {
 
 .repo-desc {
   color: var(--muted);
-  max-width: 34ch;
+  max-width: 32ch;
 }
 
 .repo-desc summary {
