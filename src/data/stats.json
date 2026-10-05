@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-05T08:36:10.760Z",
+  "generatedAt": "2026-10-05T08:38:24.421Z",
   "totals": {
     "repos": 14,
     "commits": 873,
@@ -128,6 +128,7 @@
       "visibility": "private",
       "url": "https://noamelia.sevitz.com",
       "desc": "School tracker for the kids",
+      "updated": "2026-10-03T20:11:11.000Z",
       "commits": 211,
       "loc": 41210,
       "weekly": [
@@ -214,6 +215,7 @@
       "kind": "repo",
       "visibility": "private",
       "desc": "Cloudflare Workers bots",
+      "updated": "2026-09-29T21:43:17.000Z",
       "commits": 90,
       "loc": 13401,
       "weekly": [
@@ -301,6 +303,7 @@
       "visibility": "private",
       "url": "https://wordanator.sevitz.com",
       "desc": "Test for my kids to learn new words",
+      "updated": "2026-10-03T21:05:53.000Z",
       "commits": 82,
       "loc": 10665,
       "weekly": [
@@ -388,6 +391,7 @@
       "visibility": "private",
       "url": "https://recaipe.sevitz.com",
       "desc": "The current working version of a recipe, and how it got that way. Web viewer plus MCP server on Cloudflare Workers.",
+      "updated": "2026-09-23T12:14:18.000Z",
       "commits": 40,
       "loc": 9350,
       "weekly": [
@@ -475,6 +479,7 @@
       "visibility": "private",
       "url": "https://ledger.sevitz.com",
       "desc": "Cost sharing app to split costs with friends and family",
+      "updated": "2026-09-23T14:16:36.000Z",
       "commits": 75,
       "loc": 8246,
       "weekly": [
@@ -562,6 +567,7 @@
       "visibility": "private",
       "url": "https://auth.sevitz.com",
       "desc": "Single sign-on portal for the sevitz app family",
+      "updated": "2026-09-24T20:42:54.000Z",
       "commits": 52,
       "loc": 7358,
       "weekly": [
@@ -648,6 +654,7 @@
       "kind": "repo",
       "visibility": "private",
       "desc": "Ops tooling for Sev's apps",
+      "updated": "2026-10-01T09:54:40.000Z",
       "commits": 56,
       "loc": 5379,
       "weekly": [
@@ -735,6 +742,7 @@
       "visibility": "public",
       "url": "https://sevitz.com",
       "desc": "Putting the Sev in the Dot",
+      "updated": "2026-10-05T08:35:24.000Z",
       "commits": 137,
       "loc": 4782,
       "weekly": [
@@ -821,6 +829,7 @@
       "kind": "repo",
       "visibility": "private",
       "desc": "Family apps in one iOS app",
+      "updated": "2026-09-24T22:12:40.000Z",
       "commits": 7,
       "loc": 2826,
       "weekly": [
@@ -907,6 +916,7 @@
       "kind": "repo",
       "visibility": "private",
       "desc": "Private playbook and tooling for Thoughts About",
+      "updated": "2026-10-01T09:38:06.000Z",
       "commits": 13,
       "loc": 1952,
       "weekly": [
@@ -993,6 +1003,7 @@
       "kind": "repo",
       "visibility": "private",
       "desc": "Home automation and general home-tech: setup docs, reference notes, and scripts",
+      "updated": "2026-10-05T07:21:07.000Z",
       "commits": 44,
       "loc": 1799,
       "weekly": [
@@ -1079,6 +1090,7 @@
       "kind": "repo",
       "visibility": "private",
       "desc": "My Claude skills and agents",
+      "updated": "2026-10-05T08:35:41.000Z",
       "commits": 32,
       "loc": 1441,
       "weekly": [
@@ -1166,6 +1178,7 @@
       "visibility": "public",
       "url": "https://sevitz.com/thoughts-about",
       "desc": "Thoughts about ... by Adrian Sevitz. Source of truth for sevitz.com/thoughts-about",
+      "updated": "2026-10-01T08:25:11.000Z",
       "commits": 18,
       "loc": 685,
       "weekly": [
@@ -1252,6 +1265,7 @@
       "kind": "retired",
       "count": 1,
       "desc": "Archived projects",
+      "updated": "2026-09-26T00:06:34.000Z",
       "commits": 16,
       "loc": 881,
       "weekly": [

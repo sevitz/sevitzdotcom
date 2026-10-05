@@ -243,6 +243,8 @@ function repoHistory(dir) {
   // The workflow's own "Refresh GitHub stats" commits are not work, and counting them would change the data on every run.
   const count = git(["rev-list", "--count", "HEAD", "--grep=^Refresh GitHub stats$", "--invert-grep"], dir);
   if (count.status !== 0) return null;
+  const latest = git(["log", "-1", "--format=%cI", "--grep=^Refresh GitHub stats$", "--invert-grep"], dir);
+  const updated = latest.status === 0 && latest.stdout.trim() ? new Date(latest.stdout.trim()).toISOString() : undefined;
   // Exact lines of text at HEAD. Per-commit numstat can drift slightly (merge conflict resolutions), so this anchors the series.
   const grep = git(["grep", "-I", "-c", "", "--", ".", ...EXCLUDES.map((p) => `:(exclude)${p}`)], dir);
   if (grep.status > 1) return null;
@@ -250,7 +252,7 @@ function repoHistory(dir) {
     .split("\n")
     .filter(Boolean)
     .reduce((n, line) => n + Number(line.slice(line.lastIndexOf(":") + 1)), 0);
-  return { commits: parseNumstat(hist.stdout), total: Number(count.stdout.trim()), head };
+  return { commits: parseNumstat(hist.stdout), total: Number(count.stdout.trim()), head, updated };
 }
 
 // ---------- main ----------
@@ -348,8 +350,10 @@ async function main() {
       weekly[idx].added += c.added;
       weekly[idx].removed += c.removed;
     }
-    return { entry, gh, commits: history.total, loc: history.head, weekly };
+    return { entry, gh, commits: history.total, loc: history.head, updated: history.updated, weekly };
   });
+
+  const newest = (dates) => dates.filter(Boolean).sort().at(-1);
 
   const visible = series.filter((s) => s.entry.show !== "retired");
   const retired = series.filter((s) => s.entry.show === "retired");
@@ -366,6 +370,7 @@ async function main() {
         visibility: gh.private ? "private" : "public",
         url,
         desc: desc || undefined,
+        updated: s.updated,
         commits: s.commits,
         loc: s.loc,
         weekly: s.weekly,
@@ -379,6 +384,7 @@ async function main() {
       kind: "retired",
       count: retired.length,
       desc: "Archived projects",
+      updated: newest(retired.map((s) => s.updated)),
       commits: retired.reduce((n, s) => n + s.commits, 0),
       loc: retired.reduce((n, s) => n + s.loc, 0),
       weekly: weekStarts.map((_, i) => ({

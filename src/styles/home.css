@@ -1003,6 +1003,19 @@ a:hover {
   border-bottom: 0;
 }
 
+.repo-table .updated {
+  color: var(--muted);
+  padding-right: 20px;
+}
+
+.repo-table thead th:nth-last-child(2) {
+  padding-right: 20px;
+}
+
+.repo-table tfoot .updated {
+  font-weight: 400;
+}
+
 .repo-name a {
   text-decoration: underline;
   text-underline-offset: 3px;
