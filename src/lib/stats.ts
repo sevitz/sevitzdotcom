@@ -20,6 +20,17 @@ export type RepoStat = {
   weekly: WeekDelta[];
 };
 export type Day = { date: string; count: number; level: Level };
+export type ClaudeGithub = {
+  since?: string;
+  prs: number;
+  merged: number;
+  cloudPrs: number;
+  cloudSessions: number;
+  repos: number;
+  coAuthoredCommits: number;
+  commits: number;
+  weeks: { start: string; local: number; cloud: number }[];
+};
 export type Stats = {
   generatedAt: string;
   totals: { repos: number; commits: number; loc: number };
@@ -31,6 +42,7 @@ export type Stats = {
     breakdown: { commits: number; pullRequests: number; issues: number; reviews: number };
     calendar: Day[];
   };
+  claudeGithub?: ClaudeGithub;
 };
 
 export const stats = data as Stats;
