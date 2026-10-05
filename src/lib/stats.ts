@@ -8,6 +8,8 @@ export type RepoStat = {
   kind: "repo" | "retired";
   visibility?: "public" | "private";
   url?: string;
+  /** GitHub page of a public repo, shown as an icon link. */
+  github?: string;
   desc?: string;
   /** Latest commit to the repo (ISO, UTC); for a retired row, the latest of the group. */
   updated?: string;

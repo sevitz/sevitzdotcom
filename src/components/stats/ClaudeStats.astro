@@ -126,9 +126,8 @@ const through = usage.days.length > 0 ? formatShortDate(usage.days[usage.days.le
         for (const row of rows) {
           const off = hidden.has(row.dataset.model!);
           row.classList.toggle("is-off", off);
-          const button = row.querySelector("button");
-          button?.setAttribute("aria-pressed", String(!off));
-          button?.setAttribute("title", `${off ? "Show" : "Hide"} ${row.dataset.name}`);
+          row.querySelector("button")?.setAttribute("aria-pressed", String(!off));
+          row.title = `${off ? "Show" : "Hide"} ${row.dataset.name}`;
           const share = row.querySelector<HTMLElement>(".share");
           if (share) share.textContent = off || visibleTotal === 0 ? "—" : `${((Number(row.dataset.total) / visibleTotal) * 100).toFixed(1)}%`;
         }
@@ -161,10 +160,12 @@ const through = usage.days.length > 0 ? formatShortDate(usage.days[usage.days.le
       button.type = "button";
       button.className = "cs-toggle";
       button.setAttribute("aria-pressed", "true");
-      button.title = `Hide ${row.dataset.name}`;
+      row.title = `Hide ${row.dataset.name}`;
       while (th.firstChild) button.appendChild(th.firstChild);
       th.appendChild(button);
-      button.addEventListener("click", () => {
+      // The whole row is the click target; the button inside keeps it reachable and operable by keyboard
+      // (Enter and Space on it fire a click that bubbles up to the row).
+      row.addEventListener("click", () => {
         const id = row.dataset.model!;
         if (hidden.has(id)) {
           hidden.delete(id);
@@ -177,6 +178,7 @@ const through = usage.days.length > 0 ? formatShortDate(usage.days[usage.days.le
       });
     }
 
+    card.classList.add("cs-live");
     card.querySelector<HTMLElement>(".cs-hint")?.removeAttribute("hidden");
   }
 </script>

@@ -370,6 +370,7 @@ async function main() {
         kind: "repo",
         visibility: gh.private ? "private" : "public",
         url,
+        github: isName && !gh.private ? gh.html_url : undefined,
         desc: desc || undefined,
         updated: s.updated,
         commits: s.commits,

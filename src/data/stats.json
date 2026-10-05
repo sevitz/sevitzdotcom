@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-05T16:48:31.216Z",
+  "generatedAt": "2026-10-05T17:09:29.286Z",
   "totals": {
     "repos": 14,
     "commits": 899,
@@ -654,6 +654,7 @@
       "kind": "repo",
       "visibility": "public",
       "url": "https://sevitz.com",
+      "github": "https://github.com/sevitz/sevitzdotcom",
       "desc": "Putting the Sev in the Dot",
       "updated": "2026-10-05T16:46:53.000Z",
       "commits": 140,
@@ -1177,6 +1178,7 @@
       "kind": "repo",
       "visibility": "public",
       "url": "https://sevitz.com/thoughts-about",
+      "github": "https://github.com/sevitz/thoughts-about",
       "desc": "Thoughts about ... by Adrian Sevitz. Source of truth for sevitz.com/thoughts-about",
       "updated": "2026-10-01T08:25:11.000Z",
       "commits": 18,
