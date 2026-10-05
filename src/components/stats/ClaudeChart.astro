@@ -38,10 +38,8 @@ const labels = days.map((d, i) => ({ i, d })).filter(({ i }) => i % labelEvery =
 const nameOf = (k: number) => (view.stack[k] === "other" ? "Other" : modelName(view.stack[k]));
 
 const peakDay = days.reduce((best, d) => (dayTotal(d.models) > dayTotal(best.models) ? d : best), days[0]);
-const summary =
-  n > 0
-    ? `Daily Claude Code tokens by model, ${formatShortDate(days[0].date)} to ${formatShortDate(days[n - 1].date)}; peak ${formatTokens(peak)} on ${formatShortDate(peakDay.date)}.`
-    : "";
+const labelBase = n > 0 ? `Daily Claude Code tokens by model, ${formatShortDate(days[0].date)} to ${formatShortDate(days[n - 1].date)}` : "";
+const summary = n > 0 ? `${labelBase}; peak ${formatTokens(peak)} on ${formatShortDate(peakDay.date)}.` : "";
 ---
 
 {
@@ -51,7 +49,7 @@ const summary =
       viewBox={`0 0 ${W} ${H}`}
       role="img"
       aria-label={summary}
-      data-label={summary}
+      data-label={labelBase}
       data-base={BASE}
       data-top={TOP}
     >
@@ -68,6 +66,7 @@ const summary =
           <rect
             class={`cs-c${view.rows.find((r) => r.id === view.stack[s.k])?.color ?? s.k}`}
             data-day={b.i}
+            data-date={formatShortDate(b.date)}
             data-k={s.k}
             data-v={s.value}
             data-model={view.stack[s.k]}
