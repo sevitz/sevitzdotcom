@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-05T17:09:29.286Z",
+  "generatedAt": "2026-10-05T17:31:52.067Z",
   "totals": {
     "repos": 14,
-    "commits": 899,
-    "loc": 111958
+    "commits": 900,
+    "loc": 112017
   },
   "weeks": [
     {
@@ -116,9 +116,9 @@
     },
     {
       "start": "2026-10-05",
-      "added": 3399,
-      "removed": 88,
-      "loc": 111958
+      "added": 3476,
+      "removed": 106,
+      "loc": 112017
     }
   ],
   "repos": [
@@ -656,9 +656,9 @@
       "url": "https://sevitz.com",
       "github": "https://github.com/sevitz/sevitzdotcom",
       "desc": "Putting the Sev in the Dot",
-      "updated": "2026-10-05T16:46:53.000Z",
-      "commits": 140,
-      "loc": 5568,
+      "updated": "2026-10-05T17:11:08.000Z",
+      "commits": 141,
+      "loc": 5627,
       "weekly": [
         {
           "added": 0,
@@ -733,8 +733,8 @@
           "removed": 921
         },
         {
-          "added": 2078,
-          "removed": 24
+          "added": 2155,
+          "removed": 42
         }
       ]
     },
@@ -1351,11 +1351,11 @@
     }
   ],
   "contributions": {
-    "total": 947,
+    "total": 961,
     "repoCount": 14,
     "breakdown": {
-      "commits": 759,
-      "pullRequests": 162,
+      "commits": 772,
+      "pullRequests": 163,
       "issues": 25,
       "reviews": 0
     },
@@ -2847,8 +2847,8 @@
       },
       {
         "date": "2026-07-30",
-        "count": 0,
-        "level": 0
+        "count": 1,
+        "level": 1
       },
       {
         "date": "2026-07-31",
@@ -2947,13 +2947,13 @@
       },
       {
         "date": "2026-08-19",
-        "count": 11,
+        "count": 13,
         "level": 1
       },
       {
         "date": "2026-08-20",
-        "count": 0,
-        "level": 0
+        "count": 2,
+        "level": 1
       },
       {
         "date": "2026-08-21",
@@ -3067,8 +3067,8 @@
       },
       {
         "date": "2026-09-12",
-        "count": 0,
-        "level": 0
+        "count": 1,
+        "level": 1
       },
       {
         "date": "2026-09-13",
@@ -3082,13 +3082,13 @@
       },
       {
         "date": "2026-09-15",
-        "count": 21,
+        "count": 22,
         "level": 2
       },
       {
         "date": "2026-09-16",
-        "count": 0,
-        "level": 0
+        "count": 1,
+        "level": 1
       },
       {
         "date": "2026-09-17",
@@ -3182,8 +3182,75 @@
       },
       {
         "date": "2026-10-05",
-        "count": 40,
-        "level": 3
+        "count": 46,
+        "level": 4
+      }
+    ]
+  },
+  "claudeGithub": {
+    "since": "2026-07-31",
+    "prs": 154,
+    "merged": 150,
+    "cloudPrs": 34,
+    "cloudSessions": 23,
+    "repos": 12,
+    "coAuthoredCommits": 574,
+    "commits": 900,
+    "weeks": [
+      {
+        "start": "2026-07-27",
+        "local": 7,
+        "cloud": 4
+      },
+      {
+        "start": "2026-08-03",
+        "local": 0,
+        "cloud": 0
+      },
+      {
+        "start": "2026-08-10",
+        "local": 0,
+        "cloud": 0
+      },
+      {
+        "start": "2026-08-17",
+        "local": 0,
+        "cloud": 0
+      },
+      {
+        "start": "2026-08-24",
+        "local": 0,
+        "cloud": 1
+      },
+      {
+        "start": "2026-08-31",
+        "local": 13,
+        "cloud": 0
+      },
+      {
+        "start": "2026-09-07",
+        "local": 35,
+        "cloud": 0
+      },
+      {
+        "start": "2026-09-14",
+        "local": 8,
+        "cloud": 0
+      },
+      {
+        "start": "2026-09-21",
+        "local": 9,
+        "cloud": 10
+      },
+      {
+        "start": "2026-09-28",
+        "local": 33,
+        "cloud": 19
+      },
+      {
+        "start": "2026-10-05",
+        "local": 15,
+        "cloud": 0
       }
     ]
   }

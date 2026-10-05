@@ -1134,6 +1134,117 @@ a:hover {
   }
 }
 
+/* ---------- Claude on GitHub card ---------- */
+
+.cg-tiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.cg-tile {
+  border: 1px solid var(--line);
+  padding: 12px 14px;
+  min-width: 0;
+}
+
+.cg-n {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.cg-l {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.cg-s {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.cg-bar {
+  height: 6px;
+  margin-top: 8px;
+  border-radius: 99px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.cg-bar i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+rect.cg-local,
+.cg-sw.cg-local {
+  fill: var(--accent);
+  background: var(--accent);
+}
+
+rect.cg-cloud,
+.cg-sw.cg-cloud {
+  fill: color-mix(in oklab, var(--accent) 38%, var(--card));
+  background: color-mix(in oklab, var(--accent) 38%, var(--card));
+}
+
+@media (prefers-color-scheme: dark) {
+  rect.cg-cloud,
+  .cg-sw.cg-cloud {
+    fill: color-mix(in oklab, var(--accent) 48%, var(--ink));
+    background: color-mix(in oklab, var(--accent) 48%, var(--ink));
+  }
+}
+
+.stats-svg .cg-total {
+  fill: var(--ink);
+}
+
+.cg-legend {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  font-size: 14px;
+}
+
+.cg-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cg-legend b {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.cg-sw {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+@media (max-width: 720px) {
+  .cg-tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cg-chart text {
+    font-size: 17px;
+  }
+}
+
 /* ---------- Claude stats card ---------- */
 
 .claude-card {

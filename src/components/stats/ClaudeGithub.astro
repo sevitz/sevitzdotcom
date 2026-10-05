@@ -1,0 +1,142 @@
+---
+import { formatNumber, stats } from "../../lib/stats";
+import { formatShortDate } from "../../lib/claude-usage";
+import { formatTokens, niceScale } from "../../lib/tokens";
+
+const cg = stats.claudeGithub;
+const through = stats.generatedAt.slice(0, 10);
+
+const W = 700;
+const H = 206;
+const PAD_L = 34;
+const PAD_R = 8;
+const TOP = 16;
+const BASE = 168;
+
+const weeks = cg?.weeks ?? [];
+const n = weeks.length;
+const peak = Math.max(...weeks.map((w) => w.local + w.cloud), 0);
+const scale = niceScale(peak);
+const slot = (W - PAD_L - PAD_R) / Math.max(n, 1);
+const barW = Math.max(3, Math.min(34, slot * 0.62));
+const y = (v: number) => BASE - (v / scale.max) * (BASE - TOP);
+const labelEvery = Math.max(1, Math.ceil(n / 8));
+const share = cg && cg.commits > 0 ? (cg.coAuthoredCommits / cg.commits) * 100 : 0;
+const localPrs = cg ? cg.prs - cg.cloudPrs : 0;
+---
+
+{
+  cg && (
+    <section class="stats-card cg-card" aria-labelledby="cg-title">
+      <div>
+        <h2 class="stats-card-title" id="cg-title">
+          Claude on GitHub
+        </h2>
+        {cg.prs > 0 && cg.since && (
+          <p class="claude-sub" style="margin-top:6px">
+            {formatNumber(cg.prs)} pull requests · {formatNumber(cg.merged)} merged · {cg.repos} repos · since {formatShortDate(cg.since)} · through{" "}
+            {formatShortDate(through)}
+          </p>
+        )}
+      </div>
+
+      {
+        cg.prs > 0 ? (
+          <>
+            <div class="cg-tiles">
+              <div class="cg-tile">
+                <div class="cg-n">{formatNumber(cg.prs)}</div>
+                <div class="cg-l">pull requests opened by Claude</div>
+                <div class="cg-s">{formatNumber(cg.merged)} merged</div>
+              </div>
+              <div class="cg-tile">
+                <div class="cg-n">{formatNumber(cg.cloudPrs)}</div>
+                <div class="cg-l">PRs from cloud sessions</div>
+                <div class="cg-s">{formatNumber(cg.cloudSessions)} distinct sessions</div>
+              </div>
+              <div class="cg-tile">
+                <div class="cg-n">{formatNumber(cg.coAuthoredCommits)}</div>
+                <div class="cg-l">commits co-authored by Claude</div>
+                <div class="cg-s">
+                  {Math.round(share)}% of {formatNumber(cg.commits)}
+                </div>
+                <div class="cg-bar" aria-hidden="true">
+                  <i style={`width:${share.toFixed(1)}%`} />
+                </div>
+              </div>
+              <div class="cg-tile">
+                <div class="cg-n">{cg.repos}</div>
+                <div class="cg-l">repositories touched</div>
+                <div class="cg-s">by Claude PRs</div>
+              </div>
+            </div>
+
+            <svg
+              class="stats-svg cg-chart"
+              viewBox={`0 0 ${W} ${H}`}
+              role="img"
+              aria-label={`Pull requests opened by Claude per week, local versus cloud sessions, ${formatShortDate(weeks[0].start)} to ${formatShortDate(weeks[n - 1].start)}`}
+            >
+              {[0, 1, 2, 3, 4].map((g) => (
+                <>
+                  <line class="axis" x1={PAD_L} y1={y(scale.step * g)} x2={W - PAD_R} y2={y(scale.step * g)} />
+                  <text x={PAD_L - 6} y={y(scale.step * g) + 3} text-anchor="end">
+                    {g === 0 ? "0" : formatTokens(scale.step * g)}
+                  </text>
+                </>
+              ))}
+              {weeks.map((w, i) => {
+                const x = PAD_L + i * slot + (slot - barW) / 2;
+                const hLocal = (w.local / scale.max) * (BASE - TOP);
+                const hCloud = (w.cloud / scale.max) * (BASE - TOP);
+                return (
+                  <>
+                    {w.local > 0 && (
+                      <rect class="cg-local" x={x} y={BASE - hLocal} width={barW} height={hLocal}>
+                        <title>{`Week of ${formatShortDate(w.start)} · local: ${w.local} PR${w.local === 1 ? "" : "s"}`}</title>
+                      </rect>
+                    )}
+                    {w.cloud > 0 && (
+                      <rect class="cg-cloud" x={x} y={BASE - hLocal - hCloud} width={barW} height={hCloud}>
+                        <title>{`Week of ${formatShortDate(w.start)} · cloud: ${w.cloud} PR${w.cloud === 1 ? "" : "s"}`}</title>
+                      </rect>
+                    )}
+                    {w.local + w.cloud > 0 && n <= 20 && (
+                      <text class="cg-total" x={x + barW / 2} y={BASE - hLocal - hCloud - 5} text-anchor="middle">
+                        {w.local + w.cloud}
+                      </text>
+                    )}
+                    {i % labelEvery === 0 && (
+                      <text x={PAD_L + i * slot + slot / 2} y={H - 8} text-anchor="middle">
+                        {formatShortDate(w.start)}
+                      </text>
+                    )}
+                  </>
+                );
+              })}
+            </svg>
+
+            <p class="cg-legend">
+              <span>
+                <i class="cg-sw cg-local" />
+                Local sessions <b>{formatNumber(localPrs)} PRs</b>
+              </span>
+              <span>
+                <i class="cg-sw cg-cloud" />
+                Cloud sessions <b>{formatNumber(cg.cloudPrs)} PRs</b>
+              </span>
+            </p>
+          </>
+        ) : (
+          <p class="stats-empty">No Claude pull requests yet.</p>
+        )
+      }
+
+      <p class="stats-caption">
+        Counts only, from GitHub and the repos' own commit history, for the repos I have approved for this page. A PR counts as a cloud session when its description links to
+        claude.ai/code; the other PRs with Claude Code's footer are local. Commits are on each repo's default branch. Token use isn't available for cloud sessions on
+        individual accounts, so it isn't shown.
+      </p>
+    </section>
+  )
+}

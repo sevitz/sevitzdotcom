@@ -253,7 +253,74 @@ function repoHistory(dir) {
     .split("\n")
     .filter(Boolean)
     .reduce((n, line) => n + Number(line.slice(line.lastIndexOf(":") + 1)), 0);
-  return { commits: parseNumstat(hist.stdout), total: Number(count.stdout.trim()), head, updated };
+  // Commit messages on the default branch: how many carry a Claude co-author trailer, and which cloud sessions they link to.
+  let coAuthored = 0;
+  const sessionIds = [];
+  const messages = git(["log", "HEAD", "--format=%B%x00"], dir);
+  if (messages.status === 0) {
+    for (const raw of messages.stdout.split("\0")) {
+      const body = raw.trim();
+      if (!body || body.split("\n")[0] === "Refresh GitHub stats") continue;
+      if (/^co-authored-by:\s*claude/im.test(body)) coAuthored++;
+      for (const m of body.matchAll(CLOUD_SESSION)) sessionIds.push(m[1]);
+    }
+  }
+  return { commits: parseNumstat(hist.stdout), total: Number(count.stdout.trim()), head, updated, coAuthored, sessionIds };
+}
+
+// ---------- Claude on GitHub ----------
+
+const CLOUD_SESSION = /claude\.ai\/code\/(session_[A-Za-z0-9]+)/g;
+
+/** Pure: turns PR search items into counts. Only repos in `approved` (lowercase owner/name) are counted. */
+export function summarizeClaudePrs(items, approved, now = new Date()) {
+  const prs = new Map();
+  const sessions = new Set();
+  for (const it of items) {
+    const repo = String(it.repository_url ?? "").replace("https://api.github.com/repos/", "").toLowerCase();
+    if (!approved.has(repo)) continue;
+    const ids = [...String(it.body ?? "").matchAll(CLOUD_SESSION)].map((m) => m[1]);
+    prs.set(it.id, { created: String(it.created_at).slice(0, 10), merged: Boolean(it.pull_request?.merged_at), cloud: ids.length > 0, repo });
+    for (const id of ids) sessions.add(id);
+  }
+  const all = [...prs.values()];
+  const weeks = [];
+  if (all.length > 0) {
+    const first = mondayOf(new Date(`${all.map((p) => p.created).sort()[0]}T00:00:00Z`));
+    const index = new Map();
+    for (let t = Date.parse(first); t <= Date.parse(mondayOf(now)); t += 7 * DAY) {
+      const start = new Date(t).toISOString().slice(0, 10);
+      index.set(start, weeks.length);
+      weeks.push({ start, local: 0, cloud: 0 });
+    }
+    for (const p of all) {
+      const i = index.get(mondayOf(new Date(`${p.created}T00:00:00Z`)));
+      if (i !== undefined) weeks[i][p.cloud ? "cloud" : "local"]++;
+    }
+  }
+  return {
+    since: all.length > 0 ? all.map((p) => p.created).sort()[0] : undefined,
+    prs: all.length,
+    merged: all.filter((p) => p.merged).length,
+    cloudPrs: all.filter((p) => p.cloud).length,
+    repos: new Set(all.map((p) => p.repo)).size,
+    sessions,
+    weeks,
+  };
+}
+
+async function searchPrs(token, query) {
+  const items = [];
+  for (let page = 1; page <= 10; page++) {
+    const res = await fetch(`https://api.github.com/search/issues?q=${encodeURIComponent(query)}&per_page=100&page=${page}`, {
+      headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "sevitzdotcom-stats" },
+    });
+    if (!res.ok) throw new Error(`search returned ${res.status}`);
+    const json = await res.json();
+    items.push(...json.items);
+    if (json.items.length < 100 || items.length >= json.total_count) break;
+  }
+  return items;
 }
 
 // ---------- main ----------
@@ -419,21 +486,52 @@ async function main() {
     .filter((r) => r.history.commits.some((c) => c.date.getTime() >= windowStart))
     .map((r) => r.entry.repo);
   const contributions = await fetchContributions(token, login, activeRepos);
+  const previous = existsSync(outPath) ? JSON.parse(readFileSync(outPath, "utf8")) : null;
+  const totalCommits = series.reduce((n, s) => n + s.commits, 0);
+
+  // PRs and cloud sessions Claude made, for approved repos only. Never fatal: on any failure the previous section is kept.
+  let claudeGithub;
+  try {
+    const approvedSet = new Set(config.repos.map((r) => r.repo.toLowerCase()));
+    const items = [
+      ...(await searchPrs(token, `user:${login} is:pr "Generated with Claude Code"`)),
+      ...(await searchPrs(token, `user:${login} is:pr "claude.ai/code/session"`)),
+    ];
+    const s = summarizeClaudePrs(items, approvedSet);
+    for (const r of perRepo) for (const id of r.history.sessionIds) s.sessions.add(id);
+    claudeGithub = {
+      since: s.since,
+      prs: s.prs,
+      merged: s.merged,
+      cloudPrs: s.cloudPrs,
+      cloudSessions: s.sessions.size,
+      repos: s.repos,
+      coAuthoredCommits: perRepo.reduce((n, r) => n + r.history.coAuthored, 0),
+      commits: totalCommits,
+      weeks: s.weeks,
+    };
+  } catch (e) {
+    const msg = `Claude on GitHub section kept as it was (${e?.message ?? "unexpected error"})`;
+    log(IN_CI ? `::warning::${msg}` : msg);
+    claudeGithub = previous?.claudeGithub;
+  }
 
   const out = {
     generatedAt: new Date().toISOString(),
-    totals: { repos: series.length, commits: series.reduce((n, s) => n + s.commits, 0), loc: weeks.length > 0 ? weeks[weeks.length - 1].loc : 0 },
+    totals: { repos: series.length, commits: totalCommits, loc: weeks.length > 0 ? weeks[weeks.length - 1].loc : 0 },
     weeks,
     repos,
     contributions,
+    claudeGithub,
   };
 
   const forbidden = hidden.flatMap((full) => [full, full.split("/")[1]]);
-  const leaks = findLeaks(JSON.stringify(out), forbidden);
+  const text = JSON.stringify(out);
+  const leaks = findLeaks(text, forbidden);
   if (leaks.length > 0) fail(`refusing to write: ${leaks.length} hidden repo name(s) appear in the output (reword their description or label)`);
+  if (/session_[A-Za-z0-9]{6}/.test(text)) fail("refusing to write: a cloud session id appears in the output");
 
   const stable = (o) => JSON.stringify({ ...o, generatedAt: "" });
-  const previous = existsSync(outPath) ? JSON.parse(readFileSync(outPath, "utf8")) : null;
   if (previous && stable(previous) === stable(out)) {
     log("no changes");
   } else {

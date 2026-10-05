@@ -54,6 +54,15 @@ The card under the GitHub stats on `/stats-for-geeks/` shows Claude Code token u
 - **Stale?** The card shows "through <date>" from the latest day in the data. If the Mac was off, it simply lags until the next run.
 - **Roll back the job:** `launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.sevitz.claude-usage.plist`, then delete that file. The card keeps showing the last data.
 
+## Claude on GitHub
+
+The last card on `/stats-for-geeks/` shows what Claude has done on GitHub: PRs opened (and merged), PRs from cloud sessions, commits co-authored by Claude, repos touched, and a weekly local-vs-cloud PR chart. It is the `claudeGithub` section of `src/data/stats.json`, written by `scripts/compute-stats.mjs` in the same Monday run.
+
+- **Where the numbers come from:** PRs from GitHub search (`"Generated with Claude Code"` footer, or a `claude.ai/code/session_…` link in the body), restricted to approved repos. A PR is a *cloud* PR when its body links to a claude.ai/code session; the rest are local. Commits come from the clones the script already makes: those on the default branch with a `Co-Authored-By: Claude` trailer, out of all commits (the workflow's own refresh commits excluded). Distinct cloud sessions are counted from PR bodies and commit messages.
+- **Privacy:** only approved repos count (a repo not in the private config contributes nothing), and only counts are written. Session ids are never stored, and the script refuses to write output that contains one.
+- **Never fatal:** if GitHub search fails, the previous section is kept and a warning is logged.
+- **Limits:** GitHub search returns at most 1,000 results per query. Cloud sessions' token use is not available to individual accounts, so it is not shown.
+
 ## Thoughts about content
 
 Posts live in the public repo [`sevitz/thoughts-about`](https://github.com/sevitz/thoughts-about), not here. `npm run build` and `npm run dev` first run `scripts/fetch-thoughts.mjs`, which downloads `main` into the gitignored `.content/thoughts-about/`. Only `status: published` posts get pages, feed entries and sitemap entries.

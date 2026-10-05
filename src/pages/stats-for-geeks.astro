@@ -8,6 +8,7 @@ import Radar from "../components/stats/Radar.astro";
 import RepoTable from "../components/stats/RepoTable.astro";
 import LocChart from "../components/stats/LocChart.astro";
 import ClaudeStats from "../components/stats/ClaudeStats.astro";
+import ClaudeGithub from "../components/stats/ClaudeGithub.astro";
 import { site } from "../data/site";
 import { formatDate, formatNumber, stats } from "../lib/stats";
 
@@ -67,6 +68,8 @@ const { contributions } = stats;
     </p>
 
     <ClaudeStats />
+
+    <ClaudeGithub />
   </main>
   <footer class="contact"><Footer /></footer>
 </HomeLayout>
