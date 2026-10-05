@@ -240,7 +240,8 @@ function cloneRepo(full, token, dest) {
 function repoHistory(dir) {
   const hist = git(["log", "--no-merges", "--numstat", "--format=%x00%aI", "--", ".", ...EXCLUDES.map((p) => `:(exclude)${p}`)], dir);
   if (hist.status !== 0) return null;
-  const count = git(["rev-list", "--count", "HEAD"], dir);
+  // The workflow's own "Refresh GitHub stats" commits are not work, and counting them would change the data on every run.
+  const count = git(["rev-list", "--count", "HEAD", "--grep=^Refresh GitHub stats$", "--invert-grep"], dir);
   if (count.status !== 0) return null;
   // Exact lines of text at HEAD. Per-commit numstat can drift slightly (merge conflict resolutions), so this anchors the series.
   const grep = git(["grep", "-I", "-c", "", "--", ".", ...EXCLUDES.map((p) => `:(exclude)${p}`)], dir);
