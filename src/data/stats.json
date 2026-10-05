@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-05T17:31:52.067Z",
+  "generatedAt": "2026-10-05T17:41:43.256Z",
   "totals": {
-    "repos": 14,
-    "commits": 900,
-    "loc": 112017
+    "repos": 15,
+    "commits": 919,
+    "loc": 116844
   },
   "weeks": [
     {
@@ -56,69 +56,69 @@
     },
     {
       "start": "2026-07-27",
-      "added": 2760,
+      "added": 4314,
       "removed": 743,
-      "loc": 28415
+      "loc": 29969
     },
     {
       "start": "2026-08-03",
       "added": 0,
       "removed": 0,
-      "loc": 28415
+      "loc": 29969
     },
     {
       "start": "2026-08-10",
       "added": 0,
       "removed": 0,
-      "loc": 28415
+      "loc": 29969
     },
     {
       "start": "2026-08-17",
-      "added": 6280,
-      "removed": 426,
-      "loc": 34269
+      "added": 6579,
+      "removed": 491,
+      "loc": 36057
     },
     {
       "start": "2026-08-24",
       "added": 12890,
       "removed": 1330,
-      "loc": 45829
+      "loc": 47617
     },
     {
       "start": "2026-08-31",
       "added": 19111,
       "removed": 2602,
-      "loc": 62338
+      "loc": 64126
     },
     {
       "start": "2026-09-07",
-      "added": 14146,
+      "added": 14201,
       "removed": 2125,
-      "loc": 74359
+      "loc": 76202
     },
     {
       "start": "2026-09-14",
-      "added": 24552,
-      "removed": 1770,
-      "loc": 97141
+      "added": 24938,
+      "removed": 1871,
+      "loc": 99269
     },
     {
       "start": "2026-09-21",
       "added": 13978,
       "removed": 15960,
-      "loc": 95159
+      "loc": 97287
     },
     {
       "start": "2026-09-28",
       "added": 15813,
       "removed": 2325,
-      "loc": 108647
+      "loc": 110775
     },
     {
       "start": "2026-10-05",
-      "added": 3476,
-      "removed": 106,
-      "loc": 112017
+      "added": 6390,
+      "removed": 321,
+      "loc": 116844
     }
   ],
   "repos": [
@@ -656,9 +656,9 @@
       "url": "https://sevitz.com",
       "github": "https://github.com/sevitz/sevitzdotcom",
       "desc": "Putting the Sev in the Dot",
-      "updated": "2026-10-05T17:11:08.000Z",
-      "commits": 141,
-      "loc": 5627,
+      "updated": "2026-10-05T17:40:49.000Z",
+      "commits": 142,
+      "loc": 6002,
       "weekly": [
         {
           "added": 0,
@@ -733,8 +733,8 @@
           "removed": 921
         },
         {
-          "added": 2155,
-          "removed": 42
+          "added": 2534,
+          "removed": 46
         }
       ]
     },
@@ -822,6 +822,92 @@
         {
           "added": 0,
           "removed": 0
+        }
+      ]
+    },
+    {
+      "label": "Sandwich",
+      "kind": "repo",
+      "visibility": "private",
+      "updated": "2026-10-05T17:40:52.000Z",
+      "commits": 17,
+      "loc": 4381,
+      "weekly": [
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 1554,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 299,
+          "removed": 65
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 55,
+          "removed": 0
+        },
+        {
+          "added": 386,
+          "removed": 101
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 2442,
+          "removed": 189
         }
       ]
     },
@@ -917,9 +1003,9 @@
       "kind": "repo",
       "visibility": "private",
       "desc": "My Claude skills and agents",
-      "updated": "2026-10-05T16:47:59.000Z",
-      "commits": 36,
-      "loc": 2440,
+      "updated": "2026-10-05T17:41:07.000Z",
+      "commits": 37,
+      "loc": 2511,
       "weekly": [
         {
           "added": 0,
@@ -994,8 +1080,8 @@
           "removed": 106
         },
         {
-          "added": 1046,
-          "removed": 18
+          "added": 1139,
+          "removed": 40
         }
       ]
     },
@@ -1351,11 +1437,11 @@
     }
   ],
   "contributions": {
-    "total": 961,
-    "repoCount": 14,
+    "total": 970,
+    "repoCount": 15,
     "breakdown": {
-      "commits": 772,
-      "pullRequests": 163,
+      "commits": 780,
+      "pullRequests": 164,
       "issues": 25,
       "reviews": 0
     },
@@ -3182,20 +3268,20 @@
       },
       {
         "date": "2026-10-05",
-        "count": 46,
+        "count": 55,
         "level": 4
       }
     ]
   },
   "claudeGithub": {
     "since": "2026-07-31",
-    "prs": 154,
-    "merged": 150,
+    "prs": 155,
+    "merged": 151,
     "cloudPrs": 34,
     "cloudSessions": 23,
     "repos": 12,
-    "coAuthoredCommits": 574,
-    "commits": 900,
+    "coAuthoredCommits": 593,
+    "commits": 919,
     "weeks": [
       {
         "start": "2026-07-27",
@@ -3249,7 +3335,7 @@
       },
       {
         "start": "2026-10-05",
-        "local": 15,
+        "local": 16,
         "cloud": 0
       }
     ]
