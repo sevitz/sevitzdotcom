@@ -43,6 +43,17 @@ Cloudflare Workers Builds is connected to this repo. Config lives in `wrangler.j
 - **Token:** the workflow uses the repo secret `STATS_GITHUB_TOKEN`, a fine-grained personal access token with read-only Contents, Metadata, Issues and Pull requests on all repos. It was created with no expiry because it is read-only. If it is ever revoked, create a new one and run `pbpaste | gh secret set STATS_GITHUB_TOKEN --repo sevitz/sevitzdotcom`; until then the page just stops updating and shows its "Last updated" date.
 - **How lines are counted:** text files at HEAD, excluding lockfiles, minified, map, svg and `dist/` files; the weekly series comes from `git log --numstat` and is anchored to the exact HEAD total. The contribution total is GitHub's calendar; pull requests, issues and reviews come from the search API and commits are the remainder, which matches the profile's Activity overview.
 
+## Claude stats
+
+The card under the GitHub stats on `/stats-for-geeks/` shows Claude Code token usage by model per day (All / 30d / 7d, a CSS-only toggle) from `src/data/claude-usage.json`.
+
+- **Flow:** a weekly launchd job on Sev's Mac (Sundays 22:00 local) runs `dev/stats/claude-usage.mjs` from the private `claude-library` repo. It reads the local Claude Code transcripts (`~/.claude/projects`) and pushes `dev/stats/claude-usage.json` to `claude-library`. The Monday stats workflow checks that repo out and runs `scripts/sync-claude-usage.mjs`, which validates the file and copies it here; the existing "Commit if changed" step commits it and the normal deploy follows.
+- **Counting:** each API message is counted once (transcripts repeat a message on several lines, and again when a session is resumed). Tokens are input + output + cache reads and writes; "in" excludes cached input. The Claude app's own usage view adds up every line, so it shows roughly twice as much.
+- **History is kept:** the aggregator never lowers a recorded day, so pruned transcripts can't erase history. Days are UTC. Claude Code on that one Mac only, not claude.ai chat or cloud sessions.
+- **Privacy:** the file holds only dates, model ids and four counters. The sync script rejects anything else (extra keys, strings that are not model ids, negative or non-integer counts) and never echoes file content. A missing or rejected file is skipped with a warning and never blocks the GitHub stats refresh.
+- **Stale?** The card shows "through <date>" from the latest day in the data. If the Mac was off, it simply lags until the next run.
+- **Roll back the job:** `launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.sevitz.claude-usage.plist`, then delete that file. The card keeps showing the last data.
+
 ## Thoughts about content
 
 Posts live in the public repo [`sevitz/thoughts-about`](https://github.com/sevitz/thoughts-about), not here. `npm run build` and `npm run dev` first run `scripts/fetch-thoughts.mjs`, which downloads `main` into the gitignored `.content/thoughts-about/`. Only `status: published` posts get pages, feed entries and sitemap entries.

@@ -1,0 +1,59 @@
+---
+import { buildView, formatShortDate, formatTokens, usage, type UsageView } from "../../lib/claude-usage";
+import ClaudeChart from "./ClaudeChart.astro";
+
+const views: UsageView[] = (["all", "30", "7"] as const).map((key) => buildView(usage.days, key));
+const through = usage.days.length > 0 ? formatShortDate(usage.days[usage.days.length - 1].date) : null;
+---
+
+<section class="stats-card claude-card" aria-labelledby="claude-title">
+  <div class="claude-head">
+    <h2 class="stats-card-title" id="claude-title">Claude stats</h2>
+    <div class="claude-ranges" role="radiogroup" aria-label="Time range">
+      {
+        views.map((v, i) => (
+          <>
+            <input class="cs-radio" type="radio" name="claude-range" id={`cs-${v.key}`} checked={i === 0} />
+            <label for={`cs-${v.key}`}>{v.label}</label>
+          </>
+        ))
+      }
+    </div>
+  </div>
+
+  {
+    views.map((v) => (
+      <div class="cs-view" data-view={v.key}>
+        {through && v.days.length > 0 && (
+          <p class="claude-sub">
+            {formatTokens(v.total)} tokens · {v.activeDays} active {v.activeDays === 1 ? "day" : "days"} · through {through}
+          </p>
+        )}
+        <ClaudeChart view={v} />
+        {v.rows.length > 0 && (
+          <table class="cs-legend">
+            <tbody>
+              {v.rows.map((r) => (
+                <tr>
+                  <th scope="row">
+                    <span class={`cs-sw cs-c${r.color}`} aria-hidden="true" />
+                    {r.name}
+                  </th>
+                  <td class="num">
+                    {formatTokens(r.in)} in · {formatTokens(r.out)} out
+                  </td>
+                  <td class="num">{r.share.toFixed(1)}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    ))
+  }
+
+  <p class="stats-caption">
+    Claude Code on my Mac only (not claude.ai chat or cloud sessions). Tokens are input + output + cache reads and writes, counted once per message; "in" excludes
+    cached input. The Claude app's own usage view adds up every transcript line, so it shows roughly twice as much.
+  </p>
+</section>

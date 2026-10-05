@@ -31,6 +31,7 @@ const EXCLUDES = [
   "*/node_modules/*",
   // This page's own generated data: counting it would make the total feed itself.
   "src/data/stats.json",
+  "src/data/claude-usage.json",
 ];
 
 const LEVELS = { NONE: 0, FIRST_QUARTILE: 1, SECOND_QUARTILE: 2, THIRD_QUARTILE: 3, FOURTH_QUARTILE: 4 };

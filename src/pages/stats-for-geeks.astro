@@ -7,6 +7,7 @@ import Heatmap from "../components/stats/Heatmap.astro";
 import Radar from "../components/stats/Radar.astro";
 import RepoTable from "../components/stats/RepoTable.astro";
 import LocChart from "../components/stats/LocChart.astro";
+import ClaudeStats from "../components/stats/ClaudeStats.astro";
 import { site } from "../data/site";
 import { formatDate, formatNumber, stats } from "../lib/stats";
 
@@ -64,6 +65,8 @@ const { contributions } = stats;
       How this is counted: lines of text at the latest commit, excluding lockfiles, minified files, source maps, SVGs, build output and this page's own data
       file. Commits by anyone count, including AI-assisted ones. Totals cover only the repos I have approved for this page.
     </p>
+
+    <ClaudeStats />
   </main>
   <footer class="contact"><Footer /></footer>
 </HomeLayout>

@@ -1111,3 +1111,168 @@ a:hover {
     display: none;
   }
 }
+
+/* ---------- Claude stats card ---------- */
+
+.claude-card {
+  --cs-0: var(--accent);
+  --cs-1: color-mix(in oklab, var(--accent) 62%, var(--ink));
+  --cs-2: color-mix(in oklab, var(--accent) 64%, var(--card));
+  --cs-3: color-mix(in oklab, var(--accent) 44%, var(--card));
+  --cs-4: color-mix(in oklab, var(--accent) 26%, var(--card));
+  --cs-5: color-mix(in oklab, var(--ink) 38%, var(--card));
+  --cs-6: color-mix(in oklab, var(--ink) 20%, var(--card));
+}
+
+@media (prefers-color-scheme: dark) {
+  .claude-card {
+    --cs-1: color-mix(in oklab, var(--accent) 55%, var(--ink));
+    --cs-2: color-mix(in oklab, var(--accent) 68%, var(--card));
+    --cs-3: color-mix(in oklab, var(--accent) 50%, var(--card));
+    --cs-4: color-mix(in oklab, var(--accent) 34%, var(--card));
+    --cs-5: color-mix(in oklab, var(--ink) 46%, var(--card));
+    --cs-6: color-mix(in oklab, var(--ink) 26%, var(--card));
+  }
+}
+
+rect.cs-c0 { fill: var(--cs-0); }
+rect.cs-c1 { fill: var(--cs-1); }
+rect.cs-c2 { fill: var(--cs-2); }
+rect.cs-c3 { fill: var(--cs-3); }
+rect.cs-c4 { fill: var(--cs-4); }
+rect.cs-c5 { fill: var(--cs-5); }
+rect.cs-c6 { fill: var(--cs-6); }
+.cs-sw.cs-c0 { background: var(--cs-0); }
+.cs-sw.cs-c1 { background: var(--cs-1); }
+.cs-sw.cs-c2 { background: var(--cs-2); }
+.cs-sw.cs-c3 { background: var(--cs-3); }
+.cs-sw.cs-c4 { background: var(--cs-4); }
+.cs-sw.cs-c5 { background: var(--cs-5); }
+.cs-sw.cs-c6 { background: var(--cs-6); }
+
+.claude-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+
+.claude-ranges {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.cs-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.claude-ranges label {
+  padding: 4px 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.cs-radio:checked + label {
+  background: var(--line);
+  color: var(--ink);
+}
+
+.cs-radio:focus-visible + label {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* The range toggle needs no JavaScript: radios drive which view is shown. */
+.cs-view {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cs-view[data-view="all"] {
+  display: flex;
+}
+
+.claude-card:has(#cs-30:checked) .cs-view,
+.claude-card:has(#cs-7:checked) .cs-view {
+  display: none;
+}
+
+.claude-card:has(#cs-30:checked) .cs-view[data-view="30"],
+.claude-card:has(#cs-7:checked) .cs-view[data-view="7"] {
+  display: flex;
+}
+
+@supports not selector(:has(*)) {
+  .claude-ranges {
+    display: none;
+  }
+}
+
+.claude-sub {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.cs-legend {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.cs-legend th,
+.cs-legend td {
+  padding: 6px 0;
+  border-top: 1px solid var(--line);
+  font-weight: 400;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.cs-legend .num {
+  padding-left: 16px;
+  text-align: right;
+  font-family: var(--font-mono);
+  color: var(--muted);
+}
+
+.cs-legend .num:last-child {
+  color: var(--ink);
+}
+
+.cs-sw {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+  border-radius: 2px;
+}
+
+@media (max-width: 720px) {
+  .cs-legend {
+    font-size: 13px;
+  }
+
+  .cs-legend .num {
+    padding-left: 8px;
+    font-size: 12px;
+  }
+
+  .cs-sw {
+    margin-right: 7px;
+  }
+
+  /* The chart is scaled down to the card width, so its text needs a larger source size to stay readable. */
+  .claude-chart text {
+    font-size: 17px;
+  }
+}

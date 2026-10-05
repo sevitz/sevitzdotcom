@@ -37,13 +37,19 @@ jobs:
           STATS_GITHUB_TOKEN: ${{ secrets.STATS_GITHUB_TOKEN }}
         run: node scripts/compute-stats.mjs --config .stats-config/dev/stats/repos.json
 
+      # Claude usage comes from the private repo (written weekly by a job on Sev's Mac). A missing or invalid
+      # file is skipped, never fatal, so it can't block the GitHub stats above.
+      - name: Sync Claude usage
+        continue-on-error: true
+        run: node scripts/sync-claude-usage.mjs --from .stats-config/dev/stats/claude-usage.json
+
       # Only commit from master, and only when the numbers changed. The push triggers the Workers Builds deploy.
       - name: Commit if changed
         if: github.ref == 'refs/heads/master'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/stats.json
+          git add src/data/stats.json src/data/claude-usage.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
