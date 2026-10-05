@@ -34,7 +34,7 @@ const { contributions } = stats;
     <section class="stats-card" aria-labelledby="contrib-title">
       <h2 class="stats-card-title" id="contrib-title">
         {formatNumber(contributions.total)} contributions in the last year
-        <span class="muted"> · {formatNumber(contributions.repoCount)} repositories</span>
+        <span class="muted"><span class="sep" aria-hidden="true"> · </span>{formatNumber(contributions.repoCount)} repositories</span>
       </h2>
       <div class="stats-contrib">
         <Heatmap calendar={contributions.calendar} />
@@ -51,14 +51,18 @@ const { contributions } = stats;
     <section class="stats-card" aria-labelledby="loc-title">
       <h2 class="stats-card-title" id="loc-title">Lines of code over time</h2>
       <LocChart weeks={stats.weeks} />
-      <p class="stats-caption">
-        <span class="key-add">&#9632;</span> lines added &nbsp; <span class="key-rem">&#9632;</span> lines removed &nbsp; &mdash; total lines
-      </p>
+      {
+        stats.weeks.length > 0 && (
+          <p class="stats-caption">
+            <span class="key-add">&#9632;</span> lines added &nbsp; <span class="key-rem">&#9632;</span> lines removed &nbsp; &mdash; total lines
+          </p>
+        )
+      }
     </section>
 
     <p class="stats-caption">
-      How this is counted: lines exclude lockfiles, generated, minified and binary files. Commits by anyone count, including AI-assisted ones. Totals cover
-      only the repos I have approved for this page.
+      How this is counted: lines of text at the latest commit, excluding lockfiles, minified files, source maps, SVGs, build output and this page's own data
+      file. Commits by anyone count, including AI-assisted ones. Totals cover only the repos I have approved for this page.
     </p>
   </main>
   <footer class="contact"><Footer /></footer>

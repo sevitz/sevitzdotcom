@@ -51,7 +51,10 @@ const nameOf = (r: RepoStat) => (r.kind === "retired" ? `Retired repos (${r.coun
                       <summary>
                         <span class="d-short">{desc.short}…</span>
                         <span class="d-full">{r.desc}</span>
-                        <span class="d-toggle" />
+                        <span class="d-toggle">
+                          <span class="t-more">more</span>
+                          <span class="t-less">less</span>
+                        </span>
                       </summary>
                     </details>
                   ) : (
@@ -61,7 +64,7 @@ const nameOf = (r: RepoStat) => (r.kind === "retired" ? `Retired repos (${r.coun
               <td class="num">{formatNumber(r.commits)}</td>
               <td class="num">{formatNumber(r.loc)}</td>
               <td>
-                <Sparkline weekly={r.weekly} />
+                <Sparkline weekly={r.weekly} label={nameOf(r)} />
               </td>
             </tr>
           );
@@ -75,7 +78,7 @@ const nameOf = (r: RepoStat) => (r.kind === "retired" ? `Retired repos (${r.coun
         <td class="num">{formatNumber(totals.commits)}</td>
         <td class="num">{formatNumber(totals.loc)}</td>
         <td>
-          <Sparkline weekly={totalWeekly} />
+          <Sparkline weekly={totalWeekly} label="All repos" />
         </td>
       </tr>
     </tfoot>

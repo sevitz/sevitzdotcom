@@ -1063,12 +1063,16 @@ a:hover {
   text-underline-offset: 2px;
 }
 
-.repo-desc .d-toggle::after {
-  content: "more";
+.repo-desc .t-less {
+  display: none;
 }
 
-.repo-desc[open] .d-toggle::after {
-  content: "less";
+.repo-desc[open] .t-more {
+  display: none;
+}
+
+.repo-desc[open] .t-less {
+  display: inline;
 }
 
 @media (max-width: 720px) {
@@ -1078,5 +1082,13 @@ a:hover {
 
   .stats-contrib .radar {
     max-width: 240px;
+  }
+
+  .stats-card-title .muted {
+    display: block;
+  }
+
+  .stats-card-title .sep {
+    display: none;
   }
 }

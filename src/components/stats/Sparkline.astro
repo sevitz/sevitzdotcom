@@ -3,11 +3,13 @@ import type { WeekDelta } from "../../lib/stats";
 
 interface Props {
   weekly: WeekDelta[];
+  /** Names the chart for screen readers, e.g. the repo. */
+  label: string;
   /** How many of the most recent weeks to draw. */
   weeks?: number;
 }
 
-const { weekly, weeks = 26 } = Astro.props;
+const { weekly, label, weeks = 26 } = Astro.props;
 
 const W = 112;
 const H = 18;
@@ -24,7 +26,7 @@ const bars = series.map((w, i) => ({
 }));
 ---
 
-<svg class="spark" viewBox={`0 0 ${W} ${H}`} width={W} height={H} role="img" aria-label={`Lines added and removed per week, last ${series.length} weeks`}>
+<svg class="spark" viewBox={`0 0 ${W} ${H}`} width={W} height={H} role="img" aria-label={`${label}: lines added and removed per week, last ${series.length} ${series.length === 1 ? "week" : "weeks"}`}>
   {
     bars.map((b) => (
       <>

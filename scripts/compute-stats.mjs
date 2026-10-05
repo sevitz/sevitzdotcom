@@ -29,6 +29,8 @@ const EXCLUDES = [
   "*/dist/*",
   "node_modules/*",
   "*/node_modules/*",
+  // This page's own generated data: counting it would make the total feed itself.
+  "src/data/stats.json",
 ];
 
 const LEVELS = { NONE: 0, FIRST_QUARTILE: 1, SECOND_QUARTILE: 2, THIRD_QUARTILE: 3, FOURTH_QUARTILE: 4 };
@@ -68,12 +70,12 @@ export function parseNumstat(output) {
 
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-/** Returns the forbidden names found in `text` (case-insensitive, whole-token match). */
+/** Returns the forbidden names found in `text` (case-insensitive; only letters and digits count as part of a word, so `my-name` is caught). */
 export function findLeaks(text, forbidden) {
   const hits = [];
   for (const name of forbidden) {
     if (!name) continue;
-    const re = new RegExp(`(?<![A-Za-z0-9_.-])${escapeRe(name)}(?![A-Za-z0-9_-])`, "i");
+    const re = new RegExp(`(?<![A-Za-z0-9])${escapeRe(name)}(?![A-Za-z0-9])`, "i");
     if (re.test(text)) hits.push(name);
   }
   return hits;

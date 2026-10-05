@@ -31,6 +31,7 @@ const points = [
   .join(" ");
 
 const label = (p: number, name: string) => (p >= 0.5 ? `${Math.round(p)}% ${name}` : name);
+const spoken = (p: number, name: string) => `${Math.round(p)}% ${name}`;
 ---
 
 {
@@ -39,7 +40,7 @@ const label = (p: number, name: string) => (p >= 0.5 ? `${Math.round(p)}% ${name
       class="stats-svg radar"
       viewBox="0 0 220 176"
       role="img"
-      aria-label={`Activity split: ${label(share.commits, "commits")}, ${label(share.pullRequests, "pull requests")}, ${label(share.issues, "issues")}, ${label(share.reviews, "code review")}`}
+      aria-label={`Activity split: ${spoken(share.commits, "commits")}, ${spoken(share.pullRequests, "pull requests")}, ${spoken(share.issues, "issues")}, ${spoken(share.reviews, "code review")}`}
     >
       <line class="axis" x1={CX} y1={CY - R} x2={CX} y2={CY + R} />
       <line class="axis" x1={CX - R} y1={CY} x2={CX + R} y2={CY} />
