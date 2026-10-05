@@ -25,7 +25,7 @@ const through = usage.days.length > 0 ? formatShortDate(usage.days[usage.days.le
     views.map((v) => (
       <div class="cs-view" data-view={v.key}>
         {through && v.days.length > 0 && (
-          <p class="claude-sub">
+          <p class="claude-sub" data-through={through}>
             {formatTokens(v.total)} tokens · {v.activeDays} active {v.activeDays === 1 ? "day" : "days"} · through {through}
           </p>
         )}
@@ -34,7 +34,7 @@ const through = usage.days.length > 0 ? formatShortDate(usage.days[usage.days.le
           <table class="cs-legend">
             <tbody>
               {v.rows.map((r) => (
-                <tr>
+                <tr data-model={r.id} data-name={r.name} data-total={r.total}>
                   <th scope="row">
                     <span class={`cs-sw cs-c${r.color}`} aria-hidden="true" />
                     {r.name}
@@ -42,7 +42,7 @@ const through = usage.days.length > 0 ? formatShortDate(usage.days[usage.days.le
                   <td class="num">
                     {formatTokens(r.in)} in · {formatTokens(r.out)} out
                   </td>
-                  <td class="num">{r.share.toFixed(1)}%</td>
+                  <td class="num share">{r.share.toFixed(1)}%</td>
                 </tr>
               ))}
             </tbody>
@@ -52,8 +52,115 @@ const through = usage.days.length > 0 ? formatShortDate(usage.days[usage.days.le
     ))
   }
 
+  <p class="stats-caption cs-hint" hidden>Click a model in the legend to hide or show it in the chart.</p>
   <p class="stats-caption">
     Claude Code on my Mac only (not claude.ai chat or cloud sessions). Tokens are input + output + cache reads and writes, counted once per message; "in" excludes
     cached input. The Claude app's own usage view adds up every transcript line, so it shows roughly twice as much.
   </p>
 </section>
+
+<script>
+  // Progressive enhancement: the legend rows become buttons that hide or show a model. The chart restacks and
+  // rescales from the data on its bars, so the page works (and the range toggle keeps working) without this.
+  import { formatTokens, niceScale } from "../../lib/tokens";
+
+  const card = document.querySelector<HTMLElement>(".claude-card");
+  if (card) {
+    const views = [...card.querySelectorAll<HTMLElement>(".cs-view")];
+    const hidden = new Set<string>();
+    const allIds = new Set<string>();
+    const nameOf = new Map<string, string>();
+
+    function redraw(svg: SVGSVGElement) {
+      const base = Number(svg.dataset.base);
+      const top = Number(svg.dataset.top);
+      const byDay = new Map<number, SVGRectElement[]>();
+      for (const rect of svg.querySelectorAll<SVGRectElement>("rect[data-day]")) {
+        const day = Number(rect.dataset.day);
+        const list = byDay.get(day) ?? [];
+        list.push(rect);
+        byDay.set(day, list);
+      }
+      let peak = 0;
+      let activeDays = 0;
+      for (const list of byDay.values()) {
+        const sum = list.reduce((n, r) => (hidden.has(r.dataset.model!) ? n : n + Number(r.dataset.v)), 0);
+        peak = Math.max(peak, sum);
+        if (sum > 0) activeDays++;
+      }
+      const scale = niceScale(peak);
+      for (const list of byDay.values()) {
+        list.sort((a, b) => Number(a.dataset.k) - Number(b.dataset.k));
+        let y = base;
+        for (const rect of list) {
+          if (hidden.has(rect.dataset.model!)) {
+            rect.style.display = "none";
+            continue;
+          }
+          rect.style.display = "";
+          const height = (Number(rect.dataset.v) / scale.max) * (base - top);
+          y -= height;
+          rect.setAttribute("y", String(y));
+          rect.setAttribute("height", String(height));
+        }
+      }
+      for (const label of svg.querySelectorAll<SVGTextElement>("text.cs-ylab")) {
+        const g = Number(label.dataset.g);
+        label.textContent = g === 0 ? "0" : formatTokens(scale.step * g);
+      }
+      const names = [...hidden].map((id) => nameOf.get(id) ?? id);
+      svg.setAttribute("aria-label", (svg.dataset.label ?? "") + (names.length ? ` Hidden: ${names.join(", ")}.` : ""));
+      return activeDays;
+    }
+
+    function render() {
+      for (const view of views) {
+        const rows = [...view.querySelectorAll<HTMLTableRowElement>(".cs-legend tr[data-model]")];
+        const visibleTotal = rows.reduce((n, r) => (hidden.has(r.dataset.model!) ? n : n + Number(r.dataset.total)), 0);
+        for (const row of rows) {
+          const off = hidden.has(row.dataset.model!);
+          row.classList.toggle("is-off", off);
+          const button = row.querySelector("button");
+          button?.setAttribute("aria-pressed", String(!off));
+          button?.setAttribute("title", `${off ? "Show" : "Hide"} ${row.dataset.name}`);
+          const share = row.querySelector<HTMLElement>(".share");
+          if (share) share.textContent = off || visibleTotal === 0 ? "—" : `${((Number(row.dataset.total) / visibleTotal) * 100).toFixed(1)}%`;
+        }
+        const svg = view.querySelector<SVGSVGElement>("svg.claude-chart");
+        const activeDays = svg ? redraw(svg) : 0;
+        const sub = view.querySelector<HTMLElement>(".claude-sub");
+        if (sub) {
+          const shown = allIds.size - hidden.size;
+          sub.textContent =
+            `${formatTokens(visibleTotal)} tokens · ${activeDays} active ${activeDays === 1 ? "day" : "days"} · through ${sub.dataset.through}` +
+            (hidden.size ? ` · ${shown} of ${allIds.size} models` : "");
+        }
+      }
+    }
+
+    for (const row of card.querySelectorAll<HTMLTableRowElement>(".cs-legend tr[data-model]")) {
+      allIds.add(row.dataset.model!);
+      nameOf.set(row.dataset.model!, row.dataset.name ?? row.dataset.model!);
+    }
+
+    for (const row of card.querySelectorAll<HTMLTableRowElement>(".cs-legend tr[data-model]")) {
+      const th = row.querySelector("th");
+      if (!th) continue;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "cs-toggle";
+      button.setAttribute("aria-pressed", "true");
+      button.title = `Hide ${row.dataset.name}`;
+      while (th.firstChild) button.appendChild(th.firstChild);
+      th.appendChild(button);
+      button.addEventListener("click", () => {
+        const id = row.dataset.model!;
+        if (hidden.has(id)) hidden.delete(id);
+        else if (hidden.size < allIds.size - 1) hidden.add(id);
+        render();
+      });
+    }
+
+    card.querySelector<HTMLElement>(".cs-hint")?.removeAttribute("hidden");
+  }
+</script>

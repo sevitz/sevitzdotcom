@@ -30,7 +30,7 @@ const bars = days.map((d, i) => {
     top -= height;
     return { value, k, y: top, height };
   });
-  return { x, date: d.date, segments: segments.filter((s) => s.value > 0) };
+  return { i, x, date: d.date, segments: segments.filter((s) => s.value > 0) };
 });
 
 const labelEvery = Math.max(1, Math.ceil(n / 6));
@@ -46,18 +46,36 @@ const summary =
 
 {
   n > 0 ? (
-    <svg class="stats-svg claude-chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={summary}>
+    <svg
+      class="stats-svg claude-chart"
+      viewBox={`0 0 ${W} ${H}`}
+      role="img"
+      aria-label={summary}
+      data-label={summary}
+      data-base={BASE}
+      data-top={TOP}
+    >
       {[0, 1, 2, 3, 4].map((g) => (
         <>
           <line class="axis" x1={PAD_L} y1={y(scale.step * g)} x2={W - PAD_R} y2={y(scale.step * g)} />
-          <text x={PAD_L - 6} y={y(scale.step * g) + 3} text-anchor="end">
+          <text class="cs-ylab" data-g={g} x={PAD_L - 6} y={y(scale.step * g) + 3} text-anchor="end">
             {g === 0 ? "0" : formatTokens(scale.step * g)}
           </text>
         </>
       ))}
       {bars.map((b) =>
         b.segments.map((s) => (
-          <rect class={`cs-c${view.rows.find((r) => r.id === view.stack[s.k])?.color ?? s.k}`} x={b.x} y={s.y} width={barW} height={s.height}>
+          <rect
+            class={`cs-c${view.rows.find((r) => r.id === view.stack[s.k])?.color ?? s.k}`}
+            data-day={b.i}
+            data-k={s.k}
+            data-v={s.value}
+            data-model={view.stack[s.k]}
+            x={b.x}
+            y={s.y}
+            width={barW}
+            height={s.height}
+          >
             <title>{`${formatShortDate(b.date)} · ${nameOf(s.k)}: ${formatTokens(s.value)} tokens`}</title>
           </rect>
         )),

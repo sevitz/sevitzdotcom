@@ -1,5 +1,7 @@
 import data from "../data/claude-usage.json";
 
+export { formatTokens, niceScale } from "./tokens";
+
 export type Counters = { in: number; out: number; cw: number; cr: number };
 export type UsageDay = { date: string; models: Record<string, Counters> };
 export type ClaudeUsage = { generatedAt: string; days: UsageDay[] };
@@ -31,23 +33,6 @@ export function modelName(id: string): string {
   if (!m) return id;
   const family = m[1][0].toUpperCase() + m[1].slice(1);
   return `${family} ${m[2]}${m[3] ? `.${m[3]}` : ""}`;
-}
-
-/** 23800 -> "23.8k", 7.8e6 -> "7.8M", 859000 -> "859k", 825 -> "825". */
-export function formatTokens(n: number): string {
-  const trim = (v: number, unit: string) => `${Number(v.toPrecision(3))}${unit}`;
-  if (n >= 999.5e6) return trim(n / 1e9, "B");
-  if (n >= 999.5e3) return trim(n / 1e6, "M");
-  if (n >= 1e3) return trim(n / 1e3, "k");
-  return String(Math.round(n));
-}
-
-/** A y-axis maximum with four even steps that reaches `max`. */
-export function niceScale(max: number): { max: number; step: number } {
-  const rough = Math.max(max, 1) / 4;
-  const pow = 10 ** Math.floor(Math.log10(rough));
-  const step = ([1, 2, 2.5, 5, 10].map((f) => f * pow).find((s) => s >= rough) ?? 10 * pow);
-  return { max: step * 4, step };
 }
 
 const toTime = (date: string) => Date.parse(`${date}T00:00:00Z`);
