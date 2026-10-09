@@ -6,7 +6,7 @@ import HomeLayout from "../../layouts/HomeLayout.astro";
 import Footer from "../../components/Footer.astro";
 import PostFooter from "../../components/PostFooter.astro";
 import { site } from "../../data/site";
-import { formatDate, getPublishedPosts, postFolder } from "../../lib/thoughts";
+import { formatDate, getPublishedPosts, postFolder, withFavicons } from "../../lib/thoughts";
 
 export async function getStaticPaths() {
   return (await getPublishedPosts()).map((post) => ({ params: { slug: post.data.slug }, props: { post } }));
@@ -48,7 +48,7 @@ const image = data.image ? `/thoughts-about/${data.slug}/${data.image.src}` : un
         class:list={["prose", isOpenTabs && "open-tabs"]}
         style={isOpenTabs ? `--editor-label: ${JSON.stringify(site.openTabs.editorLabel)}` : undefined}
       >
-        <Content />
+        {isOpenTabs && post.rendered?.html ? <Fragment set:html={withFavicons(post.rendered.html)} /> : <Content />}
       </div>
       {
         data.tags.length > 0 && (
