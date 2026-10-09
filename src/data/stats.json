@@ -1,124 +1,124 @@
 {
-  "generatedAt": "2026-10-09T14:24:37.878Z",
+  "generatedAt": "2026-10-09T16:17:56.449Z",
   "totals": {
-    "repos": 16,
-    "commits": 976,
-    "loc": 123794
+    "repos": 17,
+    "commits": 1037,
+    "loc": 132319
   },
   "weeks": [
     {
       "start": "2026-06-01",
       "added": 0,
       "removed": 0,
-      "loc": 12241
+      "loc": 15381
     },
     {
       "start": "2026-06-08",
       "added": 304,
       "removed": 0,
-      "loc": 12545
+      "loc": 15685
     },
     {
       "start": "2026-06-15",
       "added": 0,
       "removed": 0,
-      "loc": 12545
+      "loc": 15685
     },
     {
       "start": "2026-06-22",
       "added": 0,
       "removed": 0,
-      "loc": 12545
+      "loc": 15685
     },
     {
       "start": "2026-06-29",
       "added": 9723,
       "removed": 2243,
-      "loc": 20025
+      "loc": 23165
     },
     {
       "start": "2026-07-06",
       "added": 4837,
       "removed": 550,
-      "loc": 24312
+      "loc": 27452
     },
     {
       "start": "2026-07-13",
       "added": 0,
       "removed": 0,
-      "loc": 24312
+      "loc": 27452
     },
     {
       "start": "2026-07-20",
       "added": 2347,
       "removed": 261,
-      "loc": 26398
+      "loc": 29538
     },
     {
       "start": "2026-07-27",
       "added": 4314,
       "removed": 743,
-      "loc": 29969
+      "loc": 33109
     },
     {
       "start": "2026-08-03",
       "added": 0,
       "removed": 0,
-      "loc": 29969
+      "loc": 33109
     },
     {
       "start": "2026-08-10",
       "added": 0,
       "removed": 0,
-      "loc": 29969
+      "loc": 33109
     },
     {
       "start": "2026-08-17",
       "added": 6579,
       "removed": 491,
-      "loc": 36057
+      "loc": 39197
     },
     {
       "start": "2026-08-24",
       "added": 12890,
       "removed": 1330,
-      "loc": 47617
+      "loc": 50757
     },
     {
       "start": "2026-08-31",
       "added": 19111,
       "removed": 2602,
-      "loc": 64126
+      "loc": 67266
     },
     {
       "start": "2026-09-07",
       "added": 14201,
       "removed": 2125,
-      "loc": 76202
+      "loc": 79342
     },
     {
       "start": "2026-09-14",
       "added": 24938,
       "removed": 1871,
-      "loc": 99269
+      "loc": 102409
     },
     {
       "start": "2026-09-21",
       "added": 13978,
       "removed": 15960,
-      "loc": 97287
+      "loc": 100427
     },
     {
       "start": "2026-09-28",
       "added": 15813,
       "removed": 2325,
-      "loc": 110775
+      "loc": 113915
     },
     {
       "start": "2026-10-05",
-      "added": 14342,
-      "removed": 1323,
-      "loc": 123794
+      "added": 23042,
+      "removed": 4638,
+      "loc": 132319
     }
   ],
   "repos": [
@@ -650,6 +650,182 @@
       ]
     },
     {
+      "label": "skyback",
+      "kind": "repo",
+      "visibility": "public",
+      "url": "https://skyback.sevitz.com",
+      "github": "https://github.com/sevitz/skyback",
+      "desc": "Wayback machine for Bluesky. Search your own feed, to find that thing you might have missed.",
+      "updated": "2026-10-09T16:07:44.000Z",
+      "commits": 2,
+      "loc": 7001,
+      "weekly": [
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 7006,
+          "removed": 5
+        }
+      ]
+    },
+    {
+      "label": "man.ls",
+      "kind": "repo",
+      "visibility": "private",
+      "desc": "Human manuals for common terminal commands",
+      "updated": "2026-10-09T13:45:51.000Z",
+      "commits": 59,
+      "loc": 6511,
+      "weekly": [
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 6677,
+          "removed": 3306
+        }
+      ]
+    },
+    {
       "label": "sevitzdotcom",
       "kind": "repo",
       "visibility": "public",
@@ -912,94 +1088,6 @@
       ]
     },
     {
-      "label": "skyback",
-      "kind": "repo",
-      "visibility": "private",
-      "url": "https://skyback.sevitz.com",
-      "desc": "Wayback machine for Bluesky. Search your own feed, to find that thing you might have missed.",
-      "updated": "2026-10-09T08:25:58.000Z",
-      "commits": 1,
-      "loc": 4987,
-      "weekly": [
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 4987,
-          "removed": 0
-        }
-      ]
-    },
-    {
       "label": "sevhub",
       "kind": "repo",
       "visibility": "private",
@@ -1091,8 +1179,8 @@
       "kind": "repo",
       "visibility": "private",
       "desc": "My Claude skills and agents",
-      "updated": "2026-10-09T14:24:07.000Z",
-      "commits": 42,
+      "updated": "2026-10-09T16:17:24.000Z",
+      "commits": 43,
       "loc": 2566,
       "weekly": [
         {
@@ -1168,8 +1256,8 @@
           "removed": 106
         },
         {
-          "added": 1202,
-          "removed": 48
+          "added": 1206,
+          "removed": 52
         }
       ]
     },
@@ -1525,11 +1613,11 @@
     }
   ],
   "contributions": {
-    "total": 1049,
-    "repoCount": 16,
+    "total": 1054,
+    "repoCount": 17,
     "breakdown": {
-      "commits": 845,
-      "pullRequests": 178,
+      "commits": 848,
+      "pullRequests": 179,
       "issues": 25,
       "reviews": 0
     },
@@ -3356,20 +3444,20 @@
       },
       {
         "date": "2026-10-09",
-        "count": 23,
+        "count": 28,
         "level": 2
       }
     ]
   },
   "claudeGithub": {
     "since": "2026-07-31",
-    "prs": 169,
+    "prs": 170,
     "merged": 164,
     "cloudPrs": 34,
-    "cloudSessions": 24,
+    "cloudSessions": 23,
     "repos": 12,
-    "coAuthoredCommits": 641,
-    "commits": 976,
+    "coAuthoredCommits": 651,
+    "commits": 1037,
     "weeks": [
       {
         "start": "2026-07-27",
@@ -3423,7 +3511,7 @@
       },
       {
         "start": "2026-10-05",
-        "local": 30,
+        "local": 31,
         "cloud": 0
       }
     ]
