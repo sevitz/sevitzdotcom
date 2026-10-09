@@ -78,7 +78,7 @@ export const site = {
   } satisfies Hero,
 
   /** Open Tabs posts (tagged `open-tabs`): the label shown before each editor note (a blockquote in the post). */
-  openTabs: { editorLabel: "Sev: " },
+  openTabs: { editorLabel: "Me: " },
 
   links: {
     cv: {
