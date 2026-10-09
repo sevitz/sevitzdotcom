@@ -684,6 +684,15 @@ a:hover {
 .prose.open-tabs h2 + p {
   margin-bottom: 0.4em;
   color: var(--muted);
+  font-size: 15px;
+}
+
+.prose.open-tabs .favicon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  vertical-align: -2px;
+  border-radius: 4px;
 }
 
 .prose.open-tabs blockquote {
