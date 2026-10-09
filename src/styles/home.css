@@ -681,6 +681,22 @@ a:hover {
   line-height: 1.2;
 }
 
+.prose.open-tabs h2 + p {
+  margin-bottom: 0.4em;
+  color: var(--muted);
+}
+
+.prose.open-tabs blockquote {
+  padding-left: 0;
+  border-left: 0;
+  color: var(--ink);
+}
+
+.prose.open-tabs blockquote p::before {
+  content: var(--editor-label);
+  font-weight: 600;
+}
+
 .post-tags {
   list-style: none;
   display: flex;

@@ -77,6 +77,9 @@ export const site = {
     clickToRotate: true,
   } satisfies Hero,
 
+  /** Open Tabs posts (tagged `open-tabs`): the label shown before each editor note (a blockquote in the post). */
+  openTabs: { editorLabel: "Sev: " },
+
   links: {
     cv: {
       eyebrow: "Curriculum vitae",
