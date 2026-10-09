@@ -15,6 +15,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { data } = post;
 const { Content } = await render(post);
+const isOpenTabs = data.tags.includes("open-tabs");
 const image = data.image ? `/thoughts-about/${data.slug}/${data.image.src}` : undefined;
 ---
 
@@ -43,7 +44,12 @@ const image = data.image ? `/thoughts-about/${data.slug}/${data.image.src}` : un
         <h1 class="post-title-main">{data.title}</h1>
         {data.subtitle && <p class="page-lede">{data.subtitle}</p>}
       </header>
-      <div class="prose"><Content /></div>
+      <div
+        class:list={["prose", isOpenTabs && "open-tabs"]}
+        style={isOpenTabs ? `--editor-label: ${JSON.stringify(site.openTabs.editorLabel)}` : undefined}
+      >
+        <Content />
+      </div>
       {
         data.tags.length > 0 && (
           <ul class="post-tags" aria-label="Tags">
