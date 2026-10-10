@@ -338,20 +338,20 @@ a:hover {
 
 .start {
   padding: clamp(40px, 5vw, 64px) var(--gutter) clamp(56px, 8vw, 88px);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-  gap: clamp(32px, 5vw, 64px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 6vw, 56px);
 }
 
 .start-col {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 4px;
   min-width: 0;
 }
 
 .start-col .section-head {
-  margin-bottom: 0;
+  margin-bottom: 8px;
 }
 
 .start-list {
@@ -360,13 +360,60 @@ a:hover {
   padding: 0;
 }
 
+.start-list li {
+  border-bottom: 1px solid var(--line);
+}
+
+/* Side by side: both columns share the same rows (subgrid), so the three items line up,
+   with a hairline between the columns. */
+@media (min-width: 880px) {
+  .start {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 0;
+  }
+
+  .start-col {
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    gap: 0;
+  }
+
+  .start-col .section-head {
+    margin-bottom: 0;
+  }
+
+  .start-list {
+    display: contents;
+  }
+
+  .start-list li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .start-col:first-child {
+    padding-right: clamp(32px, 5vw, 72px);
+  }
+
+  .start-latest {
+    padding-left: clamp(32px, 5vw, 72px);
+    border-left: 1px solid var(--line);
+  }
+
+  .posts-empty {
+    grid-row: span 3;
+  }
+}
+
 .start-row {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: baseline;
   column-gap: 16px;
   padding: 16px 0;
-  border-bottom: 1px solid var(--line);
 }
 
 .start-title {
@@ -403,24 +450,28 @@ a:hover {
   color: var(--accent);
 }
 
-.post-more {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.post-row {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 16px 0;
 }
 
-.post-more li {
-  padding: 12px 0;
-  border-top: 1px solid var(--line);
+.post-row .post-title {
+  font-size: clamp(22px, 2.4vw, 26px);
 }
 
-.post-more a {
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.3;
+.post-row:hover .post-title {
+  color: var(--accent);
+}
+
+.post-row .post-summary {
+  font-size: 15px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 /* ---------- Latest thoughts ---------- */

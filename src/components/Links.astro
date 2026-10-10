@@ -8,7 +8,6 @@ interface Props {
 
 const { posts } = Astro.props;
 const { cv, thoughts, stats } = site.links;
-const [newest, ...rest] = posts;
 ---
 
 <section class="start" aria-label="Start here">
@@ -41,29 +40,24 @@ const [newest, ...rest] = posts;
     </ul>
   </div>
 
-  <div class="start-col" id="latest">
+  <div class="start-col start-latest" id="latest">
     <div class="section-head">
       <h2 class="section-label">Latest</h2>
       <a class="eyebrow" href={thoughts.href}>All →</a>
     </div>
     {
-      newest ? (
-        <>
-          <a class="post" href={`${thoughts.href}${newest.slug}/`}>
-            <span class="post-tag">{newest.tag}</span>
-            <span class="post-title">{newest.title}</span>
-            <span class="post-summary">{newest.summary}</span>
-          </a>
-          {rest.length > 0 && (
-            <ul class="post-more">
-              {rest.map((post) => (
-                <li>
-                  <a href={`${thoughts.href}${post.slug}/`}>{post.title}</a>
-                </li>
-              ))}
-            </ul>
-          )}
-        </>
+      posts.length > 0 ? (
+        <ul class="start-list">
+          {posts.map((post) => (
+            <li>
+              <a class="post-row" href={`${thoughts.href}${post.slug}/`}>
+                <span class="post-tag">{post.tag}</span>
+                <span class="post-title">{post.title}</span>
+                <span class="post-summary">{post.summary}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       ) : (
         <p class="posts-empty">First posts are on the way.</p>
       )
