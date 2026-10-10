@@ -264,7 +264,7 @@ a:hover {
 
 .career-block {
   flex: var(--w) 1 0;
-  min-width: 0;
+  min-width: var(--min);
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -275,6 +275,7 @@ a:hover {
 }
 
 .career-company {
+  white-space: nowrap;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -282,6 +283,7 @@ a:hover {
 }
 
 .career-dates {
+  white-space: nowrap;
   font-family: var(--font-mono);
   font-size: 12px;
   font-variant-numeric: tabular-nums;
@@ -338,8 +340,13 @@ a:hover {
     flex-direction: column;
   }
 
+  .career-company {
+    white-space: normal;
+  }
+
   .career-block {
     flex: none;
+    min-width: 0;
     min-height: 0;
     display: grid;
     grid-template-columns: 1fr auto;
