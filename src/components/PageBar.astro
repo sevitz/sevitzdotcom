@@ -1,0 +1,15 @@
+---
+import { site } from "../data/site";
+
+const { hero, nav } = site;
+---
+
+<div class="page-bar eyebrow">
+  <a class="wordmark" href="/">{hero.wordmark}<span class="dot">.</span></a>
+  <div class="page-bar-end">
+    <p class="hero-name">{hero.firstName} {hero.lastName}</p>
+    <nav class="hero-nav" aria-label="Main">
+      {nav.map((item) => <a href={item.href === "#contact" ? "/#contact" : item.href}>{item.label}</a>)}
+    </nav>
+  </div>
+</div>
