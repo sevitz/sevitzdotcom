@@ -135,15 +135,18 @@ a:hover {
 .hero-caption {
   position: absolute;
   right: calc(var(--gutter) - 8px);
-  bottom: 6px;
+  bottom: 8px;
   z-index: 1;
   margin: 0;
-  padding: 3px 8px;
+  padding: 5px 11px;
   border-radius: 6px;
-  background: oklch(0.14 0.03 45 / 0.45);
-  font-size: 12px;
+  background: oklch(0.14 0.03 45 / 0.66);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  font-size: 13px;
+  font-weight: 500;
   line-height: 1.2;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   color: var(--hero-ink);
   pointer-events: none;
 }
@@ -155,7 +158,7 @@ a:hover {
 .hero-bar {
   padding: 28px var(--gutter) 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 16px;
 }
@@ -178,6 +181,14 @@ a:hover {
 .hero-nav {
   display: flex;
   gap: clamp(16px, 3vw, 28px);
+}
+
+/* The name sits beside the nav, divided by a hairline; on narrow screens it goes back to the left. */
+.hero-bar .hero-name {
+  order: -1;
+  margin-right: clamp(16px, 3vw, 28px);
+  padding-right: clamp(16px, 3vw, 28px);
+  border-right: 1px solid oklch(0.98 0.02 90 / 0.35);
 }
 
 .hero-body {
@@ -234,78 +245,185 @@ a:hover {
   transform: none;
 }
 
-/* ---------- CV + Thoughts cards ---------- */
+/* ---------- Career strip ---------- */
 
-.cards {
-  padding: clamp(24px, 4vw, 40px) var(--gutter) 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-  gap: 16px;
-}
-
-.card {
+.career {
+  padding: clamp(28px, 4vw, 44px) var(--gutter) 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 28px;
-  padding: 28px;
-  min-height: 176px;
-  transition: transform 0.2s;
+  gap: 20px;
 }
 
-.card:hover {
-  transform: translateY(-6px);
+.career-strip {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 2px;
 }
 
-.card-cv,
-.card-cv:hover {
-  background: var(--accent);
-  color: var(--on-accent);
+.career-block {
+  flex: var(--w) 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 12px 16px;
+  min-height: 132px;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
-.card-thoughts,
-.card-thoughts:hover {
+.career-company {
+  font-size: clamp(14px, 1.5vw, 18px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.career-dates {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.career-role {
+  margin-top: auto;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.tone-ink {
   background: var(--ink);
   color: var(--bg);
 }
 
-.card-top {
-  display: flex;
-  justify-content: space-between;
+.tone-paper {
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line);
 }
 
-.card-arrow {
-  font-size: 28px;
+.tone-accent {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.tone-band {
+  background: var(--band);
+  color: var(--ink);
+}
+
+@media (max-width: 720px) {
+  .career-strip {
+    flex-direction: column;
+  }
+
+  .career-block {
+    flex: none;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 16px;
+    padding: 12px 14px;
+  }
+
+  .career-role {
+    margin-top: 0;
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------- Start here + Latest ---------- */
+
+.start {
+  padding: clamp(40px, 5vw, 64px) var(--gutter) clamp(56px, 8vw, 88px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: clamp(32px, 5vw, 64px);
+}
+
+.start-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.start-col .section-head {
+  margin-bottom: 0;
+}
+
+.start-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.start-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  column-gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.start-title {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
   line-height: 1;
 }
 
-.card-bottom {
+.start-cv .start-title {
+  color: var(--accent);
+}
+
+.start-blurb {
+  grid-column: 1;
+  margin-top: 6px;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.start-arrow {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: 24px;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.start-row:hover .start-arrow {
+  transform: translate(3px, -3px);
+}
+
+.start-row:hover .start-title {
+  color: var(--accent);
+}
+
+.post-more {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
-.card-title {
-  font-size: 52px;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 0.9;
+.post-more li {
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
 }
 
-.card-blurb {
+.post-more a {
   font-size: 17px;
-  line-height: 1.45;
-  max-width: 36ch;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
 /* ---------- Latest thoughts ---------- */
-
-.latest {
-  padding: clamp(32px, 4vw, 48px) var(--gutter) clamp(56px, 8vw, 88px);
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
 
 .section-head {
   display: flex;
@@ -535,6 +653,19 @@ a:hover {
   }
 }
 
+@media (max-width: 720px) {
+  .hero-bar {
+    justify-content: space-between;
+  }
+
+  .hero-bar .hero-name {
+    order: 0;
+    margin-right: 0;
+    padding-right: 0;
+    border-right: 0;
+  }
+}
+
 @media (max-width: 480px) {
   /* The name now shares the top bar with the nav, so keep it on one line. */
   .hero-bar .hero-name {
@@ -549,19 +680,6 @@ a:hover {
     min-height: clamp(300px, 40vh, 340px);
   }
 
-  .card {
-    min-height: 0;
-    padding: 20px 22px;
-    gap: 16px;
-  }
-
-  .card-title {
-    font-size: 34px;
-  }
-
-  .card-blurb {
-    font-size: 15px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -571,12 +689,16 @@ a:hover {
 
   .hero-layer,
   .tagline p,
-  .card {
+  .start-row,
+  .start-arrow {
     transition: none;
   }
 
-  .tagline p,
-  .card:hover {
+  .tagline p {
+    transform: none;
+  }
+
+  .start-row:hover .start-arrow {
     transform: none;
   }
 }

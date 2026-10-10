@@ -1,0 +1,23 @@
+---
+import { site } from "../data/site";
+
+const { career, links } = site;
+---
+
+<section class="career" aria-labelledby="career-label">
+  <div class="section-head">
+    <h2 class="section-label" id="career-label">Career</h2>
+    <a class="eyebrow" href={links.cv.href}>Full CV →</a>
+  </div>
+  <ol class="career-strip">
+    {
+      career.map((job) => (
+        <li class={`career-block tone-${job.tone}`} style={`--w:${job.weight}`}>
+          <span class="career-company">{job.company}</span>
+          <span class="career-dates">{job.dates}</span>
+          <span class="career-role">{job.role}</span>
+        </li>
+      ))
+    }
+  </ol>
+</section>

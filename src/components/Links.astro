@@ -1,27 +1,72 @@
 ---
 import { site } from "../data/site";
+import type { PostSummary } from "./Latest.astro";
 
 interface Props {
-  hasPosts: boolean;
+  posts: PostSummary[];
 }
 
-const { hasPosts } = Astro.props;
-const { cv, thoughts } = site.links;
+const { posts } = Astro.props;
+const { cv, thoughts, stats } = site.links;
+const [newest, ...rest] = posts;
 ---
 
-<section class="cards" aria-label="Start here">
-  <a class="card card-cv" href={cv.href}>
-    <span class="card-top eyebrow"><span>{cv.eyebrow}</span><span class="card-arrow" aria-hidden="true">↗</span></span>
-    <span class="card-bottom">
-      <span class="card-title">{cv.title}</span>
-      <span class="card-blurb">{cv.blurb}</span>
-    </span>
-  </a>
-  <a class="card card-thoughts" href={thoughts.href}>
-    <span class="card-top eyebrow"><span>{thoughts.eyebrow}</span><span class="card-arrow" aria-hidden="true">↗</span></span>
-    <span class="card-bottom">
-      <span class="card-title">{thoughts.title}</span>
-      <span class="card-blurb">{hasPosts ? thoughts.blurb : thoughts.blurbEmpty}</span>
-    </span>
-  </a>
+<section class="start" aria-label="Start here">
+  <div class="start-col">
+    <div class="section-head">
+      <h2 class="section-label">Start here</h2>
+    </div>
+    <ul class="start-list">
+      <li>
+        <a class="start-row start-cv" href={cv.href}>
+          <span class="start-title">{cv.title}</span>
+          <span class="start-blurb">Standard or detailed, as PDF</span>
+          <span class="start-arrow" aria-hidden="true">↗</span>
+        </a>
+      </li>
+      <li>
+        <a class="start-row" href={thoughts.href}>
+          <span class="start-title">{thoughts.title}</span>
+          <span class="start-blurb">Writing on technology and teams</span>
+          <span class="start-arrow" aria-hidden="true">↗</span>
+        </a>
+      </li>
+      <li>
+        <a class="start-row" href={stats.href}>
+          <span class="start-title">{stats.title}</span>
+          <span class="start-blurb">{stats.blurb}</span>
+          <span class="start-arrow" aria-hidden="true">↗</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="start-col" id="latest">
+    <div class="section-head">
+      <h2 class="section-label">Latest</h2>
+      <a class="eyebrow" href={thoughts.href}>All →</a>
+    </div>
+    {
+      newest ? (
+        <>
+          <a class="post" href={`${thoughts.href}${newest.slug}/`}>
+            <span class="post-tag">{newest.tag}</span>
+            <span class="post-title">{newest.title}</span>
+            <span class="post-summary">{newest.summary}</span>
+          </a>
+          {rest.length > 0 && (
+            <ul class="post-more">
+              {rest.map((post) => (
+                <li>
+                  <a href={`${thoughts.href}${post.slug}/`}>{post.title}</a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
+      ) : (
+        <p class="posts-empty">First posts are on the way.</p>
+      )
+    }
+  </div>
 </section>

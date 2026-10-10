@@ -4,7 +4,8 @@ export const prerender = true;
 import HomeLayout from "../layouts/HomeLayout.astro";
 import Hero from "../components/Hero.astro";
 import Links from "../components/Links.astro";
-import Latest, { type PostSummary } from "../components/Latest.astro";
+import Career from "../components/Career.astro";
+import type { PostSummary } from "../components/Latest.astro";
 import About from "../components/About.astro";
 import Contact from "../components/Contact.astro";
 import { getPublishedPosts } from "../lib/thoughts";
@@ -21,8 +22,8 @@ const posts: PostSummary[] = (await getPublishedPosts()).map(({ data }) => ({
 <HomeLayout>
   <Hero />
   <main>
-    <Links hasPosts={posts.length > 0} />
-    <Latest posts={posts.slice(0, 3)} />
+    <Career />
+    <Links posts={posts.slice(0, 3)} />
     <About />
   </main>
   <Contact />

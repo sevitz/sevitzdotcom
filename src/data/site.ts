@@ -94,7 +94,23 @@ export const site = {
       blurbEmpty: "Coming soon: notes on technology, teams and decisions",
       href: "/thoughts-about/",
     },
+    stats: {
+      title: "Stats for geeks",
+      blurb: "Live code and Claude usage data",
+      href: "/stats-for-geeks/",
+    },
   },
+
+  // The career strip under the hero. `weight` sets each block's share of the strip's width
+  // (roughly years served, with the one-year eBay stint widened so its label fits). Blocks run
+  // end to end with no gaps; `tone` picks the fill.
+  career: [
+    { company: "Accenture", dates: "1997 to 2006", role: "Manager", weight: 9, tone: "ink" },
+    { company: "eBay", dates: "2006 to 2007", role: "Senior Manager", weight: 3, tone: "paper" },
+    { company: "vzaar (acquired by DaCast)", dates: "2007 to 2019", role: "Co-founder and CEO", weight: 12, tone: "accent" },
+    { company: "Smart Pension", dates: "2020 to 2024", role: "Director: Technology, Infrastructure and Data", weight: 6, tone: "band" },
+    { company: "Barnett Waddingham / Howden", dates: "2024 to now", role: "Head of Future Technology", weight: 6, tone: "ink" },
+  ],
 
   about: {
     paragraphs: [

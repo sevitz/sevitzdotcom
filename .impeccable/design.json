@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-10T00:00:00Z",
+  "title": "Design System: sevitz.com",
+  "extensions": {
+    "colorMeta": {
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "oklch(0.985 0.018 90)", "tonalRamp": [] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "oklch(0.21 0.02 40)", "tonalRamp": [] },
+      "ember": { "role": "primary", "displayName": "Ember", "canonical": "oklch(0.6 0.19 25)", "tonalRamp": ["oklch(0.2 0.19 25)","oklch(0.3 0.19 25)","oklch(0.4 0.19 25)","oklch(0.5 0.19 25)","oklch(0.6 0.19 25)","oklch(0.7 0.19 25)","oklch(0.82 0.19 25)","oklch(0.95 0.19 25)"] },
+      "amber-band": { "role": "secondary", "displayName": "Amber Band", "canonical": "oklch(0.83 0.12 75)", "tonalRamp": ["oklch(0.2 0.12 75)","oklch(0.3 0.12 75)","oklch(0.4 0.12 75)","oklch(0.5 0.12 75)","oklch(0.65 0.12 75)","oklch(0.83 0.12 75)","oklch(0.9 0.12 75)","oklch(0.95 0.12 75)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero wordmark only." },
+      "label": { "displayName": "Label", "purpose": "Uppercase tracked section labels and nav." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "card-lift", "value": "transform 0.2s", "purpose": "Cards rise 6px on hover." },
+      { "name": "hero-crossfade", "value": "opacity 1.2s ease", "purpose": "Hero photo rotation." }
+    ],
+    "breakpoints": [
+      { "name": "narrow", "value": "720px" },
+      { "name": "phone", "value": "480px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "CV Card",
+      "kind": "card",
+      "refersTo": "card-cv",
+      "description": "Ember field card that lifts on hover.",
+      "html": "<a class=\"ds-card\" href=\"#\"><span class=\"ds-arrow\">↗</span><span class=\"ds-title\">CV</span></a>",
+      "css": ".ds-card{display:flex;flex-direction:column;justify-content:space-between;gap:28px;padding:28px;min-height:176px;background:oklch(0.6 0.19 25);color:oklch(0.99 0.01 90);font-family:Geist,Helvetica,Arial,sans-serif;text-decoration:none;transition:transform .2s}.ds-card:hover{transform:translateY(-6px)}.ds-arrow{font-size:28px;line-height:1}.ds-title{font-size:52px;font-weight:700;letter-spacing:-.04em;line-height:.9}"
+    },
+    {
+      "name": "Section Head",
+      "kind": "custom",
+      "refersTo": "section-head",
+      "description": "Uppercase label over a 3px ink rule.",
+      "html": "<div class=\"ds-head\"><h2 class=\"ds-label\">Latest thoughts</h2><a class=\"ds-more\" href=\"#\">All</a></div>",
+      "css": ".ds-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid oklch(0.21 0.02 40);padding-bottom:14px;font-family:Geist,Helvetica,Arial,sans-serif}.ds-label{margin:0;font-size:15px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.ds-more{color:oklch(0.6 0.19 25);text-decoration:none}.ds-more:hover{color:oklch(0.21 0.02 40)}.ds-more:focus-visible{outline:2px solid oklch(0.6 0.19 25);outline-offset:3px}"
+    },
+    {
+      "name": "Contact Item",
+      "kind": "custom",
+      "refersTo": "contact-item",
+      "description": "Label, value and 3px ember rule.",
+      "html": "<button class=\"ds-contact\"><span class=\"ds-cl\">Email</span><span class=\"ds-cv\">Click to reveal</span></button>",
+      "css": ".ds-contact{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:8px;padding:20px 0;border-bottom:3px solid oklch(0.6 0.19 25);color:oklch(0.21 0.02 40);font-family:Geist,Helvetica,Arial,sans-serif}.ds-contact:hover{border-color:oklch(0.83 0.12 75);color:oklch(0.6 0.19 25)}.ds-contact:focus-visible{outline:2px solid oklch(0.6 0.19 25);outline-offset:3px}.ds-cl{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:oklch(0.46 0.015 50)}.ds-cv{font-size:17px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Field Notebook",
+    "overview": "A warm-paper page with confident flat blocks of colour, one oversized wordmark, and photographs Adrian took himself, each captioned with place and year like a note in the margin. It reads as a person's working notebook, not a corporate brochure.",
+    "keyCharacteristics": [
+      "Flat colour fields and 3px rules instead of shadows.",
+      "Geist at heavy weight and tight tracking for display; uppercase tracked labels for structure.",
+      "Sharp corners everywhere except the photo caption pill.",
+      "Light and dark themes; hero always dark.",
+      "Real photography and real data only."
+    ],
+    "rules": [
+      { "name": "The One Ember Rule", "body": "Ember is the only accent. A screen has one dominant ember field at most.", "section": "colors" },
+      { "name": "The Warm Neutral Rule", "body": "No pure grey, black or white.", "section": "colors" },
+      { "name": "The Weight Contrast Rule", "body": "Heavy (700) against regular reading text; no mid-weight display.", "section": "typography" },
+      { "name": "The Readable Prose Rule", "body": "Long-form text uses normal case, 1.5+ line-height and a 65-75ch measure.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Surfaces never carry shadows. State is shown by colour and translateY.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep every surface flat and square-cornered; use the 3px rule for emphasis.",
+      "Do tint all neutrals warm and keep one ember accent.",
+      "Do make the CV sympathetic to this system while putting readability first."
+    ],
+    "donts": [
+      "Don't add shadows, glows or gradients outside the hero scrim.",
+      "Don't introduce a second accent colour.",
+      "Don't put long text in uppercase.",
+      "Don't let the CV drift back to the legacy Bootstrap look."
+    ]
+  }
+}
