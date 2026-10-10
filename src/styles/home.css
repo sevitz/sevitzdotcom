@@ -275,7 +275,7 @@ a:hover {
 }
 
 .career-company {
-  font-size: clamp(14px, 1.5vw, 18px);
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -314,7 +314,24 @@ a:hover {
   color: var(--ink);
 }
 
+@media (max-width: 1000px) {
+  .career-block {
+    padding-inline: 10px;
+  }
+}
+
 @media (max-width: 720px) {
+  /* Stacked rows are wide enough for the fullest wording of each field. */
+  .career .company > span:not(:last-child),
+  .career .role > span:not(:last-child) {
+    display: none !important;
+  }
+
+  .career .company > span:last-child,
+  .career .role > span:last-child {
+    display: inline !important;
+  }
+
   .career-strip {
     flex-direction: column;
   }
@@ -451,15 +468,20 @@ a:hover {
 }
 
 .post-row {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  align-items: baseline;
+  column-gap: 16px;
+  row-gap: 6px;
   padding: 16px 0;
 }
 
+.post-row .post-tag {
+  justify-self: start;
+}
+
 .post-row .post-title {
-  font-size: clamp(22px, 2.4vw, 26px);
+  font-size: clamp(20px, 2.1vw, 24px);
 }
 
 .post-row:hover .post-title {
@@ -467,6 +489,7 @@ a:hover {
 }
 
 .post-row .post-summary {
+  grid-column: 2;
   font-size: 15px;
   display: -webkit-box;
   -webkit-box-orient: vertical;

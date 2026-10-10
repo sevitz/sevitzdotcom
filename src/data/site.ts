@@ -104,19 +104,19 @@ export const site = {
   // The career strip under the hero. `weight` sets each block's share of the strip's width
   // (roughly years served, with the one-year eBay stint widened so its label fits). Blocks run
   // end to end with no gaps; `tone` picks the fill. `company` and `role` list wording from
-  // shortest to longest as [text, minimum block width in px]: the longest that fits is shown.
+  // shortest to longest as [text, minimum block width in px, measured at 16px bold / 13px regular]: the longest that fits is shown.
   career: [
     { company: [["Accenture", 0]], dates: "1997 to 2006", role: [["Manager", 0]], weight: 9, tone: "ink" },
-    { company: [["eBay", 0]], dates: "2006 to 2007", role: [["S. Manager", 0], ["Senior Manager", 100]], weight: 3.5, tone: "paper" },
-    { company: [["vzaar (acquired by DaCast)", 0]], dates: "2007 to 2019", role: [["Co-founder and CEO", 0]], weight: 12, tone: "accent" },
+    { company: [["eBay", 0]], dates: "2006 to 2007", role: [["S. Manager", 0], ["Senior Manager", 99]], weight: 3.5, tone: "paper" },
+    { company: [["vzaar (acquired by DaCast)", 0]], dates: "2007 to 2019", role: [["Co-founder & CTPO", 0], ["Co-founder, CTPO & CEO", 153]], weight: 12, tone: "accent" },
     {
       company: [["Smart Pension", 0]],
       dates: "2020 to 2024",
       role: [
         ["Director", 0],
-        ["Director: Technology", 140],
-        ["Director: Technology & Data", 185],
-        ["Director: Technology, Data and Infrastructure", 300],
+        ["Director: Technology", 126],
+        ["Director: Technology & Data", 169],
+        ["Director: Technology, Data and Infrastructure", 269],
       ],
       weight: 6,
       tone: "band",
@@ -124,10 +124,10 @@ export const site = {
     {
       company: [
         ["Howden", 0],
-        ["Howden (BW)", 100],
-        ["Howden (Barnett W)", 150],
-        ["Howden (Barnett Waddingham)", 230],
-        ["Barnett Waddingham (acquired by Howden)", 300],
+        ["Howden (BW)", 109],
+        ["Howden (Barnett W)", 160],
+        ["Howden (Barnett Waddingham)", 246],
+        ["Barnett Waddingham (acquired by Howden)", 342],
       ],
       dates: "2024 to now",
       role: [["Head of Future Technology", 0]],
