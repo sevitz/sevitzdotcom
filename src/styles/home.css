@@ -685,16 +685,43 @@ a:hover {
 /* ---------- Plain content pages (e.g. Thoughts about placeholder) ---------- */
 
 .page-bar {
-  padding: 28px var(--gutter);
+  padding: 24px var(--gutter);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  border-bottom: 1px solid var(--line);
+  background: var(--hero-bg);
+  color: var(--hero-ink);
+}
+
+.page-bar a {
+  color: var(--hero-ink);
+}
+
+.page-bar a:hover {
+  color: var(--hero-eyebrow);
 }
 
 .page-bar .dot {
-  color: var(--accent);
+  color: var(--hero-dot);
+}
+
+.page-bar-end {
+  display: flex;
+  align-items: center;
+}
+
+.page-bar .hero-name {
+  margin-right: clamp(16px, 3vw, 28px);
+  padding-right: clamp(16px, 3vw, 28px);
+  border-right: 1px solid oklch(0.98 0.02 90 / 0.35);
+}
+
+/* On narrow screens the name drops out; the wordmark carries it. */
+@media (max-width: 600px) {
+  .page-bar .hero-name {
+    display: none;
+  }
 }
 
 .page-main {
@@ -703,6 +730,7 @@ a:hover {
   flex-direction: column;
   gap: 20px;
   max-width: 900px;
+  margin-inline: auto;
 }
 
 .page-title {
@@ -788,22 +816,56 @@ a:hover {
 
 /* ---------- Thoughts about: index, posts ---------- */
 
+.all-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 24px;
+}
+
 .post-list {
   list-style: none;
-  margin: 12px 0 0;
+  margin: 0;
   padding: 0;
-  max-width: 68ch;
 }
 
 .post-list li {
-  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .post-list a {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  column-gap: 20px;
+  align-items: start;
+  padding: 24px 0;
+}
+
+.post-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.post-body {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 24px 0;
+  min-width: 0;
+}
+
+@media (max-width: 560px) {
+  .post-list a {
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+  }
+
+  .post-side {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
 }
 
 .post-list-title {
@@ -870,7 +932,7 @@ a:hover {
 .prose img {
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
+  border-radius: 0;
 }
 
 .prose blockquote {
@@ -924,14 +986,15 @@ a:hover {
 }
 
 .post-tags li {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 2px 10px;
+  background: var(--band);
+  color: var(--ink);
+  padding: 4px 8px;
+  font-weight: 500;
 }
 
 .post-elsewhere {
-  border-top: 1px solid var(--line);
-  padding-top: 20px;
+  border-top: 3px solid var(--ink);
+  padding-top: 14px;
 }
 
 .post-elsewhere ul {

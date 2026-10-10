@@ -4,6 +4,7 @@ export const prerender = true;
 import { render } from "astro:content";
 import HomeLayout from "../../layouts/HomeLayout.astro";
 import Footer from "../../components/Footer.astro";
+import PageBar from "../../components/PageBar.astro";
 import PostFooter from "../../components/PostFooter.astro";
 import { site } from "../../data/site";
 import { formatDate, getPublishedPosts, postFolder, withFavicons } from "../../lib/thoughts";
@@ -26,12 +27,7 @@ const image = data.image ? `/thoughts-about/${data.slug}/${data.image.src}` : un
   ogImage={image}
   rss
 >
-  <div class="page-bar eyebrow">
-    <a class="wordmark" href="/">{site.hero.wordmark}<span class="dot">.</span></a>
-    <nav class="hero-nav" aria-label="Main">
-      {site.nav.map((item) => <a href={item.href === "#contact" ? "/#contact" : item.href}>{item.label}</a>)}
-    </nav>
-  </div>
+  <PageBar />
   <main class="page-main post-page">
     <a class="eyebrow" style="color:var(--accent)" href="/thoughts-about/">← Thoughts about…</a>
     <article>
