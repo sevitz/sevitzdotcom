@@ -103,14 +103,15 @@ export const site = {
 
   // The career strip under the hero. `weight` sets each block's share of the strip's width
   // (roughly years served, with the one-year eBay stint widened so its label fits). Blocks run
-  // end to end with no gaps; `tone` picks the fill. `company`, `dates` and `role` list wording from
+  // end to end with no gaps; `min` is the narrowest a block may get (px) so its company and dates never wrap; `tone` picks the fill. `company`, `dates` and `role` list wording from
   // shortest to longest as [text, minimum block width in px, measured at 16px bold / 13px regular / 12px mono]: the longest that fits is shown.
   career: [
-    { company: [["Accenture", 0]], dates: [["1997 to 2006", 0]], role: [["Manager", 0]], weight: 9, tone: "ink" },
-    { company: [["eBay", 0]], dates: [["2006/7", 0], ["2006 to 2007", 91]], role: [["S. Manager", 0], ["Senior Manager", 99]], weight: 3.5, tone: "paper" },
-    { company: [["vzaar (acquired by DaCast)", 0]], dates: [["2007 to 2019", 0]], role: [["Co-founder & CTPO", 0], ["Co-founder, CTPO & CEO", 153]], weight: 12, tone: "accent" },
+    { company: [["Accenture", 0]], min: 106, dates: [["1997 to 2006", 0]], role: [["Manager", 0]], weight: 9, tone: "ink" },
+    { company: [["eBay", 0]], min: 68, dates: [["2006/7", 0], ["2006 to 2007", 91]], role: [["S. Manager", 0], ["Senior Manager", 99]], weight: 3.5, tone: "paper" },
+    { company: [["vzaar", 0], ["vzaar (acquired by DaCast)", 216]], min: 111, dates: [["2007 to 2019", 0]], role: [["Co-founder & CTPO", 0], ["Co-founder, CTPO & CEO", 153]], weight: 12, tone: "accent" },
     {
       company: [["Smart Pension", 0]],
+      min: 138,
       dates: [["2020 to 2024", 0]],
       role: [
         ["Director", 0],
@@ -129,6 +130,7 @@ export const site = {
         ["Howden (Barnett Waddingham)", 246],
         ["Barnett Waddingham (acquired by Howden)", 342],
       ],
+      min: 104,
       dates: [["2024 to now", 0]],
       role: [["Head of Future Technology", 0]],
       weight: 6,
