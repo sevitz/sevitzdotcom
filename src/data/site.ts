@@ -103,15 +103,15 @@ export const site = {
 
   // The career strip under the hero. `weight` sets each block's share of the strip's width
   // (roughly years served, with the one-year eBay stint widened so its label fits). Blocks run
-  // end to end with no gaps; `tone` picks the fill. `company` and `role` list wording from
-  // shortest to longest as [text, minimum block width in px, measured at 16px bold / 13px regular]: the longest that fits is shown.
+  // end to end with no gaps; `tone` picks the fill. `company`, `dates` and `role` list wording from
+  // shortest to longest as [text, minimum block width in px, measured at 16px bold / 13px regular / 12px mono]: the longest that fits is shown.
   career: [
-    { company: [["Accenture", 0]], dates: "1997 to 2006", role: [["Manager", 0]], weight: 9, tone: "ink" },
-    { company: [["eBay", 0]], dates: "2006 to 2007", role: [["S. Manager", 0], ["Senior Manager", 99]], weight: 3.5, tone: "paper" },
-    { company: [["vzaar (acquired by DaCast)", 0]], dates: "2007 to 2019", role: [["Co-founder & CTPO", 0], ["Co-founder, CTPO & CEO", 153]], weight: 12, tone: "accent" },
+    { company: [["Accenture", 0]], dates: [["1997 to 2006", 0]], role: [["Manager", 0]], weight: 9, tone: "ink" },
+    { company: [["eBay", 0]], dates: [["2006/7", 0], ["2006 to 2007", 91]], role: [["S. Manager", 0], ["Senior Manager", 99]], weight: 3.5, tone: "paper" },
+    { company: [["vzaar (acquired by DaCast)", 0]], dates: [["2007 to 2019", 0]], role: [["Co-founder & CTPO", 0], ["Co-founder, CTPO & CEO", 153]], weight: 12, tone: "accent" },
     {
       company: [["Smart Pension", 0]],
-      dates: "2020 to 2024",
+      dates: [["2020 to 2024", 0]],
       role: [
         ["Director", 0],
         ["Director: Technology", 126],
@@ -129,7 +129,7 @@ export const site = {
         ["Howden (Barnett Waddingham)", 246],
         ["Barnett Waddingham (acquired by Howden)", 342],
       ],
-      dates: "2024 to now",
+      dates: [["2024 to now", 0]],
       role: [["Head of Future Technology", 0]],
       weight: 6,
       tone: "ink",

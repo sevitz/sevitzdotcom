@@ -7,7 +7,7 @@ const { career, links } = site;
 // one whose minimum width fits is shown; the rest stay hidden (and out of the accessibility tree).
 const css = career
   .flatMap((job, i) =>
-    (["company", "role"] as const).flatMap((field) => {
+    (["company", "dates", "role"] as const).flatMap((field) => {
       const options = job[field];
       const rules = [`.b${i} .${field} > span{display:none}`, `.b${i} .${field} > span:first-child{display:inline}`];
       options.forEach(([, min], j) => {
@@ -40,7 +40,11 @@ const css = career
               <span>{text}</span>
             ))}
           </span>
-          <span class="career-dates">{job.dates}</span>
+          <span class="career-dates dates">
+            {job.dates.map(([text]) => (
+              <span>{text}</span>
+            ))}
+          </span>
           <span class="career-role role">
             {job.role.map(([text]) => (
               <span>{text}</span>

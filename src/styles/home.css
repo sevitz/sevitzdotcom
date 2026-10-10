@@ -323,11 +323,13 @@ a:hover {
 @media (max-width: 720px) {
   /* Stacked rows are wide enough for the fullest wording of each field. */
   .career .company > span:not(:last-child),
+  .career .dates > span:not(:last-child),
   .career .role > span:not(:last-child) {
     display: none !important;
   }
 
   .career .company > span:last-child,
+  .career .dates > span:last-child,
   .career .role > span:last-child {
     display: inline !important;
   }
