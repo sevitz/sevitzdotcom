@@ -102,13 +102,13 @@ export const site = {
   },
 
   // The career strip under the hero. `weight` sets each block's share of the strip's width
-  // (roughly years served, with the one-year eBay stint widened so its label fits). Blocks run
+  // (roughly years served; eBay's one year is held at its label's width, so it stays short). Blocks run
   // end to end with no gaps; `min` is the narrowest a block may get (px) so its company and dates never wrap; `tone` picks the fill. `company`, `dates` and `role` list wording from
   // shortest to longest as [text, minimum block width in px, measured at 16px bold / 13px regular / 12px mono]: the longest that fits is shown.
   career: [
     { company: [["Accenture", 0]], min: 106, dates: [["1997 to 2006", 0]], role: [["Manager", 0]], weight: 9, tone: "ink" },
-    { company: [["eBay", 0]], min: 68, dates: [["2006/7", 0], ["2006 to 2007", 91]], role: [["S. Manager", 0], ["Senior Manager", 99]], weight: 3.5, tone: "paper" },
-    { company: [["vzaar", 0], ["vzaar (acquired by DaCast)", 216]], min: 111, dates: [["2007 to 2019", 0]], role: [["Co-founder & CTPO", 0], ["Co-founder, CTPO & CEO", 153]], weight: 12, tone: "accent" },
+    { company: [["eBay", 0]], min: 91, dates: [["2006/7", 0]], role: [["S. Manager", 0]], weight: 1, tone: "paper" },
+    { company: [["vzaar", 0], ["vzaar (acquired by DaCast)", 216]], min: 111, dates: [["2007 to 2019", 0]], role: [["Co-founder & CTPO", 0], ["Co-founder, CTPO & CEO", 153]], weight: 13, tone: "accent" },
     {
       company: [["Smart Pension", 0]],
       min: 138,
@@ -119,7 +119,7 @@ export const site = {
         ["Director: Technology & Data", 169],
         ["Director: Technology, Data and Infrastructure", 269],
       ],
-      weight: 6,
+      weight: 4,
       tone: "band",
     },
     {
@@ -133,7 +133,7 @@ export const site = {
       min: 104,
       dates: [["2024 to now", 0]],
       role: [["Head of Future Technology", 0]],
-      weight: 6,
+      weight: 2.5,
       tone: "ink",
     },
   ],
