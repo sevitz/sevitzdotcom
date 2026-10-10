@@ -1,0 +1,58 @@
+---
+import { site } from "../data/site";
+
+const { career, links } = site;
+
+// Each block is its own size container. Of the wordings listed for a field, only the longest
+// one whose minimum width fits is shown; the rest stay hidden (and out of the accessibility tree).
+const css = career
+  .flatMap((job, i) =>
+    (["company", "dates", "role"] as const).flatMap((field) => {
+      const options = job[field];
+      const rules = [`.b${i} .${field} > span{display:none}`, `.b${i} .${field} > span:first-child{display:inline}`];
+      options.forEach(([, min], j) => {
+        if (j === 0) return;
+        const hidePrevious = options
+          .slice(0, j)
+          .map((_, k) => `.b${i} .${field} > span:nth-child(${k + 1})`)
+          .join(",");
+        rules.push(
+          `@container b${i} (min-width:${min}px){${hidePrevious}{display:none}.b${i} .${field} > span:nth-child(${j + 1}){display:inline}}`
+        );
+      });
+      return rules;
+    })
+  )
+  .join("");
+---
+
+<section class="career" aria-labelledby="career-label">
+  <div class="section-head">
+    <h2 class="section-label" id="career-label">Career</h2>
+    <a class="eyebrow" href={links.cv.href}>Full CV →</a>
+  </div>
+  <ol class="career-strip">
+    {
+      career.map((job, i) => (
+        <li class={`career-block b${i} tone-${job.tone}`} style={`--w:${job.weight};container:b${i} / inline-size`}>
+          <span class="career-company company">
+            {job.company.map(([text]) => (
+              <span>{text}</span>
+            ))}
+          </span>
+          <span class="career-dates dates">
+            {job.dates.map(([text]) => (
+              <span>{text}</span>
+            ))}
+          </span>
+          <span class="career-role role">
+            {job.role.map(([text]) => (
+              <span>{text}</span>
+            ))}
+          </span>
+        </li>
+      ))
+    }
+  </ol>
+  <style is:inline set:html={css}></style>
+</section>

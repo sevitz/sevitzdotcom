@@ -94,7 +94,47 @@ export const site = {
       blurbEmpty: "Coming soon: notes on technology, teams and decisions",
       href: "/thoughts-about/",
     },
+    stats: {
+      title: "Stats for geeks",
+      blurb: "Live code and Claude usage data",
+      href: "/stats-for-geeks/",
+    },
   },
+
+  // The career strip under the hero. `weight` sets each block's share of the strip's width
+  // (roughly years served, with the one-year eBay stint widened so its label fits). Blocks run
+  // end to end with no gaps; `tone` picks the fill. `company`, `dates` and `role` list wording from
+  // shortest to longest as [text, minimum block width in px, measured at 16px bold / 13px regular / 12px mono]: the longest that fits is shown.
+  career: [
+    { company: [["Accenture", 0]], dates: [["1997 to 2006", 0]], role: [["Manager", 0]], weight: 9, tone: "ink" },
+    { company: [["eBay", 0]], dates: [["2006/7", 0], ["2006 to 2007", 91]], role: [["S. Manager", 0], ["Senior Manager", 99]], weight: 3.5, tone: "paper" },
+    { company: [["vzaar (acquired by DaCast)", 0]], dates: [["2007 to 2019", 0]], role: [["Co-founder & CTPO", 0], ["Co-founder, CTPO & CEO", 153]], weight: 12, tone: "accent" },
+    {
+      company: [["Smart Pension", 0]],
+      dates: [["2020 to 2024", 0]],
+      role: [
+        ["Director", 0],
+        ["Director: Technology", 126],
+        ["Director: Technology & Data", 169],
+        ["Director: Technology, Data and Infrastructure", 269],
+      ],
+      weight: 6,
+      tone: "band",
+    },
+    {
+      company: [
+        ["Howden", 0],
+        ["Howden (BW)", 109],
+        ["Howden (Barnett W)", 160],
+        ["Howden (Barnett Waddingham)", 246],
+        ["Barnett Waddingham (acquired by Howden)", 342],
+      ],
+      dates: [["2024 to now", 0]],
+      role: [["Head of Future Technology", 0]],
+      weight: 6,
+      tone: "ink",
+    },
+  ],
 
   about: {
     paragraphs: [
