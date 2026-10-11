@@ -1,4 +1,5 @@
 ---
+import ArrowUpRight from "../ArrowUpRight.astro";
 import { clipDescription, formatDate, formatNumber, type RepoStat, type Stats } from "../../lib/stats";
 import { relativeTime } from "../../lib/relative-time";
 import Sparkline from "./Sparkline.astro";
@@ -40,9 +41,7 @@ const buildTime = new Date();
                 {r.url ? (
                   <a href={r.url} rel="noopener">
                     {nameOf(r)}
-                    <span class="ext" aria-hidden="true">
-                      ↗
-                    </span>
+                    <span class="ext" aria-hidden="true"><ArrowUpRight /></span>
                   </a>
                 ) : (
                   nameOf(r)
