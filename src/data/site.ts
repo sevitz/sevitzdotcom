@@ -106,7 +106,7 @@ export const site = {
   // end to end with no gaps; `min` is the narrowest a block may get (px) so its company and dates never wrap; `tone` picks the fill. `company`, `dates` and `role` list wording from
   // shortest to longest as [text, minimum block width in px, measured at 16px bold / 13px regular / 12px mono]: the longest that fits is shown.
   career: [
-    { company: [["Accenture", 0]], min: 106, dates: [["1997 to 2006", 0]], role: [["Manager", 0]], weight: 9, tone: "ink" },
+    { company: [["Accenture", 0]], min: 106, dates: [["1997 to 2006", 0]], role: [["Manager", 0]], weight: 9, tone: "taupe" },
     { company: [["eBay", 0]], min: 91, dates: [["2006/7", 0]], role: [["S. Manager", 0]], weight: 1, tone: "paper" },
     { company: [["vzaar", 0], ["vzaar (acquired by DaCast)", 216]], min: 111, dates: [["2007 to 2019", 0]], role: [["Co-founder & CTPO", 0], ["Co-founder, CTPO & CEO", 153]], weight: 13, tone: "accent" },
     {
@@ -134,7 +134,7 @@ export const site = {
       dates: [["2024 to now", 0]],
       role: [["Head of Future Technology", 0]],
       weight: 2.5,
-      tone: "ink",
+      tone: "deep",
     },
   ],
 

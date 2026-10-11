@@ -296,9 +296,10 @@ a:hover {
 }
 
 /* The strip keeps the same colours in light and dark mode, so these are fixed values rather than
-   the themed tokens (which swap in dark mode). */
-.tone-ink {
-  background: oklch(0.21 0.02 40);
+   the themed tokens (which swap in dark mode). Mid-tone blocks stay distinct from both the cream
+   and the dark page. */
+.tone-taupe {
+  background: oklch(0.43 0.04 55);
   color: oklch(0.985 0.018 90);
 }
 
@@ -318,11 +319,9 @@ a:hover {
   color: oklch(0.21 0.02 40);
 }
 
-/* Against the dark page the ink blocks need an edge to stay distinct. */
-@media (prefers-color-scheme: dark) {
-  .tone-ink {
-    box-shadow: inset 0 0 0 1px var(--line);
-  }
+.tone-deep {
+  background: oklch(0.45 0.15 25);
+  color: oklch(0.99 0.01 90);
 }
 
 @media (max-width: 1000px) {
