@@ -295,25 +295,34 @@ a:hover {
   line-height: 1.3;
 }
 
+/* The strip keeps the same colours in light and dark mode, so these are fixed values rather than
+   the themed tokens (which swap in dark mode). */
 .tone-ink {
-  background: var(--ink);
-  color: var(--bg);
+  background: oklch(0.21 0.02 40);
+  color: oklch(0.985 0.018 90);
 }
 
 .tone-paper {
-  background: var(--card);
-  color: var(--ink);
-  box-shadow: inset 0 0 0 1px var(--line);
+  background: oklch(0.995 0.008 90);
+  color: oklch(0.21 0.02 40);
+  box-shadow: inset 0 0 0 1px oklch(0.88 0.02 80);
 }
 
 .tone-accent {
-  background: var(--accent);
-  color: var(--on-accent);
+  background: oklch(0.6 0.19 25);
+  color: oklch(0.99 0.01 90);
 }
 
 .tone-band {
-  background: var(--band);
-  color: var(--ink);
+  background: oklch(0.83 0.12 75);
+  color: oklch(0.21 0.02 40);
+}
+
+/* Against the dark page the ink blocks need an edge to stay distinct. */
+@media (prefers-color-scheme: dark) {
+  .tone-ink {
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
 }
 
 @media (max-width: 1000px) {
