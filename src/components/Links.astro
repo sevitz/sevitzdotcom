@@ -1,6 +1,7 @@
 ---
 import { site } from "../data/site";
 import type { PostSummary } from "./Latest.astro";
+import ArrowUpRight from "./ArrowUpRight.astro";
 
 interface Props {
   posts: PostSummary[];
@@ -20,21 +21,21 @@ const { cv, thoughts, stats } = site.links;
         <a class="start-row start-cv" href={cv.href}>
           <span class="start-title">{cv.title}</span>
           <span class="start-blurb">Standard or detailed, as PDF</span>
-          <span class="start-arrow" aria-hidden="true">↗</span>
+          <span class="start-arrow" aria-hidden="true"><ArrowUpRight /></span>
         </a>
       </li>
       <li>
         <a class="start-row" href={thoughts.href}>
           <span class="start-title">{thoughts.title}</span>
           <span class="start-blurb">Writing on technology and teams</span>
-          <span class="start-arrow" aria-hidden="true">↗</span>
+          <span class="start-arrow" aria-hidden="true"><ArrowUpRight /></span>
         </a>
       </li>
       <li>
         <a class="start-row" href={stats.href}>
           <span class="start-title">{stats.title}</span>
           <span class="start-blurb">{stats.blurb}</span>
-          <span class="start-arrow" aria-hidden="true">↗</span>
+          <span class="start-arrow" aria-hidden="true"><ArrowUpRight /></span>
         </a>
       </li>
     </ul>

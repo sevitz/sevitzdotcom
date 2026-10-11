@@ -468,6 +468,10 @@ a:hover {
   transition: transform 0.2s;
 }
 
+.start-arrow svg {
+  display: block;
+}
+
 .start-row:hover .start-arrow {
   transform: translate(3px, -3px);
 }
@@ -1355,8 +1359,12 @@ a:hover {
 
 .repo-name .ext {
   margin-left: 3px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--muted);
+}
+
+.repo-name .ext svg {
+  vertical-align: -1px;
 }
 
 .repo-desc {
