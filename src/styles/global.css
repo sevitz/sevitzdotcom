@@ -27,7 +27,6 @@ a, .aboxlink{
 	-o-transition:all 0.5s;
 	transition:all 0.5s;
 	border-bottom: 1px dashed;
-	outline:none!important;
 }
 
 .dark-box p {
@@ -37,7 +36,6 @@ a, .aboxlink{
 a:hover,a:focus,a:active {
 	color:#0D0D0D;
 	text-decoration:none;
-	outline:none!important;
 }
 p {
 	color:#8c9398;
@@ -89,10 +87,12 @@ body {
 	font-family: 'Open Sans',sans-serif;
 }
 /* ==========================================================================Links========================================================================== */
-a:focus {
-	outline:thin dotted;
+/* !important so Bootstrap's own a:focus / .btn:focus rules cannot win. */
+:focus-visible {
+	outline:2px solid #E04343 !important;
+	outline-offset:3px !important;
 }
-a:active,a:hover {
+a:active {
 	outline: 0;
 }
 /* ==========================================================================Typography========================================================================== */
@@ -162,7 +162,6 @@ p {
 /* ==========================================================================Navigation========================================================================== */
 .menu-wrap a {
 	color:#555d7c;
-	outline:none!important;
 }
 .menu-wrap a:hover,.menu-wrap a:focus {
 	color: #E04343;
@@ -439,7 +438,6 @@ h1.arrow span {
 	-webkit-box-shadow:none;
 	box-shadow:none;
 	border:1px solid #B0B0B0;
-	outline: none;
 }
 .contact-form-status {
 	margin: 15px 0 0;
@@ -472,7 +470,6 @@ h1.arrow span {
 	cursor: default;
 }
 button,button:focus,button:hover,button:active {
-	outline: none!important;
 }
 /* ==========================================================================Waypoints / Reveal========================================================================== */
 .wp1 {

@@ -62,8 +62,10 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  color: var(--accent);
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    color: var(--accent);
+  }
 }
 
 :focus-visible {
@@ -97,7 +99,7 @@ a:hover {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  min-height: clamp(340px, 46vh, 440px);
+  min-height: clamp(340px, 46svh, 440px);
   display: flex;
   flex-direction: column;
   background-color: var(--hero-bg);
@@ -167,8 +169,10 @@ a:hover {
   color: var(--hero-ink);
 }
 
-.hero-bar a:hover {
-  color: var(--hero-eyebrow);
+@media (hover: hover) and (pointer: fine) {
+  .hero-bar a:hover {
+    color: var(--hero-eyebrow);
+  }
 }
 
 .wordmark {
@@ -193,7 +197,7 @@ a:hover {
 
 .hero-body {
   margin-top: auto;
-  padding: 0 var(--gutter) clamp(28px, 5vh, 48px);
+  padding: 0 var(--gutter) clamp(28px, 5svh, 48px);
   display: flex;
   align-items: flex-end;
   gap: clamp(24px, 4vw, 56px);
@@ -480,12 +484,16 @@ a:hover {
   display: block;
 }
 
-.start-row:hover .start-arrow {
-  transform: translate(3px, -3px);
+@media (hover: hover) and (pointer: fine) {
+  .start-row:hover .start-arrow {
+    transform: translate(3px, -3px);
+  }
 }
 
-.start-row:hover .start-title {
-  color: var(--accent);
+@media (hover: hover) and (pointer: fine) {
+  .start-row:hover .start-title {
+    color: var(--accent);
+  }
 }
 
 .post-row {
@@ -505,8 +513,10 @@ a:hover {
   font-size: clamp(20px, 2.1vw, 24px);
 }
 
-.post-row:hover .post-title {
-  color: var(--accent);
+@media (hover: hover) and (pointer: fine) {
+  .post-row:hover .post-title {
+    color: var(--accent);
+  }
 }
 
 .post-row .post-summary {
@@ -644,9 +654,11 @@ a:hover {
   color: var(--ink);
 }
 
-.contact-item:hover {
-  border-color: var(--band);
-  color: var(--accent);
+@media (hover: hover) and (pointer: fine) {
+  .contact-item:hover {
+    border-color: var(--band);
+    color: var(--accent);
+  }
 }
 
 .contact-item:focus-visible {
@@ -690,8 +702,30 @@ a:hover {
   text-underline-offset: 3px;
 }
 
-.footer-links a:hover {
-  color: var(--ink);
+@media (hover: hover) and (pointer: fine) {
+  .footer-links a:hover {
+    color: var(--ink);
+  }
+}
+
+/* ---------- Press feedback ---------- */
+
+.contact-item:active,
+.cs-toggle:active {
+  transform: scale(0.97);
+}
+
+.start-row:active .start-title,
+.post-row:active .post-title,
+.post-list a:active .post-list-title {
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .contact-item,
+  .cs-toggle {
+    transition: transform 160ms ease-out;
+  }
 }
 
 /* ---------- Plain content pages (e.g. Thoughts about placeholder) ---------- */
@@ -710,8 +744,10 @@ a:hover {
   color: var(--hero-ink);
 }
 
-.page-bar a:hover {
-  color: var(--hero-eyebrow);
+@media (hover: hover) and (pointer: fine) {
+  .page-bar a:hover {
+    color: var(--hero-eyebrow);
+  }
 }
 
 .page-bar .dot {
@@ -800,7 +836,7 @@ a:hover {
 
 @media (max-width: 600px) {
   .hero {
-    min-height: clamp(300px, 40vh, 340px);
+    min-height: clamp(300px, 40svh, 340px);
   }
 
 }
@@ -821,8 +857,10 @@ a:hover {
     transform: none;
   }
 
-  .start-row:hover .start-arrow {
-    transform: none;
+@media (hover: hover) and (pointer: fine) {
+    .start-row:hover .start-arrow {
+      transform: none;
+    }
   }
 }
 
@@ -887,8 +925,10 @@ a:hover {
   line-height: 1.15;
 }
 
-.post-list a:hover .post-list-title {
-  color: var(--accent);
+@media (hover: hover) and (pointer: fine) {
+  .post-list a:hover .post-list-title {
+    color: var(--accent);
+  }
 }
 
 .post-list-summary {
@@ -1334,9 +1374,14 @@ a:hover {
   transition: opacity 0.15s;
 }
 
-.repo-table tbody tr.is-private:hover,
 .repo-table tbody tr.is-private:focus-within {
   opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .repo-table tbody tr.is-private:hover {
+    opacity: 1;
+  }
 }
 
 .repo-table .vis-cell {
@@ -1356,8 +1401,10 @@ a:hover {
   height: 15px;
 }
 
-.repo-table a.vis:hover {
-  color: var(--ink);
+@media (hover: hover) and (pointer: fine) {
+  .repo-table a.vis:hover {
+    color: var(--ink);
+  }
 }
 
 .repo-name a {
@@ -1705,8 +1752,10 @@ rect.cs-c6 { fill: var(--cs-6); }
   transition: background-color 0.12s;
 }
 
-.cs-live .cs-legend tr[data-model]:hover {
-  background: color-mix(in oklab, var(--line) 45%, transparent);
+@media (hover: hover) and (pointer: fine) {
+  .cs-live .cs-legend tr[data-model]:hover {
+    background: color-mix(in oklab, var(--line) 45%, transparent);
+  }
 }
 
 /* Legend rows become toggle buttons when the script runs. */
@@ -1724,10 +1773,12 @@ rect.cs-c6 { fill: var(--cs-6); }
   text-align: left;
 }
 
-.cs-toggle:hover .cs-name,
-.cs-toggle:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+@media (hover: hover) and (pointer: fine) {
+  .cs-toggle:hover .cs-name,
+  .cs-toggle:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 }
 
 .cs-toggle:focus-visible {
