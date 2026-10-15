@@ -37,6 +37,7 @@ export const site = {
     images: [
       { src: "/img/header-bg.jpg", focus: "70% 30%", status: "skip" },
       { src: "/img/hero/adrian-portrait.webp", focus: "50% 38%", status: "show", caption: "New Malden, 2024" },
+      { src: "/img/hero/st-james-park-dusk.webp", focus: "50% 45%", status: "show", caption: "St James's Park, 2026" },
       { src: "/img/hero/thames-sunset.webp", focus: "50% 45%", status: "show", caption: "Waterloo Bridge, 2016" },
       { src: "/img/hero/misty-park-morning.webp", focus: "65% 40%", status: "show", caption: "Cambridge, 2016" },
       { src: "/img/hero/forest-rainbow.webp", focus: "60% 54%", status: "show", caption: "New Forest, 2019" },
