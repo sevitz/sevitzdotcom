@@ -1,130 +1,136 @@
 {
-  "generatedAt": "2026-10-12T13:13:19.671Z",
+  "generatedAt": "2026-10-19T10:49:47.069Z",
   "totals": {
     "repos": 17,
-    "commits": 1120,
-    "loc": 135651
+    "commits": 1248,
+    "loc": 140797
   },
   "weeks": [
     {
       "start": "2026-06-01",
       "added": 0,
       "removed": 0,
-      "loc": 15381
+      "loc": 15385
     },
     {
       "start": "2026-06-08",
       "added": 304,
       "removed": 0,
-      "loc": 15685
+      "loc": 15689
     },
     {
       "start": "2026-06-15",
       "added": 0,
       "removed": 0,
-      "loc": 15685
+      "loc": 15689
     },
     {
       "start": "2026-06-22",
       "added": 0,
       "removed": 0,
-      "loc": 15685
+      "loc": 15689
     },
     {
       "start": "2026-06-29",
       "added": 9723,
       "removed": 2243,
-      "loc": 23165
+      "loc": 23169
     },
     {
       "start": "2026-07-06",
       "added": 4837,
       "removed": 550,
-      "loc": 27452
+      "loc": 27456
     },
     {
       "start": "2026-07-13",
       "added": 0,
       "removed": 0,
-      "loc": 27452
+      "loc": 27456
     },
     {
       "start": "2026-07-20",
       "added": 2347,
       "removed": 261,
-      "loc": 29538
+      "loc": 29542
     },
     {
       "start": "2026-07-27",
       "added": 4314,
       "removed": 743,
-      "loc": 33109
+      "loc": 33113
     },
     {
       "start": "2026-08-03",
       "added": 0,
       "removed": 0,
-      "loc": 33109
+      "loc": 33113
     },
     {
       "start": "2026-08-10",
       "added": 0,
       "removed": 0,
-      "loc": 33109
+      "loc": 33113
     },
     {
       "start": "2026-08-17",
       "added": 6579,
       "removed": 491,
-      "loc": 39197
+      "loc": 39201
     },
     {
       "start": "2026-08-24",
       "added": 12890,
       "removed": 1330,
-      "loc": 50757
+      "loc": 50761
     },
     {
       "start": "2026-08-31",
       "added": 19111,
       "removed": 2602,
-      "loc": 67266
+      "loc": 67270
     },
     {
       "start": "2026-09-07",
       "added": 14201,
       "removed": 2125,
-      "loc": 79342
+      "loc": 79346
     },
     {
       "start": "2026-09-14",
       "added": 24938,
       "removed": 1871,
-      "loc": 102409
+      "loc": 102413
     },
     {
       "start": "2026-09-21",
       "added": 13978,
       "removed": 15960,
-      "loc": 100427
+      "loc": 100431
     },
     {
       "start": "2026-09-28",
       "added": 15813,
       "removed": 2325,
-      "loc": 113915
+      "loc": 113919
     },
     {
       "start": "2026-10-05",
       "added": 26436,
       "removed": 5141,
-      "loc": 135210
+      "loc": 135214
     },
     {
       "start": "2026-10-12",
-      "added": 619,
-      "removed": 178,
-      "loc": 135651
+      "added": 6357,
+      "removed": 1226,
+      "loc": 140345
+    },
+    {
+      "start": "2026-10-19",
+      "added": 485,
+      "removed": 33,
+      "loc": 140797
     }
   ],
   "repos": [
@@ -134,9 +140,9 @@
       "visibility": "private",
       "url": "https://noamelia.sevitz.com",
       "desc": "School tracker for the kids",
-      "updated": "2026-10-08T20:21:48.000Z",
-      "commits": 217,
-      "loc": 41819,
+      "updated": "2026-10-15T08:16:38.000Z",
+      "commits": 218,
+      "loc": 41870,
       "weekly": [
         {
           "added": 0,
@@ -213,6 +219,10 @@
         {
           "added": 731,
           "removed": 122
+        },
+        {
+          "added": 64,
+          "removed": 13
         },
         {
           "added": 0,
@@ -304,6 +314,10 @@
         {
           "added": 138,
           "removed": 21
+        },
+        {
+          "added": 0,
+          "removed": 0
         },
         {
           "added": 0,
@@ -400,6 +414,10 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     },
@@ -409,9 +427,9 @@
       "visibility": "private",
       "url": "https://recaipe.sevitz.com",
       "desc": "The current working version of a recipe, and how it got that way. Web viewer plus MCP server on Cloudflare Workers.",
-      "updated": "2026-09-23T12:14:18.000Z",
-      "commits": 40,
-      "loc": 9350,
+      "updated": "2026-10-19T10:31:55.000Z",
+      "commits": 42,
+      "loc": 9783,
       "weekly": [
         {
           "added": 0,
@@ -492,6 +510,10 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 460,
+          "removed": 27
         }
       ]
     },
@@ -572,6 +594,10 @@
         {
           "added": 2102,
           "removed": 572
+        },
+        {
+          "added": 0,
+          "removed": 0
         },
         {
           "added": 0,
@@ -677,6 +703,10 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     },
@@ -757,6 +787,10 @@
         {
           "added": 2776,
           "removed": 459
+        },
+        {
+          "added": 0,
+          "removed": 0
         },
         {
           "added": 0,
@@ -860,6 +894,105 @@
         {
           "added": 381,
           "removed": 80
+        },
+        {
+          "added": 0,
+          "removed": 0
+        }
+      ]
+    },
+    {
+      "label": "sevHouse",
+      "kind": "repo",
+      "visibility": "private",
+      "desc": "Home automation and general home-tech: setup docs, reference notes, and scripts",
+      "updated": "2026-10-17T06:45:56.000Z",
+      "commits": 203,
+      "loc": 7276,
+      "weekly": [
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
+        },
+        {
+          "added": 1958,
+          "removed": 190
+        },
+        {
+          "added": 1144,
+          "removed": 117
+        },
+        {
+          "added": 5541,
+          "removed": 1064
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     },
@@ -870,9 +1003,9 @@
       "url": "https://sevitz.com",
       "github": "https://github.com/sevitz/sevitzdotcom",
       "desc": "Putting the Sev in the Dot",
-      "updated": "2026-10-11T17:29:21.000Z",
-      "commits": 153,
-      "loc": 6821,
+      "updated": "2026-10-15T22:07:39.000Z",
+      "commits": 156,
+      "loc": 6871,
       "weekly": [
         {
           "added": 0,
@@ -951,6 +1084,10 @@
           "removed": 210
         },
         {
+          "added": 93,
+          "removed": 43
+        },
+        {
           "added": 0,
           "removed": 0
         }
@@ -961,9 +1098,9 @@
       "kind": "repo",
       "visibility": "private",
       "desc": "Ops tooling for Sev's apps",
-      "updated": "2026-10-09T16:18:27.000Z",
-      "commits": 61,
-      "loc": 5556,
+      "updated": "2026-10-15T13:39:22.000Z",
+      "commits": 62,
+      "loc": 5597,
       "weekly": [
         {
           "added": 0,
@@ -1042,6 +1179,10 @@
           "removed": 14
         },
         {
+          "added": 41,
+          "removed": 0
+        },
+        {
           "added": 0,
           "removed": 0
         }
@@ -1051,8 +1192,8 @@
       "label": "Sandwich",
       "kind": "repo",
       "visibility": "private",
-      "updated": "2026-10-06T08:40:11.000Z",
-      "commits": 33,
+      "updated": "2026-10-15T13:18:51.000Z",
+      "commits": 34,
       "loc": 5286,
       "weekly": [
         {
@@ -1134,97 +1275,10 @@
         {
           "added": 0,
           "removed": 0
-        }
-      ]
-    },
-    {
-      "label": "sevHouse",
-      "kind": "repo",
-      "visibility": "private",
-      "desc": "Home automation and general home-tech: setup docs, reference notes, and scripts",
-      "updated": "2026-10-12T10:56:50.000Z",
-      "commits": 106,
-      "loc": 2924,
-      "weekly": [
-        {
-          "added": 0,
-          "removed": 0
         },
         {
           "added": 0,
           "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 0,
-          "removed": 0
-        },
-        {
-          "added": 1958,
-          "removed": 190
-        },
-        {
-          "added": 1144,
-          "removed": 117
-        },
-        {
-          "added": 226,
-          "removed": 97
         }
       ]
     },
@@ -1316,6 +1370,10 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     },
@@ -1324,9 +1382,9 @@
       "kind": "repo",
       "visibility": "private",
       "desc": "My Claude skills and agents",
-      "updated": "2026-10-12T02:10:31.000Z",
-      "commits": 46,
-      "loc": 2599,
+      "updated": "2026-10-19T02:15:15.000Z",
+      "commits": 60,
+      "loc": 2751,
       "weekly": [
         {
           "added": 0,
@@ -1405,8 +1463,12 @@
           "removed": 54
         },
         {
-          "added": 12,
-          "removed": 1
+          "added": 157,
+          "removed": 11
+        },
+        {
+          "added": 22,
+          "removed": 5
         }
       ]
     },
@@ -1415,9 +1477,9 @@
       "kind": "repo",
       "visibility": "private",
       "desc": "Private playbook and tooling for Thoughts About",
-      "updated": "2026-10-09T13:38:07.000Z",
-      "commits": 17,
-      "loc": 1978,
+      "updated": "2026-10-19T09:32:53.000Z",
+      "commits": 21,
+      "loc": 1999,
       "weekly": [
         {
           "added": 0,
@@ -1496,7 +1558,11 @@
           "removed": 11
         },
         {
-          "added": 0,
+          "added": 34,
+          "removed": 14
+        },
+        {
+          "added": 1,
           "removed": 0
         }
       ]
@@ -1508,9 +1574,9 @@
       "url": "https://sevitz.com/thoughts-about",
       "github": "https://github.com/sevitz/thoughts-about",
       "desc": "Thoughts about ... by Adrian Sevitz. Source of truth for sevitz.com/thoughts-about",
-      "updated": "2026-10-09T13:38:39.000Z",
-      "commits": 24,
-      "loc": 767,
+      "updated": "2026-10-19T09:33:27.000Z",
+      "commits": 29,
+      "loc": 813,
       "weekly": [
         {
           "added": 0,
@@ -1589,8 +1655,12 @@
           "removed": 9
         },
         {
-          "added": 0,
-          "removed": 0
+          "added": 46,
+          "removed": 1
+        },
+        {
+          "added": 2,
+          "removed": 1
         }
       ]
     },
@@ -1682,55 +1752,24 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     }
   ],
   "contributions": {
-    "total": 1158,
+    "total": 1298,
     "repoCount": 17,
     "breakdown": {
-      "commits": 928,
-      "pullRequests": 203,
+      "commits": 1035,
+      "pullRequests": 236,
       "issues": 25,
       "reviews": 0
     },
     "calendar": [
-      {
-        "date": "2025-10-13",
-        "count": 0,
-        "level": 0
-      },
-      {
-        "date": "2025-10-14",
-        "count": 0,
-        "level": 0
-      },
-      {
-        "date": "2025-10-15",
-        "count": 0,
-        "level": 0
-      },
-      {
-        "date": "2025-10-16",
-        "count": 0,
-        "level": 0
-      },
-      {
-        "date": "2025-10-17",
-        "count": 0,
-        "level": 0
-      },
-      {
-        "date": "2025-10-18",
-        "count": 0,
-        "level": 0
-      },
-      {
-        "date": "2025-10-19",
-        "count": 0,
-        "level": 0
-      },
       {
         "date": "2025-10-20",
         "count": 0,
@@ -3518,20 +3557,55 @@
       },
       {
         "date": "2026-10-12",
-        "count": 37,
-        "level": 3
+        "count": 62,
+        "level": 4
+      },
+      {
+        "date": "2026-10-13",
+        "count": 21,
+        "level": 2
+      },
+      {
+        "date": "2026-10-14",
+        "count": 17,
+        "level": 2
+      },
+      {
+        "date": "2026-10-15",
+        "count": 8,
+        "level": 1
+      },
+      {
+        "date": "2026-10-16",
+        "count": 24,
+        "level": 2
+      },
+      {
+        "date": "2026-10-17",
+        "count": 17,
+        "level": 2
+      },
+      {
+        "date": "2026-10-18",
+        "count": 19,
+        "level": 2
+      },
+      {
+        "date": "2026-10-19",
+        "count": 9,
+        "level": 1
       }
     ]
   },
   "claudeGithub": {
     "since": "2026-07-31",
-    "prs": 194,
-    "merged": 188,
-    "cloudPrs": 35,
-    "cloudSessions": 24,
+    "prs": 227,
+    "merged": 223,
+    "cloudPrs": 39,
+    "cloudSessions": 27,
     "repos": 14,
-    "coAuthoredCommits": 716,
-    "commits": 1120,
+    "coAuthoredCommits": 816,
+    "commits": 1248,
     "weeks": [
       {
         "start": "2026-07-27",
@@ -3590,8 +3664,13 @@
       },
       {
         "start": "2026-10-12",
-        "local": 8,
-        "cloud": 1
+        "local": 33,
+        "cloud": 5
+      },
+      {
+        "start": "2026-10-19",
+        "local": 4,
+        "cloud": 0
       }
     ]
   }
