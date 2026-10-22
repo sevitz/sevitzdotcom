@@ -987,6 +987,20 @@ a {
   border-radius: 0;
 }
 
+/* Images written next to each other on one markdown line sit side by side,
+   and stack once the column is too narrow for both. */
+.prose p:has(> img:not(.favicon) + img:not(.favicon)) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.prose p:has(> img:not(.favicon) + img:not(.favicon)) > img {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
 .prose blockquote {
   padding-left: 16px;
   border-left: 3px solid var(--line);
