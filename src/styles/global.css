@@ -1,5 +1,53 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
 
+/* ==========================================================================
+	Base: the Bootstrap 3.4.1 rules this page relied on, kept so it renders
+	the same without Bootstrap.
+========================================================================== */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+html {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+body {
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #333;
+	background-color: #fff;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 500;
+	line-height: 1.1;
+}
+a {
+	text-decoration: none;
+}
+button {
+	-webkit-appearance: button;
+	appearance: button;
+	line-height: inherit;
+}
+@media print {
+	*,
+	*::before,
+	*::after {
+		color: #000 !important;
+		text-shadow: none !important;
+		background: transparent !important;
+		box-shadow: none !important;
+	}
+	h2, h3, p {
+		orphans: 3;
+		widows: 3;
+	}
+	h2, h3 {
+		break-after: avoid;
+	}
+}
+
 /*========================================================================*/
 
 /* /////////////////////////////////////////////////////////////////////
@@ -87,7 +135,7 @@ body {
 	font-family: 'Open Sans',sans-serif;
 }
 /* ==========================================================================Links========================================================================== */
-/* !important so Bootstrap's own a:focus / .btn:focus rules cannot win. */
+/* !important so no a:focus rule elsewhere in this file can win. */
 :focus-visible {
 	outline:2px solid #E04343 !important;
 	outline-offset:3px !important;
@@ -548,10 +596,6 @@ button,button:focus,button:hover,button:active {
 	.hero {
     	padding: 0px;
 	}
-}
-/** Bootstrap grid override: 5 equal contact boxes per row **/
-.col-md-5 {
-	width: 20%;
 }
 /* ==========================================================================Footer========================================================================== */
 .site-footer {
