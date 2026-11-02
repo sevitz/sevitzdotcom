@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-26T11:10:51.230Z",
+  "generatedAt": "2026-11-02T13:34:24.980Z",
   "totals": {
     "repos": 17,
-    "commits": 1416,
-    "loc": 152733
+    "commits": 1482,
+    "loc": 156428
   },
   "weeks": [
     {
@@ -134,9 +134,15 @@
     },
     {
       "start": "2026-10-26",
-      "added": 18,
+      "added": 4561,
+      "removed": 860,
+      "loc": 156417
+    },
+    {
+      "start": "2026-11-02",
+      "added": 12,
       "removed": 1,
-      "loc": 152733
+      "loc": 156428
     }
   ],
   "repos": [
@@ -237,6 +243,10 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     },
@@ -245,9 +255,9 @@
       "kind": "repo",
       "visibility": "private",
       "desc": "Home automation and general home-tech: setup docs, reference notes, and scripts",
-      "updated": "2026-10-25T21:36:25.000Z",
-      "commits": 332,
-      "loc": 16955,
+      "updated": "2026-11-01T17:32:22.000Z",
+      "commits": 389,
+      "loc": 20500,
       "weekly": [
         {
           "added": 0,
@@ -332,6 +342,10 @@
         {
           "added": 1472,
           "removed": 235
+        },
+        {
+          "added": 4396,
+          "removed": 851
         },
         {
           "added": 0,
@@ -431,6 +445,10 @@
         {
           "added": 95,
           "removed": 9
+        },
+        {
+          "added": 0,
+          "removed": 0
         },
         {
           "added": 0,
@@ -535,6 +553,10 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     },
@@ -635,6 +657,10 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     },
@@ -715,6 +741,10 @@
         {
           "added": 2102,
           "removed": 572
+        },
+        {
+          "added": 0,
+          "removed": 0
         },
         {
           "added": 0,
@@ -836,6 +866,10 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     },
@@ -916,6 +950,10 @@
         {
           "added": 2776,
           "removed": 459
+        },
+        {
+          "added": 0,
+          "removed": 0
         },
         {
           "added": 0,
@@ -1035,6 +1073,10 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     },
@@ -1136,6 +1178,10 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     },
@@ -1226,6 +1272,10 @@
         },
         {
           "added": 41,
+          "removed": 0
+        },
+        {
+          "added": 0,
           "removed": 0
         },
         {
@@ -1333,6 +1383,10 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     },
@@ -1341,9 +1395,9 @@
       "kind": "repo",
       "visibility": "private",
       "desc": "My Claude skills and agents",
-      "updated": "2026-10-26T03:20:09.000Z",
-      "commits": 67,
-      "loc": 2853,
+      "updated": "2026-11-02T03:00:09.000Z",
+      "commits": 72,
+      "loc": 2954,
       "weekly": [
         {
           "added": 0,
@@ -1430,7 +1484,11 @@
           "removed": 15
         },
         {
-          "added": 18,
+          "added": 112,
+          "removed": 5
+        },
+        {
+          "added": 12,
           "removed": 1
         }
       ]
@@ -1511,6 +1569,10 @@
         {
           "added": 2946,
           "removed": 120
+        },
+        {
+          "added": 0,
+          "removed": 0
         },
         {
           "added": 0,
@@ -1630,6 +1692,10 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     },
@@ -1640,9 +1706,9 @@
       "url": "https://sevitz.com/thoughts-about",
       "github": "https://github.com/sevitz/thoughts-about",
       "desc": "Thoughts about ... by Adrian Sevitz. Source of truth for sevitz.com/thoughts-about",
-      "updated": "2026-10-23T12:32:02.000Z",
-      "commits": 31,
-      "loc": 861,
+      "updated": "2026-10-27T18:15:15.000Z",
+      "commits": 35,
+      "loc": 910,
       "weekly": [
         {
           "added": 0,
@@ -1727,6 +1793,10 @@
         {
           "added": 50,
           "removed": 1
+        },
+        {
+          "added": 53,
+          "removed": 4
         },
         {
           "added": 0,
@@ -1830,55 +1900,24 @@
         {
           "added": 0,
           "removed": 0
+        },
+        {
+          "added": 0,
+          "removed": 0
         }
       ]
     }
   ],
   "contributions": {
-    "total": 1473,
-    "repoCount": 17,
+    "total": 1580,
+    "repoCount": 18,
     "breakdown": {
-      "commits": 1185,
-      "pullRequests": 261,
-      "issues": 25,
+      "commits": 1275,
+      "pullRequests": 277,
+      "issues": 26,
       "reviews": 0
     },
     "calendar": [
-      {
-        "date": "2025-10-27",
-        "count": 0,
-        "level": 0
-      },
-      {
-        "date": "2025-10-28",
-        "count": 0,
-        "level": 0
-      },
-      {
-        "date": "2025-10-29",
-        "count": 0,
-        "level": 0
-      },
-      {
-        "date": "2025-10-30",
-        "count": 0,
-        "level": 0
-      },
-      {
-        "date": "2025-10-31",
-        "count": 0,
-        "level": 0
-      },
-      {
-        "date": "2025-11-01",
-        "count": 0,
-        "level": 0
-      },
-      {
-        "date": "2025-11-02",
-        "count": 0,
-        "level": 0
-      },
       {
         "date": "2025-11-03",
         "count": 0,
@@ -3232,7 +3271,7 @@
       {
         "date": "2026-07-31",
         "count": 35,
-        "level": 3
+        "level": 2
       },
       {
         "date": "2026-08-01",
@@ -3357,7 +3396,7 @@
       {
         "date": "2026-08-25",
         "count": 17,
-        "level": 2
+        "level": 1
       },
       {
         "date": "2026-08-26",
@@ -3497,12 +3536,12 @@
       {
         "date": "2026-09-22",
         "count": 16,
-        "level": 2
+        "level": 1
       },
       {
         "date": "2026-09-23",
         "count": 50,
-        "level": 4
+        "level": 3
       },
       {
         "date": "2026-09-24",
@@ -3582,7 +3621,7 @@
       {
         "date": "2026-10-09",
         "count": 49,
-        "level": 4
+        "level": 3
       },
       {
         "date": "2026-10-10",
@@ -3596,7 +3635,7 @@
       },
       {
         "date": "2026-10-12",
-        "count": 62,
+        "count": 71,
         "level": 4
       },
       {
@@ -3622,7 +3661,7 @@
       {
         "date": "2026-10-17",
         "count": 32,
-        "level": 3
+        "level": 2
       },
       {
         "date": "2026-10-18",
@@ -3646,7 +3685,7 @@
       },
       {
         "date": "2026-10-22",
-        "count": 33,
+        "count": 39,
         "level": 3
       },
       {
@@ -3657,7 +3696,7 @@
       {
         "date": "2026-10-24",
         "count": 17,
-        "level": 2
+        "level": 1
       },
       {
         "date": "2026-10-25",
@@ -3666,6 +3705,41 @@
       },
       {
         "date": "2026-10-26",
+        "count": 5,
+        "level": 1
+      },
+      {
+        "date": "2026-10-27",
+        "count": 18,
+        "level": 2
+      },
+      {
+        "date": "2026-10-28",
+        "count": 18,
+        "level": 2
+      },
+      {
+        "date": "2026-10-29",
+        "count": 9,
+        "level": 1
+      },
+      {
+        "date": "2026-10-30",
+        "count": 6,
+        "level": 1
+      },
+      {
+        "date": "2026-10-31",
+        "count": 27,
+        "level": 2
+      },
+      {
+        "date": "2026-11-01",
+        "count": 9,
+        "level": 1
+      },
+      {
+        "date": "2026-11-02",
         "count": 1,
         "level": 1
       }
@@ -3673,13 +3747,13 @@
   },
   "claudeGithub": {
     "since": "2026-07-31",
-    "prs": 251,
-    "merged": 246,
+    "prs": 265,
+    "merged": 260,
     "cloudPrs": 40,
     "cloudSessions": 28,
     "repos": 14,
-    "coAuthoredCommits": 942,
-    "commits": 1416,
+    "coAuthoredCommits": 993,
+    "commits": 1482,
     "weeks": [
       {
         "start": "2026-07-27",
@@ -3748,6 +3822,11 @@
       },
       {
         "start": "2026-10-26",
+        "local": 14,
+        "cloud": 0
+      },
+      {
+        "start": "2026-11-02",
         "local": 0,
         "cloud": 0
       }
